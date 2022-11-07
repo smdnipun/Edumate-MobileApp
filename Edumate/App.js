@@ -1,21 +1,30 @@
+import { NavigationContainer } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import {
+  HomeScreen,
+  ProfileScreen,
+  RootStack,
+} from './src/components/RootStack'
+import AuthScreen from './src/screens/Common/Login'
 import Title from './src/screens/test'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Image
+    <NavigationContainer style={styles.container}>
+      {/* <Image
         source={{ uri: 'https://i.imgur.com/TkIrScD.png' }}
         style={styles.logo}
       />
-      <Title/>
       <Text style={styles.instructions}>
         To share a photo from your phone with a friend, just press the button
         below!
-      </Text>
+      </Text> */}
+
+      {/* <HomeScreen /> */}
+      <AuthScreen />
       <StatusBar style='auto' />
-    </View>
+    </NavigationContainer>
   )
 }
 
