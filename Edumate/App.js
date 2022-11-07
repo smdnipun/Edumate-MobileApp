@@ -6,7 +6,7 @@ import {
   ProfileScreen,
   RootStack,
 } from './src/components/RootStack'
-import AuthScreen from './src/screens/Common/Login'
+import { Login } from './src/screens/Common/Login'
 import Title from './src/screens/test'
 
 export default function App() {
@@ -20,9 +20,7 @@ export default function App() {
         To share a photo from your phone with a friend, just press the button
         below!
       </Text> */}
-
-      {/* <HomeScreen /> */}
-      <AuthScreen />
+      <Login />
       <StatusBar style='auto' />
     </NavigationContainer>
   )

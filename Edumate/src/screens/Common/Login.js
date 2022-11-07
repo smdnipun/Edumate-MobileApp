@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   ImageBackground,
   View,
@@ -8,11 +8,14 @@ import {
   TextInput,
   Platform,
 } from 'react-native'
+import axios from 'axios'
+import { Input } from '../../constants/InputField'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const API_URL =
   Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
-const AuthScreen = () => {
+export const Login = () => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
@@ -22,9 +25,28 @@ const AuthScreen = () => {
   const [isLogin, setIsLogin] = useState(true)
 
   const onChangeHandler = () => {
-    setIsLogin(!isLogin)
-    setMessage('')
+    // setIsLogin(!isLogin)
+    // setMessage('')
+    const data = {
+      email,
+      password,
+    }
+
+    const url = `https://edumate-backend.herokuapp.com/api/auth/login`
+    axios.post(url, data).then((res) => {
+      console.log(res.data.details)
+      const response = res.data.details._id
+      AsyncStorage.setItem('token', response)
+      fetch()
+    })
   }
+
+  useEffect(() => {
+    async function fetch()  {
+      const user =await AsyncStorage.getItem('token')
+      console.log('hi', user)
+    }
+  },[])
 
   const onLoggedIn = (token) => {
     // fetch(`${API_URL}/private`, {
@@ -89,48 +111,33 @@ const AuthScreen = () => {
   }
 
   return (
-    <ImageBackground
-      // source={require('../public/images/gradient-back.jpeg')}
-      style={styles.image}
-    >
+    <ImageBackground style={styles.image}>
       <View style={styles.card}>
-        <Text style={styles.heading}>{isLogin ? 'Login' : 'Signup'}</Text>
+        <Text style={styles.heading}>Login</Text>
         <View style={styles.form}>
           <View style={styles.inputs}>
-            <TextInput
+            <Input
               style={styles.input}
               placeholder='Email'
               autoCapitalize='none'
               onChangeText={setEmail}
-            ></TextInput>
-            {!isLogin && (
-              <TextInput
-                style={styles.input}
-                placeholder='Name'
-                onChangeText={setName}
-              ></TextInput>
-            )}
-            <TextInput
+            ></Input>
+            <Input
               secureTextEntry={true}
               style={styles.input}
               placeholder='Password'
               onChangeText={setPassword}
-            ></TextInput>
+            ></Input>
             <Text
               style={[styles.message, { color: isError ? 'red' : 'green' }]}
             >
               {message ? getMessage() : null}
             </Text>
-            <TouchableOpacity style={styles.button} onPress={onSubmitHandler}>
-              <Text style={styles.buttonText}>Done</Text>
-            </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonAlt}
               onPress={onChangeHandler}
             >
-              <Text style={styles.buttonAltText}>
-                {isLogin ? 'Sign Up' : 'Log In'}
-              </Text>
+              <Text style={styles.buttonAltText}>Log In</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -175,9 +182,8 @@ const styles = StyleSheet.create({
     paddingTop: '10%',
   },
   input: {
-    width: '80%',
-    // borderBottomWidth: 1,
-    // borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    borderBottomColor: 'black',
     paddingTop: 10,
     fontSize: 16,
     minHeight: 40,
@@ -216,5 +222,3 @@ const styles = StyleSheet.create({
     marginVertical: '5%',
   },
 })
-
-export default AuthScreen
