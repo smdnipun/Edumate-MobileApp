@@ -7,6 +7,7 @@ import {
   RootStack,
 } from './src/components/RootStack'
 import { Login } from './src/screens/Common/Login'
+import { UploadLink } from './src/screens/Teacher/UploadLink'
 import Title from './src/screens/test'
 
 export default function App() {
@@ -20,7 +21,7 @@ export default function App() {
         To share a photo from your phone with a friend, just press the button
         below!
       </Text> */}
-      <Login />
+      <UploadLink />
       <StatusBar style='auto' />
     </NavigationContainer>
   )
