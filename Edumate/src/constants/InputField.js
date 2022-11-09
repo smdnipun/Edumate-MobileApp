@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { StyledInputLabel, StyledTextInput } from './styles.js'
+import { StyledInputLabel, StyledTextInputField } from './styles.js'
 export const Input = ({
   label,
   isPassword,
@@ -11,7 +11,7 @@ export const Input = ({
   return (
     <View>
       <StyledInputLabel>{label}</StyledInputLabel>
-      <StyledTextInput {...props} />
+      <StyledTextInputField {...props} />
       {isPassword && (
         <RightIcon onPress={() => setHidePassword(!hidePassword)}>
           <Ionicons

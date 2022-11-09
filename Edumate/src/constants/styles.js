@@ -20,8 +20,7 @@ const { primary, secondary, tertiary, darkLight, brand, green, red } = colors
 
 export const LoadingContainer = styled.ImageBackground`
   min-width: 100%;
-  height: 94%;
-  margin: 0;
+  height: 100%;
   align-items: center;
 `
 export const AppLogo = styled.Image`
@@ -127,6 +126,17 @@ export const StyledTextInput = styled.TextInput`
   margin-bottom: 10px;
   color: ${tertiary};
 `
+
+export const StyledTextInputField = styled.TextInput`
+  // background-color: ${secondary};
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  height: 45px;
+  margin-bottom: 10px;
+  border: 2px
+`
 export const StyledTextInputCard = styled.TextInput`
   background-color: ${secondary};
   padding-left: 15px;
@@ -139,7 +149,7 @@ export const StyledTextInputCard = styled.TextInput`
 `
 export const StyledInputLabel = styled.Text`
   color: ${tertiary};
-  font-size: 13px;
+  font-size: 16px;
   text-align: left;
 `
 export const LeftIcon = styled.View`
@@ -155,7 +165,6 @@ export const RightIcon = styled.TouchableOpacity`
   z-index: 1;
 `
 export const StyledButton = styled.TouchableOpacity`
-  padding: 15px;
   background-color: ${brand};
   justify-content: center;
   align-items: center;
@@ -164,7 +173,6 @@ export const StyledButton = styled.TouchableOpacity`
   height: 55px;
 `
 export const StyledButtoWhite = styled.TouchableOpacity`
-  padding: 15px;
   background-color: ${primary};
   justify-content: center;
   border: 1px;
@@ -216,7 +224,7 @@ export const TextLink = styled.TouchableOpacity`
   align-items: center;
 `
 export const TextLinkContent = styled.Text`
-  color: ${brand};
+  color: ${tertiary};
   font-size: 15px;
 `
 
