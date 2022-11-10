@@ -1,9 +1,17 @@
+import { NavigationContainer } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import Title from './src/screens/test'
 import { Adminhome } from './src/screens/admin/Adminhome'
 import { AddStreams } from './src/screens/admin/AddStreams'
 import { AddSubjects } from './src/screens/admin/AddSubjects'
+import {
+  HomeScreen,
+  ProfileScreen,
+  RootStack,
+} from './src/components/RootStack'
+import FirstSrn from './src/screens/Common/FirstSrn'
+import { Login } from './src/screens/Common/Login'
 
 export default function App() {
   return (
@@ -20,6 +28,7 @@ export default function App() {
     //   <StatusBar style='auto' />
     // </View>
     <AddSubjects/>
+
   )
 }
 
