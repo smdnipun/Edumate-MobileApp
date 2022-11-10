@@ -1,21 +1,25 @@
 import { StatusBar } from 'expo-status-bar'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import Title from './src/screens/test'
+import { Adminhome } from './src/screens/admin/Adminhome'
+import { AddStreams } from './src/screens/admin/AddStreams'
+import { AddSubjects } from './src/screens/admin/AddSubjects'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Image
-        source={{ uri: 'https://i.imgur.com/TkIrScD.png' }}
-        style={styles.logo}
-      />
-      <Title/>
-      <Text style={styles.instructions}>
-        To share a photo from your phone with a friend, just press the button
-        below!
-      </Text>
-      <StatusBar style='auto' />
-    </View>
+    // <View style={styles.container}>s
+    //   <Image
+    //     source={{ uri: 'https://i.imgur.com/TkIrScD.png' }}
+    //     style={styles.logo}
+    //   />
+    //   <Title/>
+    //   <Text style={styles.instructions}>
+    //     To share a photo from your phone with a friend, just press the button
+    //     below!
+    //   </Text>
+    //   <StatusBar style='auto' />
+    // </View>
+    <AddSubjects/>
   )
 }
 
