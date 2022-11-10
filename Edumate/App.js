@@ -12,18 +12,19 @@ import { UploadLink } from './src/screens/Teacher/UploadLink'
 
 export default function App() {
   return (
-    <NavigationContainer style={styles.container}>
-      {/* <Image
-        source={{ uri: 'https://i.imgur.com/TkIrScD.png' }}
-        style={styles.logo}
-      />
-      <Text style={styles.instructions}>
-        To share a photo from your phone with a friend, just press the button
-        below!
-      </Text> */}
-      <UploadLink />
-      <StatusBar style='auto' />
-    </NavigationContainer>
+    // <NavigationContainer style={styles.container}>
+    //   {/* <Image
+    //     source={{ uri: 'https://i.imgur.com/TkIrScD.png' }}
+    //     style={styles.logo}
+    //   />
+    //   <Text style={styles.instructions}>
+    //     To share a photo from your phone with a friend, just press the button
+    //     below!
+    //   </Text> */}
+    //   <FirstSrn />
+    //   <StatusBar style='auto' />
+    // </NavigationContainer>
+    <RootStack/>
   )
 }
 
