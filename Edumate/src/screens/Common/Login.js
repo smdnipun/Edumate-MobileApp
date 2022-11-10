@@ -10,8 +10,9 @@ import {
   TextLinkContent,
   TextLink,
   ExtraText,
+  StyledTextInputField,
+  StyledInputLabel,
 } from '../../constants/styles'
-import { Input } from '../../constants/InputField'
 
 const { primary, black } = colors
 
@@ -23,10 +24,15 @@ export default function Login({ navigation }) {
         <Text style={styles.header}>Login</Text>
         <View style={styles.inputFieldView}>
           <View style={styles.spacing}>
-            <Input label={'Email'}></Input>
+            <StyledInputLabel>Email</StyledInputLabel>
+            <StyledTextInputField placeholder='example@edumate.com' />
           </View>
           <View style={styles.spacing}>
-            <Input label={'Password'}></Input>
+            <StyledInputLabel>Password</StyledInputLabel>
+            <StyledTextInputField
+              secureTextEntry={true}
+              placeholder='* * * * * * *'
+            />
           </View>
           <Text style={styles.alignRight}>Forgot Password?</Text>
           <StyledButton>
@@ -36,7 +42,7 @@ export default function Login({ navigation }) {
             <ExtraText>Don't have an account? </ExtraText>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('SingUp')
+                navigation.navigate('SingUpSelection')
               }}
             >
               <TextLinkContent>SignUp</TextLinkContent>

@@ -32,7 +32,7 @@ export const AppLogo = styled.Image`
 export const StyledContainer = styled.View`
   flex: 1;
   padding: 15px;
-  padding-top: ${StatusBarHeight + 100}px;
+  padding-top: ${StatusBarHeight + 90}px;
   background-color: ${primary};
 `
 

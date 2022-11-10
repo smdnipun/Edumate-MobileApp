@@ -12,7 +12,7 @@ import {
 } from '../../constants/styles'
 const { primary } = colors
 
-export default function FirstSrn({navigation}) {
+export default function FirstSrn({ navigation }) {
   return (
     <>
       <StatusBar />
@@ -33,7 +33,7 @@ export default function FirstSrn({navigation}) {
           <View style={styles.buttonContainer}>
             <StyledButton
               onPress={() => {
-                navigation.navigate('SingUp')
+                navigation.navigate('SingUpSelection')
               }}
             >
               <ButtonText>Register</ButtonText>

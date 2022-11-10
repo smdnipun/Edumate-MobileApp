@@ -1,6 +1,13 @@
 import React from 'react'
 import { View } from 'react-native'
-import { StyledInputLabel, StyledTextInputField } from './styles.js'
+import {
+  StyledInputLabel,
+  StyledTextInputField,
+  RightIcon,
+  Ionicons,
+  colors
+} from './styles.js'
+const { darkLight } = colors
 export const Input = ({
   label,
   isPassword,

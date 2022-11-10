@@ -7,6 +7,7 @@ import Login from '../screens/Common/Login'
 import FirstSrn from '../screens/Common/FirstSrn'
 import { colors } from '../constants/styles'
 import SignUp from '../screens/Common/SignUp'
+import SignUpSelection from '../screens/Common/SignUpSelection'
 const { tertiary, primary } = colors
 
 const Stack = createNativeStackNavigator()
@@ -34,6 +35,13 @@ export const RootStack = () => {
           <Stack.Screen
             name='Login'
             component={Login}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='SingUpSelection'
+            component={SignUpSelection}
             options={{
               headerShown: false,
             }}
