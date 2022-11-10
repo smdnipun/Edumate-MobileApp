@@ -81,6 +81,7 @@ export const UploadLink = () => {
             <InputCd
               placeholder='Subject'
               placeholderTextColor={darkLight}
+              // onChangeText={}
               value={subject}
             />
             <InputCd
