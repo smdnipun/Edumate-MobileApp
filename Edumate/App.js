@@ -1,13 +1,22 @@
+import { NavigationContainer } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Home } from './src/screens/student/Home'
 import Title from './src/screens/test'
+import {
+  HomeScreen,
+  ProfileScreen,
+  RootStack,
+} from './src/components/RootStack'
+import FirstSrn from './src/screens/Common/FirstSrn'
+import { Login } from './src/screens/Common/Login'
 
 export default function App() {
   return (
     // <Title/>
 
     <Home/>
+    // <RootStack/>
     // <View style={styles.container}>
       
     //   <Image
@@ -21,8 +30,9 @@ export default function App() {
     //   </Text>
     //   <StatusBar style='auto' />
     // </View>
-  )
-}
+  )}
+
+
 
 // const styles = StyleSheet.create({
 //   container: {
