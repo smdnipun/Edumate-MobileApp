@@ -8,6 +8,11 @@ import FirstSrn from '../screens/Common/FirstSrn'
 import { colors } from '../constants/styles'
 import SignUp from '../screens/Common/SignUp'
 import SignUpSelection from '../screens/Common/SignUpSelection'
+import { UploadLink } from '../screens/Teacher/UploadLink'
+import { UploadNote } from '../screens/Teacher/UploadNote'
+import { UpdateLink } from '../screens/Teacher/UpdateLink'
+import { UpdateNote } from '../screens/Teacher/UpdateNote'
+import { Comment } from '../screens/Teacher/Comments'
 const { tertiary, primary } = colors
 
 const Stack = createNativeStackNavigator()
@@ -49,6 +54,41 @@ export const RootStack = () => {
           <Stack.Screen
             name='SingUp'
             component={SignUp}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='UploadLink'
+            component={UploadLink}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='UploadNote'
+            component={UploadNote}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='UpdateLink'
+            component={UpdateLink}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='UpdateNote'
+            component={UpdateNote}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='Comments'
+            component={Comment}
             options={{
               headerShown: false,
             }}

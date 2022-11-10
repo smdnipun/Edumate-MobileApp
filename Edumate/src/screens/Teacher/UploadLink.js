@@ -54,15 +54,24 @@ export const UploadLink = () => {
   const [isError, setIsError] = useState(false)
   const [message, setMessage] = useState('')
 
+  const data = {
+    subject,
+    lesson_name,
+    grade,
+    date,
+    time,
+    link,
+    teacher_id:'515'
+  }
+
+  console.log(data)
   const onChangeHandler = () => {
-    const data = {
-      email,
-      password,
-    }
+    
 
     const url = `https://edumate-backend.herokuapp.com/link/add`
     axios.post(url, data).then((res) => {
       console.log('done')
+      alert("Link added")
     })
   }
 
@@ -81,18 +90,20 @@ export const UploadLink = () => {
             <InputCd
               placeholder='Subject'
               placeholderTextColor={darkLight}
-              // onChangeText={}
+              onChangeText={(subect) => setSubject(subect)}
               value={subject}
             />
             <InputCd
               placeholder='Lesson name'
               placeholderTextColor={darkLight}
+              onChangeText={(lesson_name) => setLesson(lesson_name)}
               value={lesson_name}
             />
             <InputCd
               type='number'
               placeholder='Grade'
               placeholderTextColor={darkLight}
+              onChangeText={(grade) => setGrade(grade)}
               value={grade}
               keyboardType='numeric'
             />
@@ -101,6 +112,7 @@ export const UploadLink = () => {
               icon='calendar'
               placeholder='Date'
               placeholderTextColor={darkLight}
+              onChangeText={(date) => setDate(date)}
               value={date}
             />
             <InputCd
@@ -108,15 +120,17 @@ export const UploadLink = () => {
               icon='clock'
               placeholder='Time'
               placeholderTextColor={darkLight}
+              onChangeText={(time) => setTime(time)}
               value={time}
             />
             <InputCd
               icon='link'
               placeholder='Link'
               placeholderTextColor={darkLight}
+              onChangeText={(link) => setLink(link)}
               value={link}
             />
-            <StyledButton>
+            <StyledButton onPress={onChangeHandler}>
               <ButtonText>Upload</ButtonText>
             </StyledButton>
           </View>

@@ -8,7 +8,9 @@ import {
 } from './src/components/RootStack'
 import FirstSrn from './src/screens/Common/FirstSrn'
 import { Login } from './src/screens/Common/Login'
+import { TeacherDash } from './src/screens/Teacher/TeacherDash'
 import { UploadLink } from './src/screens/Teacher/UploadLink'
+import { UploadNote } from './src/screens/Teacher/UploadNote'
 
 export default function App() {
   return (
@@ -24,7 +26,7 @@ export default function App() {
     //   <FirstSrn />
     //   <StatusBar style='auto' />
     // </NavigationContainer>
-    <RootStack/>
+    <UploadLink/>
   )
 }
 
