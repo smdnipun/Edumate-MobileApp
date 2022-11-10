@@ -10,26 +10,23 @@ import {
 } from './src/components/RootStack'
 import FirstSrn from './src/screens/Common/FirstSrn'
 import { Login } from './src/screens/Common/Login'
+import { UploadLink } from './src/screens/Teacher/UploadLink'
+import { StudentSubject } from './src/screens/student/StudentSubject'
+import { StudentNotes } from './src/screens/student/StudentNotes'
+import { StudentFeedback } from './src/screens/student/StudentFeedback'
+import { StudentComment } from './src/screens/student/StudentComment'
+import { StduentAnswerSheetUpload } from './src/screens/student/StduentAnswerSheetUpload'
 
 export default function App() {
   return (
     // <Title/>
-
-    <Home/>
-    // <RootStack/>
-    // <View style={styles.container}>
-      
-    //   <Image
-    //     source={{ uri: 'https://i.imgur.com/TkIrScD.png' }}
-    //     style={styles.logo}
-    //   />
-    //   <Title/>
-    //   <Text style={styles.instructions}>
-    //     To share a photo from your phone with a friend, just press the button
-    //     below!
-    //   </Text>
-    //   <StatusBar style='auto' />
-    // </View>
+    // <Home/>
+    // <StudentSubject/>
+    // <StudentNotes/>
+    // <StudentFeedback/>
+    // <StudentComment/>
+    <StduentAnswerSheetUpload/>
+    
   )}
 
 

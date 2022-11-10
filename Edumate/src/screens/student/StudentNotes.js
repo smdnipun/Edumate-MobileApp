@@ -8,18 +8,18 @@ import {
   StyledContainer,
 } from "../../constants/styles.js";
 
-export const Home = () => (
+export const StudentNotes = () => (
   <StyledContainer>
     <StatusBar style="dark" />
-    <PageTitle>Stream</PageTitle>
+    <PageTitle>Subject Name</PageTitle>
     <StyledButton style={style.btn}>
-      <ButtonText>Subject</ButtonText>
+      <ButtonText>Note 1</ButtonText>
     </StyledButton>
     <StyledButton style={style.btn}>
-      <ButtonText>Subject</ButtonText>
+      <ButtonText>Note 2</ButtonText>
     </StyledButton>
     <StyledButton style={style.btn}>
-      <ButtonText>Subject</ButtonText>
+      <ButtonText>Note 3</ButtonText>
     </StyledButton>
   </StyledContainer>
 );
@@ -29,3 +29,5 @@ const style = StyleSheet.create({
     marginTop: 20,
   },
 });
+
+
