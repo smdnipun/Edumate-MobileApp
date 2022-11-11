@@ -41,6 +41,10 @@ export const InnerContainer = styled.View`
   width: 100%;
   align-items: center;
 `
+export const ProfileInnerContainer = styled.View`
+  width: 100%;
+  align-items: center;
+`
 
 export const WelcomeContainer = styled(InnerContainer)`
   padding: 25px;
@@ -135,7 +139,7 @@ export const StyledTextInputField = styled.TextInput`
   font-size: 16px;
   height: 45px;
   margin-bottom: 10px;
-  border: 2px
+  border: 2px;
 `
 export const StyledTextInputCard = styled.TextInput`
   background-color: ${secondary};
@@ -151,6 +155,7 @@ export const StyledInputLabel = styled.Text`
   color: ${tertiary};
   font-size: 16px;
   text-align: left;
+  margin-bottom: 6px;
 `
 export const LeftIcon = styled.View`
   left: 15px;
@@ -175,7 +180,7 @@ export const StyledButton = styled.TouchableOpacity`
 export const StyledButtoWhite = styled.TouchableOpacity`
   background-color: ${primary};
   justify-content: center;
-  border: 1px;
+  border: 2px;
   border-color: ${brand};
   align-items: center;
   border-radius: 5px;
@@ -196,7 +201,7 @@ export const ButtonTextWhite = styled.Text`
 export const MsgBox = styled.Text`
   text-align: center;
   font-size: 13px;
-  color: ${(props) => (props.type == 'SUCCESS' ? green : red)};
+  color: red;
 `
 
 export const Line = styled.View`

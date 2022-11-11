@@ -8,6 +8,9 @@ import {
 } from './src/components/RootStack'
 import FirstSrn from './src/screens/Common/FirstSrn'
 import { Login } from './src/screens/Common/Login'
+import Profile from './src/screens/Common/Profile'
+import ResetPassword from './src/screens/Common/ResetPassword'
+import UpdateProfile from './src/screens/Common/UpdateProfile'
 
 export default function App() {
   return (
@@ -24,6 +27,9 @@ export default function App() {
     //   <StatusBar style='auto' />
     // </NavigationContainer>
     <RootStack/>
+    // <Profile />
+    // <UpdateProfile/>
+    // <ResetPassword/>
   )
 }
 

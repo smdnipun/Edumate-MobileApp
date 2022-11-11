@@ -33,7 +33,7 @@ export default function FirstSrn({ navigation }) {
           <View style={styles.buttonContainer}>
             <StyledButton
               onPress={() => {
-                navigation.navigate('SingUpSelection')
+                navigation.navigate('SingUp')
               }}
             >
               <ButtonText>Register</ButtonText>

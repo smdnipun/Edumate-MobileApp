@@ -2,11 +2,11 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { KeyBoardAvoidingWrapper } from '../../components/KeyBoardAvoidingWrapper'
 import {
   StyledContainer,
@@ -18,95 +18,200 @@ import {
   TextLinkContent,
   StyledInputLabel,
   StyledTextInputField,
+  InnerContainer,
+  MsgBox,
 } from '../../constants/styles'
-// import DropDownPicker from 'react-native-dropdown-picker'
-// import { Dropdown } from 'react-native-material-dropdown'
+import { AsyncStorage } from '@react-native-async-storage/async-storage'
+import axios from 'axios'
 
-const { primary, black } = colors
+const { darkLight, black } = colors
 
 export default function SignUp({ navigation }) {
   const [regForm, setRegForm] = useState(false)
-  // let data = [
-  //   {
-  //     value: 'Banana',
-  //   },
-  //   {
-  //     value: 'Mango',
-  //   },
-  //   {
-  //     value: 'Pear',
-  //   },
-  // ]
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [type, setType] = useState('')
+  const [stream, setStream] = useState('')
+  const [password, setPassword] = useState('')
+  const [rpassword, setrPassword] = useState('')
+
+  const [message, setMessage] = useState()
+  const [messageType, setMessageType] = useState()
+
+  const handleSubmit = async () => {
+    handleMessage(null)
+    const data = {
+      firstName: firstName,
+      lastName: lastName,
+      type: type,
+      stream: stream,
+      email: email,
+      password: password,
+    }
+    if (
+      data.firstName == '' ||
+      data.lastName == '' ||
+      data.stream == '' ||
+      data.type == '' ||
+      data.email == '' ||
+      data.password == ''
+    ) {
+      handleMessage('Please fill all the fields', 'FAILED')
+    } else {
+      if (password !== rpassword) {
+        handleMessage('Password Mismatch!!!', 'FAILED')
+      } else {
+        await axios
+          .post('https://edumate-backend.herokuapp.com/api/auth/register', data)
+          .then((res) => {
+            const result = res.data
+            console.log(res)
+            if (res.data === 'Created') {
+              alert('Successfully Registered')
+              navigation.navigate('Login')
+            } else if (res.data === 'Exists') {
+              handleMessage('The user already exists', 'FAILED')
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+            handleMessage('An error occured. Please try again!')
+          })
+      }
+    }
+  }
+
+  const handleMessage = (message, type = 'FAILED') => {
+    setMessage(message)
+    setMessageType(type)
+  }
+
+  useEffect(() => {
+    setRegForm(false)
+  }, [])
+
   return (
-    <KeyBoardAvoidingWrapper>
-      <StyledContainer>
-        <StatusBar style='dark' />
-        <Text style={styles.header}>Register</Text>
-        {/* {!regForm && (
-          
-        )} */}
-        <View style={styles.formView}>
-          <View style={styles.container}>
-            <View style={styles.inputField}>
-              <StyledInputLabel>First Name</StyledInputLabel>
-              <StyledTextInputField placeholder='First Name' />
-            </View>
-            <View style={styles.inputField}>
-              <StyledInputLabel>Last Name</StyledInputLabel>
-              <StyledTextInputField placeholder='Last Name' />
-            </View>
-          </View>
-          <View style={styles.spacing}>
-            <StyledInputLabel>Email</StyledInputLabel>
-            <StyledTextInputField placeholder='example@edumate.com' />
-          </View>
-          <View style={styles.spacing}>
-            <StyledInputLabel>Role</StyledInputLabel>
-            {/* <DropDownPicker
-              items={[
-                { label: 'Student', value: 'student' },
-                { label: 'Teacher', value: 'teacher' },
-              ]}
-              defaultIndex={0}
-              containerStyle={{ height: 45 }}
-              onChangeItem={(item) => console.log(item.label, item.value)}
-            /> */}
-            {/* <Dropdown label='Favorite Fruit' data={data} /> */}
-          </View>
-          <View style={styles.spacing}>
-            <StyledInputLabel>Stream</StyledInputLabel>
-            <StyledTextInputField placeholder='example@edumate.com' />
-          </View>
-          <View style={styles.spacing}>
-            <StyledInputLabel>Password</StyledInputLabel>
-            <StyledTextInputField
-              secureTextEntry={true}
-              placeholder='* * * * * * *'
-            />
-          </View>
-          <View style={styles.spacing}>
-            <StyledInputLabel>Re-enter Password</StyledInputLabel>
-            <StyledTextInputField
-              secureTextEntry={true}
-              placeholder='* * * * * * *'
-            />
-          </View>
-          <StyledButton>
-            <ButtonText>Register</ButtonText>
-          </StyledButton>
-          <ExtraView>
-            <ExtraText>Already have an account? </ExtraText>
+    <>
+      {!regForm ? (
+        <StyledContainer>
+          <StatusBar style='dark' />
+          <Text style={styles.header}>Registration</Text>
+          <Text style={{ marginStart: 15, fontSize: 18 }}>Select Role</Text>
+          <InnerContainer>
             <TouchableOpacity
+              style={styles.buttonFacebookStyle}
+              activeOpacity={0.5}
               onPress={() => {
-                navigation.navigate('Login')
+                setRegForm(true)
+                setType('Teacher')
               }}
             >
-              <TextLinkContent>Login</TextLinkContent>
+              <Image
+                source={require('../../../assets/Teacher.png')}
+                style={styles.buttonImageIconStyle}
+              />
             </TouchableOpacity>
-          </ExtraView>
-        </View>
-      </StyledContainer>
-    </KeyBoardAvoidingWrapper>
+            <Text style={{ fontSize: 18 }}>Teacher</Text>
+            <TouchableOpacity
+              style={styles.buttonFacebookStyle}
+              activeOpacity={0.5}
+              onPress={() => {
+                setRegForm(true)
+                setType('Student')
+              }}
+            >
+              <Image
+                source={require('../../../assets/Student.png')}
+                style={styles.buttonImageIconStyle}
+              />
+            </TouchableOpacity>
+            <Text style={{ fontSize: 18 }}>Student</Text>
+          </InnerContainer>
+        </StyledContainer>
+      ) : (
+        <KeyBoardAvoidingWrapper>
+          <StyledContainer>
+            <StatusBar style='dark' />
+            <Text style={styles.header}>Register</Text>
+            <View style={styles.formView}>
+              <View style={styles.container}>
+                <View style={styles.inputField}>
+                  <StyledInputLabel>First Name</StyledInputLabel>
+                  <StyledTextInputField
+                    placeholder='First Name'
+                    placeholderTextColor={darkLight}
+                    onChangeText={(firstName) => setFirstName(firstName)}
+                    value={firstName}
+                  />
+                </View>
+                <View style={styles.inputField}>
+                  <StyledInputLabel>Last Name</StyledInputLabel>
+                  <StyledTextInputField
+                    placeholder='Last Name'
+                    placeholderTextColor={darkLight}
+                    onChangeText={(lastName) => setLastName(lastName)}
+                    value={lastName}
+                  />
+                </View>
+              </View>
+              <View style={styles.spacing}>
+                <StyledInputLabel>Email</StyledInputLabel>
+                <StyledTextInputField
+                  placeholder='example@edumate.com'
+                  placeholderTextColor={darkLight}
+                  onChangeText={(email) => setEmail(email)}
+                  value={email}
+                />
+              </View>
+              <View style={styles.spacing}>
+                <StyledInputLabel>Stream</StyledInputLabel>
+                <StyledTextInputField
+                  placeholder='Choose'
+                  placeholderTextColor={darkLight}
+                  onChangeText={(stream) => setStream(stream)}
+                  value={stream}
+                />
+              </View>
+              <View style={styles.spacing}>
+                <StyledInputLabel>Password</StyledInputLabel>
+                <StyledTextInputField
+                  secureTextEntry={true}
+                  placeholder='* * * * * * *'
+                  placeholderTextColor={darkLight}
+                  onChangeText={(password) => setPassword(password)}
+                  value={password}
+                />
+              </View>
+              <View style={styles.spacing}>
+                <StyledInputLabel>Re-enter Password</StyledInputLabel>
+                <StyledTextInputField
+                  secureTextEntry={true}
+                  placeholder='* * * * * * *'
+                  placeholderTextColor={darkLight}
+                  onChangeText={(rpassword) => setrPassword(rpassword)}
+                  value={rpassword}
+                />
+              </View>
+              <MsgBox type={messageType}>{message}</MsgBox>
+              <StyledButton onPress={handleSubmit}>
+                <ButtonText>Register</ButtonText>
+              </StyledButton>
+              <ExtraView>
+                <ExtraText>Already have an account? </ExtraText>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('Login')
+                  }}
+                >
+                  <TextLinkContent>Login</TextLinkContent>
+                </TouchableOpacity>
+              </ExtraView>
+            </View>
+          </StyledContainer>
+        </KeyBoardAvoidingWrapper>
+      )}
+    </>
   )
 }
 
@@ -141,5 +246,23 @@ const styles = StyleSheet.create({
   alignCenter: {
     textAlign: 'center',
     margin: 15,
+  },
+  buttonFacebookStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+    margin: 10,
+  },
+  buttonImageIconStyle: {
+    padding: 10,
+    margin: 5,
+    height: 180,
+    width: 180,
+    resizeMode: 'stretch',
+  },
+  buttonTextStyle: {
+    color: '#fff',
+    marginBottom: 4,
+    marginLeft: 10,
   },
 })

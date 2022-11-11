@@ -7,7 +7,7 @@ import Login from '../screens/Common/Login'
 import FirstSrn from '../screens/Common/FirstSrn'
 import { colors } from '../constants/styles'
 import SignUp from '../screens/Common/SignUp'
-import SignUpSelection from '../screens/Common/SignUpSelection'
+import Profile from '../screens/Common/Profile'
 const { tertiary, primary } = colors
 
 const Stack = createNativeStackNavigator()
@@ -40,15 +40,15 @@ export const RootStack = () => {
             }}
           />
           <Stack.Screen
-            name='SingUpSelection'
-            component={SignUpSelection}
+            name='SingUp'
+            component={SignUp}
             options={{
               headerShown: false,
             }}
           />
           <Stack.Screen
-            name='SingUp'
-            component={SignUp}
+            name='Profile'
+            component={Profile}
             options={{
               headerShown: false,
             }}
@@ -57,16 +57,4 @@ export const RootStack = () => {
       </NavigationContainer>
     </>
   )
-}
-
-export const HomeScreen = ({ navigation }) => {
-  return (
-    <Button
-      title="Go to Jane's profile"
-      onPress={() => navigation.navigate('Profile', { name: 'Jane' })}
-    />
-  )
-}
-export const ProfileScreen = ({ navigation, route }) => {
-  return <Text>This is {route.params.name}'s profile</Text>
 }
