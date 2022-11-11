@@ -253,3 +253,78 @@ export const RightBox = styled.View`
   height: 100px;
   right: -150px;
 `
+export const UploadButton = styled.View`
+  width: 300px;
+  height: 200px;
+  border-color: ${secondary};
+  border: 1px;
+  margin-bottom: 50px;
+  border-style: dashed;
+  align-items: center;
+`
+
+export const UploadingButton = styled.TouchableOpacity`
+  top: 60px;
+  position: absolute;
+`
+export const DiscoverTitle = styled.View`
+  width: 412px;
+  height: 50px;
+  background-color: ${brand};
+`
+export const DiscoverText = styled.Text`
+  font-size: 15px;
+  text-align: left;
+  padding: 15px;
+  font-weight: bold;
+  color: ${primary};
+`
+export const DashButton = styled.TouchableOpacity`
+  left: 75px;
+  top: 10.5px;
+  position: absolute;
+  z-index: 1;
+`
+export const TeacherCard = styled.View`
+  width: 370px;
+  height: 200px;
+  border-color: ${secondary};
+  border: 1px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+`
+export const TeacherCardColumn = styled.View`
+  
+  flex-direction: column;
+  flex: 1px;
+`
+export const TeacherCardRow = styled.View`
+  flex-direction: row;
+  flex: 1px;
+`
+export const TeacherDashContent = styled.Text`
+  margin-left: 10px;
+  margin-top: 5px;
+  flex: 1px;
+  font-size: 12px;
+`
+export const TeacherDashContentButton = styled.TouchableOpacity`
+  margin-left: 150px;
+  margin-top: 20px;
+  font-size: 12px;
+  flex: 1px;
+  right: 50px;
+`
+export const StyledTextInputComment = styled.TextInput`
+  background-color: ${secondary};
+  padding-left: 60px;
+  padding-right: 55px;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 270;
+  height: 200px;
+  margin-bottom: 70px;
+  color: ${tertiary};
+`

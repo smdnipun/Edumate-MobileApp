@@ -3,22 +3,20 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StatusBar } from 'expo-status-bar'
 import { Button, Text } from 'react-native'
-import Login from '../screens/Common/Login'
-import FirstSrn from '../screens/Common/FirstSrn'
 import { colors } from '../constants/styles'
-import SignUp from '../screens/Common/SignUp'
-import Profile from '../screens/Common/Profile'
-import SignUpSelection from '../screens/Common/SignUpSelection'
 import { UploadLink } from '../screens/Teacher/UploadLink'
 import { UploadNote } from '../screens/Teacher/UploadNote'
 import { UpdateLink } from '../screens/Teacher/UpdateLink'
 import { UpdateNote } from '../screens/Teacher/UpdateNote'
 import { Comment } from '../screens/Teacher/Comments'
+import { TeacherDash } from '../screens/Teacher/TeacherDash'
+import { PaperMarking } from '../screens/Teacher/PaperMarking'
+import { Answers } from '../screens/Teacher/Answers'
 const { tertiary, primary } = colors
 
 const Stack = createNativeStackNavigator()
 
-export const RootStack = () => {
+export const TeacherStack = () => {
   return (
     <>
       <NavigationContainer>
@@ -34,27 +32,8 @@ export const RootStack = () => {
           }}
         >
           <Stack.Screen
-            name='LoadingPage'
-            component={FirstSrn}
-            // options={{ navigationBarHidden: true }}
-          />
-          <Stack.Screen
-            name='Login'
-            component={Login}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name='SingUp'
-            component={SignUp}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name='Profile'
-            component={Profile}
+            name='TeacherDash'
+            component={TeacherDash}
             options={{
               headerShown: false,
             }}
@@ -73,13 +52,7 @@ export const RootStack = () => {
               headerShown: false,
             }}
           />
-          <Stack.Screen
-            name='UpdateLink'
-            component={UpdateLink}
-            options={{
-              headerShown: false,
-            }}
-          />
+          <Stack.Screen name='UpdateLink' component={UpdateLink} options={{}} />
           <Stack.Screen
             name='UpdateNote'
             component={UpdateNote}
@@ -94,8 +67,32 @@ export const RootStack = () => {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name='PaperMarking'
+            component={PaperMarking}
+            options={{}}
+          />
+          <Stack.Screen
+            name='Answer'
+            component={Answers}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
   )
+}
+
+export const HomeScreen = ({ navigation }) => {
+  return (
+    <Button
+      title="Go to Jane's profile"
+      onPress={() => navigation.navigate('Profile', { name: 'Jane' })}
+    />
+  )
+}
+export const ProfileScreen = ({ navigation, route }) => {
+  return <Text>This is {route.params.name}'s profile</Text>
 }

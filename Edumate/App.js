@@ -6,11 +6,17 @@ import {
   ProfileScreen,
   RootStack,
 } from './src/components/RootStack'
+import { TeacherStack } from './src/components/TeacherStack'
 import FirstSrn from './src/screens/Common/FirstSrn'
 import { Login } from './src/screens/Common/Login'
 import Profile from './src/screens/Common/Profile'
 import ResetPassword from './src/screens/Common/ResetPassword'
 import UpdateProfile from './src/screens/Common/UpdateProfile'
+import { Answers } from './src/screens/Teacher/Answers'
+import { TeacherDash } from './src/screens/Teacher/TeacherDash'
+import { UpdateLink } from './src/screens/Teacher/UpdateLink'
+import { UploadLink } from './src/screens/Teacher/UploadLink'
+import { UploadNote } from './src/screens/Teacher/UploadNote'
 
 export default function App() {
   return (
@@ -30,6 +36,7 @@ export default function App() {
     // <Profile />
     // <UpdateProfile/>
     // <ResetPassword/>
+    // <UploadLink/>
   )
 }
 
