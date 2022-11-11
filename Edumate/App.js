@@ -32,10 +32,10 @@ export default function App() {
     //   <FirstSrn />
     //   <StatusBar style='auto' />
     // </NavigationContainer>
-    <RootStack/>
+    // <RootStack/>
     // <Profile />
     // <UpdateProfile/>
-    // <ResetPassword/>
+    <ResetPassword/>
     // <UploadLink/>
   )
 }

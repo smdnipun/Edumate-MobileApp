@@ -12,15 +12,19 @@ import {
 } from '../../constants/styles'
 import ProfileUpper from './ProfileUpper'
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const { darkLight, black } = colors
+
+var userId = ''
+AsyncStorage.getItem('user').then((value) => {
+  userId = value
+})
 
 export default function UpdateProfile() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [dob, setDob] = useState()
-
-  const [id, setId] = useState('631790c1cd120dcba06fbf90')
 
   const [message, setMessage] = useState()
   const [messageType, setMessageType] = useState()
@@ -30,7 +34,7 @@ export default function UpdateProfile() {
   }, [])
   const loadData = async () => {
     await axios
-      .get(`https://edumate-backend.herokuapp.com/api/users/${id}`)
+      .get(`https://edumate-backend.herokuapp.com/api/users/${userId}`)
       .then((res) => {
         setFirstName(res.data.firstName)
         setLastName(res.data.lastName)
@@ -51,7 +55,7 @@ export default function UpdateProfile() {
       handleMessage('Please fill all the fields', 'FAILED')
     } else {
       await axios
-        .put(`https://edumate-backend.herokuapp.com/api/users/${id}`, data)
+        .put(`https://edumate-backend.herokuapp.com/api/users/${userId}`, data)
         .then((res) => {
           alert('Profile successfully updated')
         })

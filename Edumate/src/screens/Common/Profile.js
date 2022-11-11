@@ -13,23 +13,24 @@ import { StatusBar } from 'expo-status-bar'
 import axios from 'axios'
 const { primary, black } = colors
 
-export default function Profile() {
+var userId = ''
+AsyncStorage.getItem('user').then((value) => {
+  userId = value
+})
+
+export default function Profile({ navigation }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [dob, setDob] = useState('')
   const [role, setRole] = useState('')
   const [stream, setStream] = useState('')
-  const [id, setId] = useState('')
-  AsyncStorage.getItem('user').then((value) => {
-    setId(value)
-  })
-  console.log(id)
+
   useEffect(() => {
     loadData()
   }, [])
   const loadData = async () => {
     await axios
-      .get(`https://edumate-backend.herokuapp.com/api/users/${id}`)
+      .get(`https://edumate-backend.herokuapp.com/api/users/${userId}`)
       .then((res) => {
         const name = res.data.firstName + ' ' + res.data.lastName
         setName(name)
@@ -41,10 +42,12 @@ export default function Profile() {
   }
 
   const deleteProfile = async () => {
+    AsyncStorage.removeItem('user')
     await axios
-      .delete(`https://edumate-backend.herokuapp.com/api/users/${id}`)
+      .delete(`https://edumate-backend.herokuapp.com/api/users/${userId}`)
       .then(() => {
         alert('Profile Successfully deleted')
+        navigation.navigate('Login')
       })
       .catch((err) => {
         console.log(err)

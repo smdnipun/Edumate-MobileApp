@@ -40,15 +40,23 @@ export default function Login({ navigation }) {
           'https://edumate-backend.herokuapp.com/api/auth/login',
           credentials
         )
-        .then(async (res) => {
+        .then((res) => {
           const result = res.data.details
-          await AsyncStorage.setItem('user', result._id)
+          AsyncStorage.setItem('user', result._id)
           if (result.type == 'student' || result.type == 'Student') {
             navigation.navigate('Profile')
           } else if (result.type == 'teacher' || result.type == 'Teacher') {
             navigation.navigate('Profile')
           } else {
             alert('Please try again!!!')
+          }
+        })
+        .catch((err) => {
+          const result = err.response.data
+          if (result.message == 'Wrong Password or Username') {
+            alert(result.message)
+          } else if (result.status == 404) {
+            alert(result.message)
           }
         })
     }

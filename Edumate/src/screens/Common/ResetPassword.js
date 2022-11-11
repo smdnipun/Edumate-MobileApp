@@ -12,7 +12,13 @@ import {
 } from '../../constants/styles'
 import ProfileUpper from './ProfileUpper'
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const { darkLight, black } = colors
+
+var userId = ''
+AsyncStorage.getItem('user').then((value) => {
+  userId = value
+})
 
 export default function ResetPassword() {
   const [oldPwd, setOldPwd] = useState('')
@@ -42,7 +48,7 @@ export default function ResetPassword() {
         console.log(data)
         await axios
           .put(
-            `https://edumate-backend.herokuapp.com/api/auth/updatePwd/${id}`,
+            `https://edumate-backend.herokuapp.com/api/auth/updatePwd/${userId}`,
             data
           )
           .then((res) => {
