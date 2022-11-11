@@ -19,10 +19,11 @@ export default function Profile() {
   const [dob, setDob] = useState('')
   const [role, setRole] = useState('')
   const [stream, setStream] = useState('')
-  const [id, setId] = useState('631790c1cd120dcba06fbf90')
-  let user = ''
-  user = AsyncStorage.getItem('user')
-  console.log(user)
+  const [id, setId] = useState('')
+  AsyncStorage.getItem('user').then((value) => {
+    setId(value)
+  })
+  console.log(id)
   useEffect(() => {
     loadData()
   }, [])

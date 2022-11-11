@@ -14,7 +14,6 @@ import {
   StyledInputLabel,
   MsgBox,
 } from '../../constants/styles'
-import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -26,8 +25,6 @@ export default function Login({ navigation }) {
 
   const [message, setMessage] = useState()
   const [messageType, setMessageType] = useState()
-
-  const { loading, error, dispatch } = useContext(AuthContext)
 
   const handleSubmit = async (e) => {
     const credentials = {
@@ -45,7 +42,7 @@ export default function Login({ navigation }) {
         )
         .then(async (res) => {
           const result = res.data.details
-          await AsyncStorage.setItem('user', JSON.stringify(result._id))
+          await AsyncStorage.setItem('user', result._id)
           if (result.type == 'student' || result.type == 'Student') {
             navigation.navigate('Profile')
           } else if (result.type == 'teacher' || result.type == 'Teacher') {
@@ -68,9 +65,7 @@ export default function Login({ navigation }) {
         <StatusBar style='dark' />
         <Text style={styles.header}>Login</Text>
         <View style={styles.inputFieldView}>
-          <MsgBox type={messageType}>
-            {error && <Text>{error.message}</Text>}
-          </MsgBox>
+          <MsgBox type={messageType}>{message}</MsgBox>
           <View style={styles.spacing}>
             <StyledInputLabel>Email</StyledInputLabel>
             <StyledTextInputField
