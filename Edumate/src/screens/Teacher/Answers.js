@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Platform,
+  ScrollView,
 } from 'react-native'
 import axios from 'axios'
 import { Input } from '../../constants/InputField'
@@ -52,30 +53,27 @@ const { brand, darkLight, primary } = colors
 const API_URL =
   Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
-export const Answers = () => {
-  const [subject, setSubject] = useState('')
-  const [lesson_name, setLesson] = useState('')
-  const [grade, setGrade] = useState('')
-  const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
-  const [link, setLink] = useState('')
+export const Answers = ({navigation}) => {
+  const [answer, setAnswers] = useState([])
+  
   const [teacher_id, setTeacher] = useState('')
 
   const [isError, setIsError] = useState(false)
   const [message, setMessage] = useState('')
 
-  const onChangeHandler = () => {
-    const data = {
-      email,
-      password,
-    }
-
-    const url = `https://edumate-backend.herokuapp.com/link/add`
-    axios.post(url, data).then((res) => {
-      console.log('done')
+  const stream = 'Science'
+  const loadData=()=>{
+    const url = `https://edumate-backend.herokuapp.com/StudentAnswers/getBySubject/${stream}`
+  axios.get(url).then((res) => {
+    setAnswers(res.data)
+    
+      
     })
   }
 
+  useEffect(() => {
+    loadData()
+  },[])
   const getMessage = () => {
     const status = isError ? `Error: ` : `Success: `
     return status + message
@@ -87,24 +85,49 @@ export const Answers = () => {
       <PageTitle>Answers</PageTitle>
       <InnerContainer>
         <View>
-          <TeacherCard>
-            <TeacherCardRow>
-              <TeacherCardColumn>
-                <TeacherDashContent>Subect</TeacherDashContent>
-                <TeacherDashContent>Grade</TeacherDashContent>
-                <TeacherDashContent>Student Id</TeacherDashContent>
-              </TeacherCardColumn>
-              <TeacherCardColumn>
-                <TeacherDashContentButton>
-                  <Octicons size={20} color={darkLight} name='pencil' />
-                </TeacherDashContentButton>
-                <TeacherDashContentButton>
-                  <Octicons size={20} color={darkLight} name='trash' />
-                </TeacherDashContentButton>
-              </TeacherCardColumn>
-            </TeacherCardRow>
-          </TeacherCard>
-
+          <ScrollView>
+            {answer.map((answer) => {
+              return (
+                <>
+                  <TeacherCard>
+                    <TeacherCardRow>
+                      <TeacherCardColumn>
+                        <TeacherDashContent>
+                          Subect : {answer.subject}
+                        </TeacherDashContent>
+                        <TeacherDashContent>
+                          Grade {answer.grade}
+                        </TeacherDashContent>
+                        <TeacherDashContent>
+                          Student Id : {answer.student_id}
+                        </TeacherDashContent>
+                      </TeacherCardColumn>
+                      <TeacherCardColumn>
+                        <TeacherDashContentButton
+                          onPress={() => {
+                            navigation.navigate('PaperMarking', {
+                              id: answer._id,
+                            })
+                          }}
+                        >
+                          <Octicons size={20} color={darkLight} name='pencil' />
+                        </TeacherDashContentButton>
+                        <TeacherDashContentButton>
+                          <Octicons
+                            size={20}
+                            color={darkLight}
+                            name='download'
+                          />
+                        </TeacherDashContentButton>
+                      </TeacherCardColumn>
+                    </TeacherCardRow>
+                  </TeacherCard>
+                </>
+              )
+        
+      })}
+            
+          </ScrollView>
           <View></View>
         </View>
       </InnerContainer>

@@ -36,16 +36,17 @@ import {
 } from '../../constants/styles.js'
 import { StatusBar } from 'expo-status-bar'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import { Picker } from '@react-native-picker/picker'
 
 const { brand, darkLight, primary } = colors
 
 const API_URL =
   Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
-export const UpdateLink = () => {
+export const UpdateLink = ({ route, navigation }) => {
   const [subject, setSubject] = useState('')
   const [lesson_name, setLesson] = useState('')
-  const [grade, setGrade] = useState('')
+  const [grade, setGrade] = useState()
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
   const [link, setLink] = useState('')
@@ -53,15 +54,41 @@ export const UpdateLink = () => {
 
   const [isError, setIsError] = useState(false)
   const [message, setMessage] = useState('')
+  const { id } = route.params
 
-  const onChangeHandler = () => {
-    const data = {
-      email,
-      password,
-    }
+  // const id = '636cbe0453ef6c69dc31e041'
 
-    const url = `https://edumate-backend.herokuapp.com/link/add`
-    axios.post(url, data).then((res) => {
+  const loadLink = async () => {
+    const url = `https://edumate-backend.herokuapp.com/link/${id}`
+    axios.get(url).then((res) => {
+      setSubject(res.data.subject)
+      setLesson(res.data.lesson_name)
+      setGrade(res.data.grade)
+      setDate(res.data.date)
+      setTime(res.data.time)
+      setLink(res.data.link)
+      console.log(res.data)
+    })
+  }
+
+  useEffect(() => {
+    loadLink()
+  }, [])
+
+  const data = {
+    subject,
+    lesson_name,
+    grade,
+    date,
+    time,
+    link,
+    teacher_id: '516',
+  }
+
+  const onChangeHandler = (e) => {
+    e.preventDefault()
+    const url = `https://edumate-backend.herokuapp.com/link/${id}`
+    axios.put(url, data).then((res) => {
       console.log('done')
     })
   }
@@ -80,27 +107,29 @@ export const UpdateLink = () => {
           <View>
             <InputCd
               placeholder='Subject'
+              disabled
               placeholderTextColor={darkLight}
-              // onChangeText={}
               value={subject}
             />
             <InputCd
               placeholder='Lesson name'
               placeholderTextColor={darkLight}
+              onChangeText={(lesson_name) => setLesson(lesson_name)}
               value={lesson_name}
             />
-            <InputCd
-              type='number'
-              placeholder='Grade'
-              placeholderTextColor={darkLight}
-              value={grade}
-              keyboardType='numeric'
-            />
+            <Picker
+              selectedValue={grade}
+              onValueChange={(itemValue, itemIndex) => setGrade(itemValue)}
+            >
+              <Picker.Item label='12 Grade' value={12} />
+              <Picker.Item label='13 Grade' value={13} />
+            </Picker>
             <InputCd
               type='date'
               icon='calendar'
               placeholder='Date'
               placeholderTextColor={darkLight}
+              onChangeText={(date) => setDate(date)}
               value={date}
             />
             <InputCd
@@ -108,15 +137,17 @@ export const UpdateLink = () => {
               icon='clock'
               placeholder='Time'
               placeholderTextColor={darkLight}
+              onChangeText={(time) => setTime(time)}
               value={time}
             />
             <InputCd
               icon='link'
               placeholder='Link'
               placeholderTextColor={darkLight}
+              onChangeText={(link) => setLink(link)}
               value={link}
             />
-            <StyledButton>
+            <StyledButton onPress={onChangeHandler}>
               <ButtonText>Update</ButtonText>
             </StyledButton>
           </View>

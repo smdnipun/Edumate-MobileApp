@@ -312,3 +312,14 @@ export const TeacherDashContentButton = styled.TouchableOpacity`
   flex: 1px;
   right: 50px;
 `
+export const StyledTextInputComment = styled.TextInput`
+  background-color: ${secondary};
+  padding-left: 60px;
+  padding-right: 55px;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 270;
+  height: 200px;
+  margin-bottom: 70px;
+  color: ${tertiary};
+`

@@ -1,7 +1,8 @@
 import React from 'react'
+import { Text } from 'react-native'
 
 export const Comment= () => {
   return (
-    <div>Comments</div>
+    <Text>Comments</Text>
   )
 }

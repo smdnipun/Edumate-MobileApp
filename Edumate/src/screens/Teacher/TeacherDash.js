@@ -53,15 +53,15 @@ const { brand, darkLight, primary } = colors
 const API_URL =
   Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
-export const TeacherDash = () => {
+export const TeacherDash = ({ navigation }) => {
   const [link, setlink] = useState([])
   const [note, setNote] = useState([])
 
   const [isError, setIsError] = useState(false)
   const [message, setMessage] = useState('')
-
+  const userId = '632fca23dd30b18d46c4bccd'
   const loadNotes = async () => {
-    const url = `https://edumate-backend.herokuapp.com/teacherNote/get`
+    const url = `https://edumate-backend.herokuapp.com/teacherNote/get/${userId}`
     await axios.get(url).then((res) => {
       setNote(res.data)
     })
@@ -74,8 +74,19 @@ export const TeacherDash = () => {
   }
   useEffect(() => {
     loadLinks()
+  }, [])
+
+  useEffect(() => {
     loadNotes()
-  })
+  }, [])
+
+  const deleteNote = (id) => {
+    axios.delete(`https://edumate-backend.herokuapp.com/teacherNote/${id}`)
+  }
+
+  const deleteLink = (id) => {
+    axios.delete(`https://edumate-backend.herokuapp.com/link/${id}`)
+  }
 
   const getMessage = () => {
     const status = isError ? `Error: ` : `Success: `
@@ -97,41 +108,47 @@ export const TeacherDash = () => {
           <ScrollView>
             {note.map((notes) => {
               return (
-                <>
-                  <TeacherCard id={notes._id}>
-                    <TeacherCardRow>
-                      <TeacherCardColumn>
-                        <TeacherDashContent>
-                          subect : {notes.subject}
-                        </TeacherDashContent>
-                        <TeacherDashContent>
-                          Lesson : {notes.lesson_name}
-                        </TeacherDashContent>
-                        <TeacherDashContent>
-                          grade : {notes.grade}
-                        </TeacherDashContent>
-                        <TeacherDashContent>
-                          note : {notes.note}
-                        </TeacherDashContent>
-                      </TeacherCardColumn>
-                      <TeacherCardColumn>
-                        <TeacherDashContentButton>
-                          <Octicons
-                            size={20}
-                            color={darkLight}
-                            name='comment'
-                          />
-                        </TeacherDashContentButton>
-                        <TeacherDashContentButton>
-                          <Octicons size={20} color={darkLight} name='pencil' />
-                        </TeacherDashContentButton>
-                        <TeacherDashContentButton>
-                          <Octicons size={20} color={darkLight} name='trash' />
-                        </TeacherDashContentButton>
-                      </TeacherCardColumn>
-                    </TeacherCardRow>
-                  </TeacherCard>
-                </>
+                <TeacherCard>
+                  <TeacherCardRow>
+                    <TeacherCardColumn>
+                      <TeacherDashContent>
+                        subect : {notes.subject}
+                      </TeacherDashContent>
+                      <TeacherDashContent>
+                        Lesson : {notes.lesson_name}
+                      </TeacherDashContent>
+                      <TeacherDashContent>
+                        grade : {notes.grade}
+                      </TeacherDashContent>
+                      <TeacherDashContent>
+                        note : {notes.note}
+                      </TeacherDashContent>
+                    </TeacherCardColumn>
+                    <TeacherCardColumn>
+                      <TeacherDashContentButton
+                        onPress={() => {
+                          navigation.navigate('Comments')
+                        }}
+                      >
+                        <Octicons size={20} color={darkLight} name='comment' />
+                      </TeacherDashContentButton>
+                      <TeacherDashContentButton
+                        onPress={() => {
+                          navigation.navigate('UpdateNote')
+                        }}
+                      >
+                        <Octicons size={20} color={darkLight} name='pencil' />
+                      </TeacherDashContentButton>
+                      <TeacherDashContentButton
+                        onPress={() => {
+                          deleteNote(note._id)
+                        }}
+                      >
+                        <Octicons size={20} color={darkLight} name='trash' />
+                      </TeacherDashContentButton>
+                    </TeacherCardColumn>
+                  </TeacherCardRow>
+                </TeacherCard>
               )
             })}
           </ScrollView>
@@ -169,10 +186,18 @@ export const TeacherDash = () => {
                         </TeacherDashContent>
                       </TeacherCardColumn>
                       <TeacherCardColumn>
-                        <TeacherDashContentButton>
+                        <TeacherDashContentButton
+                          onPress={() => {
+                            navigation.navigate('UpdateLink',{id:links._id})
+                          }}
+                        >
                           <Octicons size={20} color={darkLight} name='pencil' />
                         </TeacherDashContentButton>
-                        <TeacherDashContentButton>
+                        <TeacherDashContentButton
+                          onPress={() => {
+                            deleteLink(links._id)
+                          }}
+                        >
                           <Octicons size={20} color={darkLight} name='trash' />
                         </TeacherDashContentButton>
                       </TeacherCardColumn>

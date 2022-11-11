@@ -6,9 +6,12 @@ import {
   ProfileScreen,
   RootStack,
 } from './src/components/RootStack'
+import { TeacherStack } from './src/components/TeacherStack'
 import FirstSrn from './src/screens/Common/FirstSrn'
 import { Login } from './src/screens/Common/Login'
+import { Answers } from './src/screens/Teacher/Answers'
 import { TeacherDash } from './src/screens/Teacher/TeacherDash'
+import { UpdateLink } from './src/screens/Teacher/UpdateLink'
 import { UploadLink } from './src/screens/Teacher/UploadLink'
 import { UploadNote } from './src/screens/Teacher/UploadNote'
 

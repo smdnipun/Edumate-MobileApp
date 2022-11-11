@@ -36,14 +36,12 @@ import {
 } from '../../constants/styles.js'
 import { StatusBar } from 'expo-status-bar'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import { Picker } from '@react-native-picker/picker'
 
 const { brand, darkLight, primary } = colors
 
-const API_URL =
-  Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
-
 export const UploadLink = () => {
-  const [subject, setSubject] = useState('')
+  const [subject, setSubject] = useState([])
   const [lesson_name, setLesson] = useState('')
   const [grade, setGrade] = useState('')
   const [date, setDate] = useState('')
@@ -61,17 +59,31 @@ export const UploadLink = () => {
     date,
     time,
     link,
-    teacher_id:'515'
+    teacher_id: '515',
   }
+ 
+  const userStream = 'Science'
+  const loadSubject = () => {
+    axios
+      .post('https://edumate-backend.herokuapp.com/subject/stream', {
+        streamname: userStream,
+      })
+      .then((res) => {
+        setSubject(res.data)
+        console.log(res.data)
+      })
+  }
+
+  useEffect(() => {
+    loadSubject()
+  }, [])
 
   console.log(data)
   const onChangeHandler = () => {
-    
-
     const url = `https://edumate-backend.herokuapp.com/link/add`
     axios.post(url, data).then((res) => {
       console.log('done')
-      alert("Link added")
+      alert('Link added')
     })
   }
 
@@ -87,26 +99,32 @@ export const UploadLink = () => {
       <InnerContainer>
         <View>
           <View>
-            <InputCd
-              placeholder='Subject'
-              placeholderTextColor={darkLight}
-              onChangeText={(subect) => setSubject(subect)}
-              value={subject}
-            />
+            <Picker
+              selectedValue={grade}
+              onValueChange={(itemValue, itemIndex) => setSubject(itemValue)}
+            >
+              {subject.map((sub) => {
+                return (
+                  <Picker.Item
+                    label={sub.subjectname}
+                    value={sub.subjectname}
+                  />
+                )
+              })}
+            </Picker>
             <InputCd
               placeholder='Lesson name'
               placeholderTextColor={darkLight}
               onChangeText={(lesson_name) => setLesson(lesson_name)}
               value={lesson_name}
             />
-            <InputCd
-              type='number'
-              placeholder='Grade'
-              placeholderTextColor={darkLight}
-              onChangeText={(grade) => setGrade(grade)}
-              value={grade}
-              keyboardType='numeric'
-            />
+            <Picker
+              selectedValue={grade}
+              onValueChange={(itemValue, itemIndex) => setGrade(itemValue)}
+            >
+              <Picker.Item label='12 Grade' value={12} />
+              <Picker.Item label='13 Grade' value={13} />
+            </Picker>
             <InputCd
               type='date'
               icon='calendar'

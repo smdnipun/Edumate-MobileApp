@@ -38,6 +38,7 @@ import {
 } from '../../constants/styles.js'
 import { StatusBar } from 'expo-status-bar'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import { Picker } from '@react-native-picker/picker'
 
 const { brand, darkLight, primary } = colors
 
@@ -47,10 +48,7 @@ const API_URL =
 export const UpdateNote = () => {
   const [subject, setSubject] = useState('')
   const [lesson_name, setLesson] = useState('')
-  const [grade, setGrade] = useState('')
-  const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
-  const [link, setLink] = useState('')
+  const [grade, setGrade] = useState()
   const [teacher_id, setTeacher] = useState('')
 
   const [isError, setIsError] = useState(false)
@@ -83,21 +81,23 @@ export const UpdateNote = () => {
             <InputCd
               placeholder='Subject'
               placeholderTextColor={darkLight}
+              onChangeText={(subect) => setSubject(subect)}
               // onChangeText={}
               value={subject}
             />
             <InputCd
               placeholder='Lesson name'
               placeholderTextColor={darkLight}
+              onChangeText={(lesson_name) => setLesson(lesson_name)}
               value={lesson_name}
             />
-            <InputCd
-              type='number'
-              placeholder='Grade'
-              placeholderTextColor={darkLight}
-              value={grade}
-              keyboardType='numeric'
-            />
+            <Picker
+              selectedValue={grade}
+              onValueChange={(itemValue, itemIndex) => setGrade(itemValue)}
+            >
+              <Picker.Item label='12 Grade' value={12} />
+              <Picker.Item label='13 Grade' value={13} />
+            </Picker>
             <UploadButton>
               <UploadingButton>
                 <Octicons size={30} color={brand} name='upload' />

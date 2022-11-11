@@ -53,17 +53,25 @@ export const UploadNote = () => {
 
   const [isError, setIsError] = useState(false)
   const [message, setMessage] = useState('')
-  const data = {
-    subject,
-    lesson_name,
-    grade,
-    note: '21343',
-    teacher_id: '34354',
-  }
-  console.log(data)
+
+  const userId='123465'
+  const formData = new FormData()
+
+    const noteAdd = (e) => {
+      setNote(e.target.files[0])
+    }
+
+  formData.append('lesson_name', lesson_name)
+  formData.append('file', note)
+  formData.append('subject', subject)
+  formData.append('grade', grade)
+  formData.append('teacher_id', userId)
+
+
+  console.log(formData)
   const onChangeHandler = () => {
     const url = `https://edumate-backend.herokuapp.com/teacherNote/add`
-    axios.post(url, data).then((res) => {
+    axios.post(url, formData).then((res) => {
       console.log('done')
     })
   }
@@ -104,12 +112,11 @@ export const UploadNote = () => {
               onChangeText={(grade) => setGrade(grade)}
               keyboardType='numeric'
             />
-            <UploadButton>
-              <UploadingButton>
-                <Octicons size={30} color={brand} name='upload' />
-                <ButtonTextWhite>Upload File Here</ButtonTextWhite>
-              </UploadingButton>
-            </UploadButton>
+            <File>
+             
+               filename='file' onChange={noteAdd}
+              className='form-input'
+            </File>
             <StyledButton onPress={onChangeHandler}>
               <ButtonText>Upload</ButtonText>
             </StyledButton>
