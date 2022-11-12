@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, DrawerLayoutAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
@@ -51,11 +51,6 @@ export default function Profile({ navigation }) {
       .catch((err) => {
         console.log(err)
       })
-  }
-
-  const Logout = () => {
-    AsyncStorage.removeItem('user')
-    navigation.navigate("Login")
   }
 
   return (
@@ -134,9 +129,6 @@ export default function Profile({ navigation }) {
           </View>
           <StyledButton onPress={deleteProfile}>
             <ButtonText>Delete Profile</ButtonText>
-          </StyledButton>
-          <StyledButton onPress={Logout}>
-            <ButtonText>Logout</ButtonText>
           </StyledButton>
         </View>
       </View>

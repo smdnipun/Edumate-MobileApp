@@ -14,18 +14,9 @@ import { UpdateLink } from './src/screens/Teacher/UpdateLink'
 
 export default function App() {
   return (
-    // <Title/>
-    // <Home/>
-    // <StudentSubject/>
-    // <StudentNotes/>
-    // <StudentFeedback/>
-    // <StudentComment/>
-    // <RootStack />
-    // <StduentAnswerSheetUpload/>
-    // <Upload/>
-    // <UploadLink/>
-    <TeacherStack/>
-    // <UpdateProfile/>
+    <>
+    <RootStack />
+    </>
   )
 }
 
