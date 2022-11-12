@@ -16,6 +16,7 @@ import { StudentNotes } from './src/screens/student/StudentNotes'
 import { StudentFeedback } from './src/screens/student/StudentFeedback'
 import { StudentComment } from './src/screens/student/StudentComment'
 import { StduentAnswerSheetUpload } from './src/screens/student/StduentAnswerSheetUpload'
+import { Upload } from './src/screens/student/Upload'
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
     // <StudentFeedback/>
     // <StudentComment/>
     <StduentAnswerSheetUpload/>
+    // <Upload/>
     
   )}
 
