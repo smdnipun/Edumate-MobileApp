@@ -14,6 +14,7 @@ import ResetPassword from './src/screens/Common/ResetPassword'
 import UpdateProfile from './src/screens/Common/UpdateProfile'
 import { Answers } from './src/screens/Teacher/Answers'
 import { TeacherDash } from './src/screens/Teacher/TeacherDash'
+import { Test } from './src/screens/Teacher/Test'
 import { UpdateLink } from './src/screens/Teacher/UpdateLink'
 import { UploadLink } from './src/screens/Teacher/UploadLink'
 import { UploadNote } from './src/screens/Teacher/UploadNote'
@@ -35,7 +36,7 @@ export default function App() {
     // <RootStack/>
     // <Profile />
     // <UpdateProfile/>
-    <ResetPassword/>
+    <TeacherStack/>
     // <UploadLink/>
   )
 }
