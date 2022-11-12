@@ -1,67 +1,71 @@
 import React, { useEffect, useState } from 'react'
-import {
-  ImageBackground,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Platform,
-} from 'react-native'
+import { View, Button } from 'react-native'
 import axios from 'axios'
-import { Input } from '../../constants/InputField'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   StyledContainer,
   InnerContainer,
-  PageLogo,
   PageTitle,
-  SubTitle,
-  StyledFormArea,
-  LeftIcon,
   RightIcon,
   StyledInputLabel,
   StyledButton,
   ButtonText,
   StyledTextInput,
   colors,
-  MsgBox,
-  Line,
-  ExtraView,
-  ExtraText,
-  TextLink,
-  TextLinkContent,
-  StyledButtoWhite,
-  ButtonTextWhite,
 } from '../../constants/styles.js'
 import { StatusBar } from 'expo-status-bar'
-import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import { Octicons } from '@expo/vector-icons'
 import { Picker } from '@react-native-picker/picker'
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 
 const { brand, darkLight, primary } = colors
 
 export const UploadLink = () => {
   const [subject, setSubject] = useState([])
+  const [selectedSubject, setSelectedSubject] = useState('')
   const [lesson_name, setLesson] = useState('')
   const [grade, setGrade] = useState('')
-  const [date, setDate] = useState('')
+  const [date, setDate] = useState(new Date())
   const [time, setTime] = useState('')
   const [link, setLink] = useState('')
   const [teacher_id, setTeacher] = useState('')
 
-  const [isError, setIsError] = useState(false)
-  const [message, setMessage] = useState('')
+  const validateDate = date
+  var linkDate = validateDate.toLocaleDateString('en-GB')
+
+  var linkTime = validateDate.toLocaleTimeString('en-GB')
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate
+    setDate(currentDate)
+  }
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+    })
+  }
+
+  const showDatepicker = () => {
+    showMode('date')
+  }
+
+  const showTimepicker = () => {
+    showMode('time')
+  }
 
   const data = {
-    subject,
+    subject:selectedSubject,
     lesson_name,
     grade,
-    date,
-    time,
+    date:linkDate,
+    time:linkTime,
     link,
     teacher_id: '515',
   }
- 
+  console.log(data)
+
   const userStream = 'Science'
   const loadSubject = () => {
     axios
@@ -70,7 +74,7 @@ export const UploadLink = () => {
       })
       .then((res) => {
         setSubject(res.data)
-        console.log(res.data)
+        // console.log(res.data)
       })
   }
 
@@ -78,18 +82,13 @@ export const UploadLink = () => {
     loadSubject()
   }, [])
 
-  console.log(data)
+
   const onChangeHandler = () => {
     const url = `https://edumate-backend.herokuapp.com/link/add`
     axios.post(url, data).then((res) => {
       console.log('done')
       alert('Link added')
     })
-  }
-
-  const getMessage = () => {
-    const status = isError ? `Error: ` : `Success: `
-    return status + message
   }
 
   return (
@@ -100,8 +99,8 @@ export const UploadLink = () => {
         <View>
           <View>
             <Picker
-              selectedValue={grade}
-              onValueChange={(itemValue, itemIndex) => setSubject(itemValue)}
+              selectedValue={subject}
+              onValueChange={(itemValue, itemIndex) => setSelectedSubject(itemValue)}
             >
               {subject.map((sub) => {
                 return (
@@ -130,17 +129,21 @@ export const UploadLink = () => {
               icon='calendar'
               placeholder='Date'
               placeholderTextColor={darkLight}
-              onChangeText={(date) => setDate(date)}
-              value={date}
+              command={showDatepicker}
+              // onChangeText={(date) => setDate(date)}
+              value={date.toLocaleDateString()}
             />
+
             <InputCd
               type='time'
               icon='clock'
               placeholder='Time'
               placeholderTextColor={darkLight}
-              onChangeText={(time) => setTime(time)}
-              value={time}
+              command={showTimepicker}
+              // onChangeText={(time) => setTime(time)}
+              value={date.toLocaleTimeString()}
             />
+
             <InputCd
               icon='link'
               placeholder='Link'
@@ -158,12 +161,12 @@ export const UploadLink = () => {
   )
 }
 
-export const InputCd = ({ label, icon, ...props }) => {
+export const InputCd = ({ label, icon, command, ...props }) => {
   return (
     <View>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextInput {...props} />
-      <RightIcon>
+      <RightIcon onPress={command}>
         <Octicons name={icon} size={30} color={brand} />
       </RightIcon>
     </View>
