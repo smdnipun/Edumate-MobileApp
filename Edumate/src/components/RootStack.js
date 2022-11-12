@@ -7,8 +7,14 @@ import Login from '../screens/Common/Login'
 import FirstSrn from '../screens/Common/FirstSrn'
 import { colors } from '../constants/styles'
 import SignUp from '../screens/Common/SignUp'
+import Profile from '../screens/Common/Profile'
 import SignUpSelection from '../screens/Common/SignUpSelection'
-const { tertiary, primary } = colors
+import { UploadLink } from '../screens/Teacher/UploadLink'
+import { UploadNote } from '../screens/Teacher/UploadNote'
+import { UpdateLink } from '../screens/Teacher/UpdateLink'
+import { UpdateNote } from '../screens/Teacher/UpdateNote'
+import { Comment } from '../screens/Teacher/Comments'
+import UserStack from './UserStack'
 
 const Stack = createNativeStackNavigator()
 
@@ -40,15 +46,50 @@ export const RootStack = () => {
             }}
           />
           <Stack.Screen
-            name='SingUpSelection'
-            component={SignUpSelection}
+            name='SingUp'
+            component={SignUp}
             options={{
               headerShown: false,
             }}
           />
           <Stack.Screen
-            name='SingUp'
-            component={SignUp}
+            name='User'
+            component={UserStack}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='UploadLink'
+            component={UploadLink}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='UploadNote'
+            component={UploadNote}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='UpdateLink'
+            component={UpdateLink}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='UpdateNote'
+            component={UpdateNote}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='Comments'
+            component={Comment}
             options={{
               headerShown: false,
             }}
@@ -57,16 +98,4 @@ export const RootStack = () => {
       </NavigationContainer>
     </>
   )
-}
-
-export const HomeScreen = ({ navigation }) => {
-  return (
-    <Button
-      title="Go to Jane's profile"
-      onPress={() => navigation.navigate('Profile', { name: 'Jane' })}
-    />
-  )
-}
-export const ProfileScreen = ({ navigation, route }) => {
-  return <Text>This is {route.params.name}'s profile</Text>
 }

@@ -2,14 +2,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Home } from './src/screens/student/Home'
-import Title from './src/screens/test'
-import {
-  HomeScreen,
-  ProfileScreen,
-  RootStack,
-} from './src/components/RootStack'
-import FirstSrn from './src/screens/Common/FirstSrn'
-import { Login } from './src/screens/Common/Login'
+import { RootStack } from './src/components/RootStack'
 import { UploadLink } from './src/screens/Teacher/UploadLink'
 import { StudentSubject } from './src/screens/student/StudentSubject'
 import { StudentNotes } from './src/screens/student/StudentNotes'
@@ -25,11 +18,10 @@ export default function App() {
     // <StudentNotes/>
     // <StudentFeedback/>
     // <StudentComment/>
-    <StduentAnswerSheetUpload/>
-    
-  )}
-
-
+    <StduentAnswerSheetUpload />
+    // <RootStack />
+  )
+}
 
 // const styles = StyleSheet.create({
 //   container: {
