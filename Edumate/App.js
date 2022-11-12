@@ -10,7 +10,6 @@ import { StudentFeedback } from './src/screens/student/StudentFeedback'
 import { StudentComment } from './src/screens/student/StudentComment'
 import { StduentAnswerSheetUpload } from './src/screens/student/StduentAnswerSheetUpload'
 
-
 export default function App() {
   return (
     // <Title/>
@@ -19,10 +18,11 @@ export default function App() {
     // <StudentNotes/>
     // <StudentFeedback/>
     // <StudentComment/>
-// <RootStack /> 
-    <StduentAnswerSheetUpload/> 
+    <RootStack />
+    // <StduentAnswerSheetUpload/>
     // <Upload/>
-  )}
+  )
+}
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -42,4 +42,3 @@ export default function App() {
 //     marginHorizontal: 15,
 //   },
 // })
-
