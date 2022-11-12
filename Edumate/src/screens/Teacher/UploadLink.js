@@ -1,74 +1,94 @@
 import React, { useEffect, useState } from 'react'
-import {
-  ImageBackground,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Platform,
-} from 'react-native'
+import { View, Button } from 'react-native'
 import axios from 'axios'
-import { Input } from '../../constants/InputField'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   StyledContainer,
   InnerContainer,
-  PageLogo,
   PageTitle,
-  SubTitle,
-  StyledFormArea,
-  LeftIcon,
   RightIcon,
   StyledInputLabel,
   StyledButton,
   ButtonText,
   StyledTextInput,
   colors,
-  MsgBox,
-  Line,
-  ExtraView,
-  ExtraText,
-  TextLink,
-  TextLinkContent,
-  StyledButtoWhite,
-  ButtonTextWhite,
 } from '../../constants/styles.js'
 import { StatusBar } from 'expo-status-bar'
-import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import { Octicons } from '@expo/vector-icons'
+import { Picker } from '@react-native-picker/picker'
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 
 const { brand, darkLight, primary } = colors
 
-const API_URL =
-  Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
-
 export const UploadLink = () => {
-  const [subject, setSubject] = useState('')
+  const [subject, setSubject] = useState([])
+  const [selectedSubject, setSelectedSubject] = useState('')
   const [lesson_name, setLesson] = useState('')
   const [grade, setGrade] = useState('')
-  const [date, setDate] = useState('')
+  const [date, setDate] = useState(new Date())
   const [time, setTime] = useState('')
   const [link, setLink] = useState('')
   const [teacher_id, setTeacher] = useState('')
 
-  const [isError, setIsError] = useState(false)
-  const [message, setMessage] = useState('')
+  const validateDate = date
+  var linkDate = validateDate.toLocaleDateString('en-GB')
 
-  const onChangeHandler = () => {
-    const data = {
-      email,
-      password,
-    }
+  var linkTime = validateDate.toLocaleTimeString('en-GB')
 
-    const url = `https://edumate-backend.herokuapp.com/link/add`
-    axios.post(url, data).then((res) => {
-      console.log('done')
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate
+    setDate(currentDate)
+  }
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
     })
   }
 
-  const getMessage = () => {
-    const status = isError ? `Error: ` : `Success: `
-    return status + message
+  const showDatepicker = () => {
+    showMode('date')
+  }
+
+  const showTimepicker = () => {
+    showMode('time')
+  }
+
+  const data = {
+    subject:selectedSubject,
+    lesson_name,
+    grade,
+    date:linkDate,
+    time:linkTime,
+    link,
+    teacher_id: '515',
+  }
+  console.log(data)
+
+  const userStream = 'Science'
+  const loadSubject = () => {
+    axios
+      .post('https://edumate-backend.herokuapp.com/subject/stream', {
+        streamname: userStream,
+      })
+      .then((res) => {
+        setSubject(res.data)
+        // console.log(res.data)
+      })
+  }
+
+  useEffect(() => {
+    loadSubject()
+  }, [])
+
+
+  const onChangeHandler = () => {
+    const url = `https://edumate-backend.herokuapp.com/link/add`
+    axios.post(url, data).then((res) => {
+      console.log('done')
+      alert('Link added')
+    })
   }
 
   return (
@@ -78,44 +98,60 @@ export const UploadLink = () => {
       <InnerContainer>
         <View>
           <View>
-            <InputCd
-              placeholder='Subject'
-              placeholderTextColor={darkLight}
-              value={subject}
-            />
+            <Picker
+              selectedValue={subject}
+              onValueChange={(itemValue, itemIndex) => setSelectedSubject(itemValue)}
+            >
+              {subject.map((sub) => {
+                return (
+                  <Picker.Item
+                    label={sub.subjectname}
+                    value={sub.subjectname}
+                  />
+                )
+              })}
+            </Picker>
             <InputCd
               placeholder='Lesson name'
               placeholderTextColor={darkLight}
+              onChangeText={(lesson_name) => setLesson(lesson_name)}
               value={lesson_name}
             />
-            <InputCd
-              type='number'
-              placeholder='Grade'
-              placeholderTextColor={darkLight}
-              value={grade}
-              keyboardType='numeric'
-            />
+            <Picker
+              selectedValue={grade}
+              onValueChange={(itemValue, itemIndex) => setGrade(itemValue)}
+            >
+              <Picker.Item label='12 Grade' value={12} />
+              <Picker.Item label='13 Grade' value={13} />
+            </Picker>
             <InputCd
               type='date'
               icon='calendar'
               placeholder='Date'
               placeholderTextColor={darkLight}
-              value={date}
+              command={showDatepicker}
+              // onChangeText={(date) => setDate(date)}
+              value={date.toLocaleDateString()}
             />
+
             <InputCd
               type='time'
               icon='clock'
               placeholder='Time'
               placeholderTextColor={darkLight}
-              value={time}
+              command={showTimepicker}
+              // onChangeText={(time) => setTime(time)}
+              value={date.toLocaleTimeString()}
             />
+
             <InputCd
               icon='link'
               placeholder='Link'
               placeholderTextColor={darkLight}
+              onChangeText={(link) => setLink(link)}
               value={link}
             />
-            <StyledButton>
+            <StyledButton onPress={onChangeHandler}>
               <ButtonText>Upload</ButtonText>
             </StyledButton>
           </View>
@@ -125,12 +161,12 @@ export const UploadLink = () => {
   )
 }
 
-export const InputCd = ({ label, icon, ...props }) => {
+export const InputCd = ({ label, icon, command, ...props }) => {
   return (
     <View>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextInput {...props} />
-      <RightIcon>
+      <RightIcon onPress={command}>
         <Octicons name={icon} size={30} color={brand} />
       </RightIcon>
     </View>
