@@ -2,7 +2,6 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import {
-  InnerContainer,
   colors,
   StyledTextInputField,
   StyledInputLabel,
@@ -20,7 +19,7 @@ AsyncStorage.getItem('user').then((value) => {
   userId = value
 })
 
-export default function UpdateProfile() {
+export default function UpdateProfile({navigation}) {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
@@ -58,6 +57,7 @@ export default function UpdateProfile() {
         .put(`https://edumate-backend.herokuapp.com/api/users/${userId}`, data)
         .then((res) => {
           alert('Profile successfully updated')
+          navigation.navigate("Profile")
         })
         .catch((err) => {
           console.log(err)
@@ -110,7 +110,7 @@ export default function UpdateProfile() {
               <StyledTextInputField
                 placeholder='Date Of Birth'
                 placeholderTextColor={darkLight}
-                onChangeText={(dob) => setEmail(dob)}
+                onChangeText={(dob) => setDob(dob)}
                 value={dob}
               />
             </View>

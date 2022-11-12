@@ -141,6 +141,7 @@ export const StyledTextInputField = styled.TextInput`
   margin-bottom: 10px;
   border: 2px;
 `
+
 export const StyledTextInputCard = styled.TextInput`
   background-color: ${secondary};
   padding-left: 15px;

@@ -8,7 +8,6 @@ import {
   ButtonText,
   ExtraView,
   TextLinkContent,
-  TextLink,
   ExtraText,
   StyledTextInputField,
   StyledInputLabel,
@@ -18,6 +17,11 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const { darkLight, black } = colors
+
+var userId = ''
+AsyncStorage.getItem('user').then((value) => {
+  userId = value
+})
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('')
@@ -44,9 +48,9 @@ export default function Login({ navigation }) {
           const result = res.data.details
           AsyncStorage.setItem('user', result._id)
           if (result.type == 'student' || result.type == 'Student') {
-            navigation.navigate('Profile')
+            navigation.replace('User')
           } else if (result.type == 'teacher' || result.type == 'Teacher') {
-            navigation.navigate('Profile')
+            navigation.replace('User')
           } else {
             alert('Please try again!!!')
           }

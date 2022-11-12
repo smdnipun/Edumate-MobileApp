@@ -14,7 +14,7 @@ import { UploadNote } from '../screens/Teacher/UploadNote'
 import { UpdateLink } from '../screens/Teacher/UpdateLink'
 import { UpdateNote } from '../screens/Teacher/UpdateNote'
 import { Comment } from '../screens/Teacher/Comments'
-const { tertiary, primary } = colors
+import UserStack from './UserStack'
 
 const Stack = createNativeStackNavigator()
 
@@ -53,8 +53,8 @@ export const RootStack = () => {
             }}
           />
           <Stack.Screen
-            name='Profile'
-            component={Profile}
+            name='User'
+            component={UserStack}
             options={{
               headerShown: false,
             }}

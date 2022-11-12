@@ -11,7 +11,7 @@ import {
 } from '../../constants/styles'
 import { StatusBar } from 'expo-status-bar'
 import axios from 'axios'
-const { primary, black } = colors
+const { primary } = colors
 
 var userId = ''
 AsyncStorage.getItem('user').then((value) => {
@@ -42,7 +42,6 @@ export default function Profile({ navigation }) {
   }
 
   const deleteProfile = async () => {
-    AsyncStorage.removeItem('user')
     await axios
       .delete(`https://edumate-backend.herokuapp.com/api/users/${userId}`)
       .then(() => {
@@ -54,6 +53,11 @@ export default function Profile({ navigation }) {
       })
   }
 
+  const Logout = () => {
+    AsyncStorage.removeItem('user')
+    navigation.navigate("Login")
+  }
+
   return (
     <>
       <View style={styles.page}>
@@ -63,7 +67,7 @@ export default function Profile({ navigation }) {
             source={require('../../../assets/Teacher.png')}
             style={styles.buttonImageIconStyle}
           />
-          <Text style={{ fontSize: 35 }}>
+          <Text style={{ fontSize: 28 }}>
             {name == '' ? 'John Smith' : name}
           </Text>
         </ProfileInnerContainer>
@@ -110,18 +114,29 @@ export default function Profile({ navigation }) {
           </View>
           <View style={styles.tagOuterView}>
             <View style={styles.tagInnerView}>
-              <StyledButtoWhite onPress={() => {}}>
+              <StyledButtoWhite
+                onPress={() => {
+                  navigation.navigate('UpdateDetails')
+                }}
+              >
                 <ButtonTextWhite>Update Details</ButtonTextWhite>
               </StyledButtoWhite>
             </View>
             <View style={styles.tagInnerView}>
-              <StyledButtoWhite onPress={() => {}}>
+              <StyledButtoWhite
+                onPress={() => {
+                  navigation.navigate('UpdatePassword')
+                }}
+              >
                 <ButtonTextWhite>Reset Password</ButtonTextWhite>
               </StyledButtoWhite>
             </View>
           </View>
           <StyledButton onPress={deleteProfile}>
             <ButtonText>Delete Profile</ButtonText>
+          </StyledButton>
+          <StyledButton onPress={Logout}>
+            <ButtonText>Logout</ButtonText>
           </StyledButton>
         </View>
       </View>

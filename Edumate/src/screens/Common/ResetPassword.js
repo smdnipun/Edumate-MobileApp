@@ -52,7 +52,6 @@ export default function ResetPassword() {
             data
           )
           .then((res) => {
-            console.log(res)
             if (res.data === 'Password Reset') {
               alert('Password Updated Successfully')
             } else if (res.data.message === 'Wrong Password') {

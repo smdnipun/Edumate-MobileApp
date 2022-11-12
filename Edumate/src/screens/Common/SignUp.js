@@ -21,8 +21,8 @@ import {
   InnerContainer,
   MsgBox,
 } from '../../constants/styles'
-import { AsyncStorage } from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import { Picker } from '@react-native-picker/picker'
 
 const { darkLight, black } = colors
 
@@ -35,9 +35,20 @@ export default function SignUp({ navigation }) {
   const [stream, setStream] = useState('')
   const [password, setPassword] = useState('')
   const [rpassword, setrPassword] = useState('')
+  const [subject, setSubject] = useState([])
 
   const [message, setMessage] = useState()
   const [messageType, setMessageType] = useState()
+
+  const loadSubject = () => {
+    axios.get('https://edumate-backend.herokuapp.com/stream').then((res) => {
+      setSubject(res.data)
+    })
+  }
+
+  useEffect(() => {
+    loadSubject()
+  }, [])
 
   const handleSubmit = async () => {
     handleMessage(null)
@@ -66,7 +77,6 @@ export default function SignUp({ navigation }) {
           .post('https://edumate-backend.herokuapp.com/api/auth/register', data)
           .then((res) => {
             const result = res.data
-            console.log(res)
             if (res.data === 'Created') {
               alert('Successfully Registered')
               navigation.navigate('Login')
@@ -166,12 +176,30 @@ export default function SignUp({ navigation }) {
               </View>
               <View style={styles.spacing}>
                 <StyledInputLabel>Stream</StyledInputLabel>
-                <StyledTextInputField
+                {/* <StyledTextInputField
                   placeholder='Choose'
                   placeholderTextColor={darkLight}
                   onChangeText={(stream) => setStream(stream)}
                   value={stream}
-                />
+                /> */}
+                <View style={styles.picker}>
+                  <Picker
+                    selectedValue={stream}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setStream(itemValue)
+                    }
+                  >
+                    <Picker.Item label='Choose...' />
+                    {subject.map((sub) => {
+                      return (
+                        <Picker.Item
+                          label={sub.streamname}
+                          value={sub.streamname}
+                        />
+                      )
+                    })}
+                  </Picker>
+                </View>
               </View>
               <View style={styles.spacing}>
                 <StyledInputLabel>Password</StyledInputLabel>
@@ -264,5 +292,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 4,
     marginLeft: 10,
+  },
+  picker: {
+    paddingHorizontal: 10,
+    fontSize: 16,
+    height: 50,
+    borderWidth: 1,
+    borderRadius: 5,
   },
 })
