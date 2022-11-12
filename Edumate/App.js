@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  HomeScreen,
-  ProfileScreen,
-  RootStack,
-} from './src/components/RootStack'
+import { RootStack } from './src/components/RootStack'
 import { TeacherStack } from './src/components/TeacherStack'
 import FirstSrn from './src/screens/Common/FirstSrn'
 import { Login } from './src/screens/Common/Login'
@@ -23,7 +19,8 @@ export default function App() {
     // <StudentNotes/>
     // <StudentFeedback/>
     // <StudentComment/>
-    <StduentAnswerSheetUpload/>
+// <RootStack /> 
+    <StduentAnswerSheetUpload/> 
     // <Upload/>
   )}
 
@@ -45,3 +42,4 @@ export default function App() {
 //     marginHorizontal: 15,
 //   },
 // })
+
