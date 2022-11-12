@@ -34,8 +34,8 @@ export const UploadNote = () => {
   const [subject, setSubject] = useState('')
   const [lesson_name, setLesson] = useState('')
   const [grade, setGrade] = useState('')
-  const [note, setNote] = useState('')
-  const [teacher_id, setTeacher] = useState('')
+  const [note, setNote] = useState()
+  const [teacher_id, setTeacher] = useState(userId)
 
  const [blobFile, setBlobFile] = useState(null)
  const [fileName, setFileName] = useState('No Files')
@@ -44,9 +44,19 @@ export const UploadNote = () => {
   const [uploadStart, setUploadStart] = useState(false)
   
 
+  var userId = ''
+  AsyncStorage.getItem('user').then((value) => {
+    userId = value
+  })
+
+  var file = ''
+  AsyncStorage.getItem('file').then((value) => {
+    file = value
+  })
+
    useEffect(() => {
      if (uploadCompleted) {
-       showToastWithGravityAndOffset('Document Saved SuccessFully')
+      //  showToastWithGravityAndOffset('Document Saved SuccessFully')
        clearFiles()
      }
    }, [uploadCompleted])
@@ -63,6 +73,7 @@ export const UploadNote = () => {
       setBlobFile(b)
       setIsChoosed(true)
     }
+ 
   }
 
   const clearFiles = () => {
@@ -73,44 +84,46 @@ export const UploadNote = () => {
 
   const uploadFile = () => {
     if (blobFile) {
-      showToastWithGravityAndOffset('Uploading File....')
+      // showToastWithGravityAndOffset('Uploading File....')
       setUploadStart(true)
       UploadFile(blobFile, fileName, isUploadCompleted)
       clearFiles()
     }
   }
 
-  const showToastWithGravityAndOffset = (msg = '') => {
-    ToastAndroid.showWithGravityAndOffset(
-      msg,
-      ToastAndroid.LONG,
-      ToastAndroid.BOTTOM,
-      25,
-      50
-    )
-  }
+  // const showToastWithGravityAndOffset = (msg = '') => {
+  //   ToastAndroid.showWithGravityAndOffset(
+  //     msg,
+  //     ToastAndroid.LONG,
+  //     ToastAndroid.BOTTOM,
+  //     25,
+  //     50
+  //   )
+  // }
 
 
-  const userId = '123465'
-  const formData = new FormData()
+  
 
-  const noteAdd = (e) => {
-    setNote(e.target.files[0])
-  }
 
-  formData.append('lesson_name', lesson_name)
-  formData.append('file', fileName)
-  formData.append('subject', subject)
-  formData.append('grade', grade)
-  formData.append('teacher_id', userId)
+  
 
-  console.log(formData)
+  
   const onChangeHandler = () => {
+       uploadFile()
+
+       const data = {
+         subject,
+         lesson_name,
+         grade,
+         note:file,
+         teacher_id,
+    }
+    console.log(data)
     const url = `https://edumate-backend.herokuapp.com/teacherNote/add`
-    axios.post(url, formData).then((res) => {
+    axios.post(url, data).then((res) => {
       console.log('done')
     })
-    uploadFile()
+    
   }
 
   const getMessage = () => {

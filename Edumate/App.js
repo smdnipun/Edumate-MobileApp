@@ -11,6 +11,7 @@ import { StudentComment } from './src/screens/student/StudentComment'
 import { StduentAnswerSheetUpload } from './src/screens/student/StduentAnswerSheetUpload'
 import UpdateProfile from './src/screens/Common/UpdateProfile'
 import { UpdateLink } from './src/screens/Teacher/UpdateLink'
+import { UploadNote } from './src/screens/Teacher/UploadNote'
 
 export default function App() {
   return (
