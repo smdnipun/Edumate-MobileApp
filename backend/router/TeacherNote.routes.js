@@ -1,12 +1,12 @@
 import express from 'express'
 import {
-  CreateNote,
+
   DeleteNote,
   GetNote,
   GetTeacherNotes,
   GetTeacherNotessubject,
   UpdateNote,
-  Upload,
+ CreateNote,
   getNoteByTeacherId,
   getSubject,
   getNotesbySubject,
@@ -15,7 +15,7 @@ import {
 const router = express.Router()
 
 //create answers
-router.post('/add', Upload.single('file'), CreateNote)
+router.post('/add',CreateNote)
 //get all answers
 router.get('/get', GetTeacherNotes)
 

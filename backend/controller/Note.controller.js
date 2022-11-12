@@ -1,31 +1,55 @@
 import TeacherNotesModel from '../model/TeacherNotes.model.js'
-import multer from 'multer'
+// import multer from 'multer'
 
-//multer and file location
-export const Upload = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, callback) => {
-      callback(null, 'TeacherNotes')
-    },
-    filename: (req, file, callback) => {
-      callback(null, file.originalname)
-    },
-  }),
-})
+// //multer and file location
+// export const Upload = multer({
+//   storage: multer.diskStorage({
+//     destination: (req, file, callback) => {
+//       callback(null, 'TeacherNotes')
+//     },
+//     filename: (req, file, callback) => {
+//       callback(null, file.originalname)
+//     },
+//   }),
+// })
 
-//Create Industry
+// //Create Industry
+// export const CreateNote = async (req, res, next) => {
+//   try {
+//     const newTeacherNote = new TeacherNotesModel({
+//       lesson_name: req.body.lesson_name,
+//       stream: req.body.stream,
+//       subject: req.body.subject,
+//       grade: req.body.grade,
+//       note: req.file.originalname,
+//       teacher_id:req.body.teacher_id
+//     })
+//     await newTeacherNote.save()
+//     res.status(200).json('Student Answers has been created.....')
+//   } catch (err) {
+//     next(err)
+//   }
+// }
+
 export const CreateNote = async (req, res, next) => {
+  const newNote = new TeacherNotesModel(req.body)
+
   try {
-    const newTeacherNote = new TeacherNotesModel({
-      lesson_name: req.body.lesson_name,
-      stream: req.body.stream,
-      subject: req.body.subject,
-      grade: req.body.grade,
-      note: req.file.originalname,
-      teacher_id:req.body.teacher_id
-    })
-    await newTeacherNote.save()
-    res.status(200).json('Student Answers has been created.....')
+    const savedNote = await newNote.save()
+    res.status(200).json(savedNote)
+  } catch (err) {
+    next(err)
+  }
+}
+
+export const updateLink = async (req, res, next) => {
+  try {
+    const updatedLink = await LinkSchema.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    )
+    res.status(200).json(updatedLink)
   } catch (err) {
     next(err)
   }
@@ -82,16 +106,18 @@ export const GetTeacherNotes = async (req, res, next) => {
 //Get all Industry
 export const GetTeacherNotessubject = async (req, res, next) => {
   try {
-    const getTeacherNotes = await TeacherNotesModel.find({subject:req.body.subject} && {grade : req.body.grade},function(result){
-      res.json(result);
-    })
+    const getTeacherNotes = await TeacherNotesModel.find(
+      { subject: req.body.subject } && { grade: req.body.grade },
+      function (result) {
+        res.json(result)
+      }
+    )
 
     res.status(200).json(getTeacherNotes)
   } catch (err) {
     next(err)
   }
 }
-
 
 export const getNoteByTeacherId = async (req, res, next) => {
   let myquery = { teacher_id: Object(req.params.teacher_id) }
@@ -101,22 +127,18 @@ export const getNoteByTeacherId = async (req, res, next) => {
   })
 }
 
-
-
 export const getSubject = async (req, res, next) => {
-
-
   const marks = await TeacherNotesModel.find().select({ subject: 1, _id: 0 })
 
   res.status(200).json(marks)
 }
 
 //get notes by subject
-export const getNotesbySubject = async (req,res,next) => {
-  try{
-    const filter = await TeacherNotesModel.find(
-      {subject : req.body.subject}
-    )
+export const getNotesbySubject = async (req, res, next) => {
+  try {
+    const filter = await TeacherNotesModel.find({ subject: req.body.subject })
     res.status(200).json(filter)
-  }catch(err){next(err)}
+  } catch (err) {
+    next(err)
+  }
 }

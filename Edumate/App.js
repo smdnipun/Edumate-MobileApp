@@ -33,7 +33,7 @@ export default function App() {
     //   <FirstSrn />
     //   <StatusBar style='auto' />
     // </NavigationContainer>
-    <RootStack/>
+    <UploadNote/>
     // <Profile />
     // <UpdateProfile/>
     // <ResetPassword/>
