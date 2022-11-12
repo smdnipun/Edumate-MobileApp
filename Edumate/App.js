@@ -12,6 +12,10 @@ import {
 } from './src/components/RootStack'
 import FirstSrn from './src/screens/Common/FirstSrn'
 import { Login } from './src/screens/Common/Login'
+import { AddExams } from './src/screens/admin/AddExams'
+import { Exams } from './src/screens/admin/Exams'
+import { Subjects } from './src/screens/admin/Subjects'
+import { Streams } from './src/screens/admin/Streams'
 
 export default function App() {
   return (
@@ -27,8 +31,7 @@ export default function App() {
     //   </Text>
     //   <StatusBar style='auto' />
     // </View>
-    <AddSubjects/>
-
+    <Exams/>
   )
 }
 

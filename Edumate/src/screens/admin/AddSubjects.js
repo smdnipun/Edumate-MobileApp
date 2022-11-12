@@ -1,44 +1,105 @@
-import {React, useState} from "react";
-import { SafeAreaView, StyleSheet, TextInput, Text, Button } from "react-native";
+import React, { useEffect, useState } from 'react'
+import {
+  ImageBackground,
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  TextInput,
+  Platform,
+  Picker
+} from 'react-native'
+import axios from 'axios'
+import { Input } from '../../constants/InputField'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import {
+  RightIcon,
+  StyledInputLabel,
+  StyledButton,
+  ButtonText,
+  StyledTextInput,
+  colors,
+} from '../../constants/styles.js'
+import { StatusBar } from 'expo-status-bar'
+import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+
+const { brand, darkLight, primary } = colors
+
 
 export const AddSubjects = () => {
-//   const [text, onChangeText] = React.useState("Useless Text");
-const [streamname, setStreamname] = useState('');
-const [subjectname, setSubjectname] = useState('');
 
-const Subject = {streamname, subjectname}
+  const [streamname, setStreamname] = useState('')
+  const [subjectname, setSubjectname] = useState('')
+  const [streams, setStreams] = useState([])
 
-const addSubject = (e)=>{
-    e.preventDefault();
-    axios.post('/subject/add', Subject);
+  const formData = {streamname, subjectname}
+
+  const onChangeHandler = () => {
+    const url = `https://edumate-backend.herokuapp.com/subject/add`
+    axios.post(url, formData).then((res) => {
+      console.log('done')
+      alert('Subject added')
+    })
+  }
+
+  const loadStreams = async () => {
+    const url = `https://edumate-backend.herokuapp.com/stream/`
+    await axios.get(url).then((res) => {
+        setStreams(res.data)
+    })
+  }
+
+  useEffect(() => {
+    loadStreams()
+  })
+
+    const getMessage = () => {
+      const status = isError ? `Error: ` : `Success: `
+      return status + message
+    }
+  
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.text}> Add Subject </Text>
+          <Picker
+              selectedValue={streamname}
+              onValueChange={(itemValue, itemIndex) => setStreamname(itemValue)}
+            >
+              {streams.map((s)=>{
+                return(
+                  <Picker.Item  value={s.streamname} />
+                )
+              })}
+            
+            </Picker>
+              <InputCd
+              placeholder='Subject Name'
+              placeholderTextColor={darkLight}
+              value={subjectname}
+              onChangeText={(subjectname) => setSubjectname(subjectname)}
+
+            />
+          <StyledButton onPress={onChangeHandler}>
+                 <ButtonText>Add</ButtonText>
+        </StyledButton>
+      </SafeAreaView>
+    );
+    
 }
 
+
+export const InputCd = ({ label, icon, ...props }) => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.text}> Add Subject </Text>
-      <TextInput
-        style={styles.input}
-        onChange= {(e)=>setStreamname(e.target.value)}
-        // onChangeText={onChangeText}
-        // value={text}
-        placeholder="Stream Name"
-      />
-      
-        <TextInput
-        style={styles.input}
-        onChange= {(e)=>setSubjectname(e.target.value)}
-        // onChangeText={onChangeText}
-        // value={text}
-        placeholder="Subject Name"
-      />
-       <Button color="black"
-       onPress={addSubject}
-        title="Add"
-        // onPress={() => Alert.alert('Button with adjusted color pressed')}
-      />
-    </SafeAreaView>
-  );
-};
+    <View>
+      <StyledInputLabel>{label}</StyledInputLabel>
+      <StyledTextInput {...props} />
+      <RightIcon>
+        <Octicons name={icon} size={30}  />
+      </RightIcon>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
  container: {
@@ -57,3 +118,4 @@ const styles = StyleSheet.create({
     fontSize:30,
   },
 });
+
