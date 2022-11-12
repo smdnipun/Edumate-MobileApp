@@ -14,18 +14,20 @@ import { UpdateLink } from './src/screens/Teacher/UpdateLink'
 
 export default function App() {
   return (
-    // <Title/>
-    // <Home/>
-    // <StudentSubject/>
-    // <StudentNotes/>
-    // <StudentFeedback/>
-    // <StudentComment/>
-    // <RootStack />
-    // <StduentAnswerSheetUpload/>
-    // <Upload/>
-    // <UploadLink/>
-    <TeacherStack/>
-    // <UpdateProfile/>
+    // <NavigationContainer style={styles.container}>
+    //   {/* <Image
+    //     source={{ uri: 'https://i.imgur.com/TkIrScD.png' }}
+    //     style={styles.logo}
+    //   />
+    //   <Text style={styles.instructions}>
+    //     To share a photo from your phone with a friend, just press the button
+    //     below!
+    //   </Text> */}
+    //   <FirstSrn />
+    //   <StatusBar style='auto' />
+    // </NavigationContainer>
+    <UploadNote/>
+
   )
 }
 
