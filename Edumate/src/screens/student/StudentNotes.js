@@ -8,17 +8,26 @@ import {
   StyledContainer,
 } from "../../constants/styles.js";
 
-export const StudentNotes = () => (
+export const StudentNotes = ({ navigation }) => (
   <StyledContainer>
     <StatusBar style="dark" />
     <PageTitle>Subject Name</PageTitle>
-    <StyledButton style={style.btn}>
+    <StyledButton
+      onPress={() => {
+        navigation.navigate("Studentsubject");
+      }}
+      style={style.btn}
+    >
       <ButtonText>Note 1</ButtonText>
     </StyledButton>
-    <StyledButton style={style.btn}>
+    <StyledButton  onPress={() => {
+        navigation.navigate("Studentsubject");
+      }} style={style.btn}>
       <ButtonText>Note 2</ButtonText>
     </StyledButton>
-    <StyledButton style={style.btn}>
+    <StyledButton  onPress={() => {
+        navigation.navigate("Studentsubject");
+      }} style={style.btn}>
       <ButtonText>Note 3</ButtonText>
     </StyledButton>
   </StyledContainer>
@@ -29,5 +38,3 @@ const style = StyleSheet.create({
     marginTop: 20,
   },
 });
-
-

@@ -33,7 +33,7 @@ export const StduentAnswerSheetUpload = () => {
             type: "application/" + fileType,
           }
         
-        // console.log(fileToUpload, "...............file");
+        console.log(fileToUpload, "...............file");
         setDoc(fileToUpload);
         console.log(doc);
         // console.log(doc.name);
