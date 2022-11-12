@@ -9,6 +9,8 @@ import { StudentNotes } from './src/screens/student/StudentNotes'
 import { StudentFeedback } from './src/screens/student/StudentFeedback'
 import { StudentComment } from './src/screens/student/StudentComment'
 import { StduentAnswerSheetUpload } from './src/screens/student/StduentAnswerSheetUpload'
+import UpdateProfile from './src/screens/Common/UpdateProfile'
+import { UpdateLink } from './src/screens/Teacher/UpdateLink'
 
 export default function App() {
   return (
@@ -18,9 +20,12 @@ export default function App() {
     // <StudentNotes/>
     // <StudentFeedback/>
     // <StudentComment/>
-    <RootStack />
+    // <RootStack />
     // <StduentAnswerSheetUpload/>
     // <Upload/>
+    // <UploadLink/>
+    <TeacherStack/>
+    // <UpdateProfile/>
   )
 }
 
