@@ -11,9 +11,14 @@ export default function SignUpSelection({ navigation }) {
     <StyledContainer>
       <StatusBar style='dark' />
       <Text style={styles.header}>Registration</Text>
+      <Text style={{ marginStart: 15 }}>Select Role</Text>
       <InnerContainer>
         <TouchableOpacity
+          style={styles.buttonFacebookStyle}
           activeOpacity={0.5}
+          onPress={() => {
+            navigation.navigate('SingUp',{selection:'Teacher'})
+          }}
         >
           <Image
             source={require('../../../assets/Teacher.png')}
@@ -24,11 +29,12 @@ export default function SignUpSelection({ navigation }) {
         <TouchableOpacity
           style={styles.buttonFacebookStyle}
           activeOpacity={0.5}
+          onPress={() => {
+            navigation.navigate('SingUp',{selection:'Student'})
+          }}
         >
           <Image
-            source={{
-              uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/facebook.png',
-            }}
+            source={require('../../../assets/Student.png')}
             style={styles.buttonImageIconStyle}
           />
         </TouchableOpacity>
@@ -48,13 +54,7 @@ const styles = StyleSheet.create({
   buttonFacebookStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#485a96',
-    borderWidth: 0.5,
-    borderColor: '#fff',
-    height: 150,
-    width: 150,
-    marginTop: 50,
-    borderRadius: 5,
+    marginTop: 40,
     margin: 10,
   },
   buttonImageIconStyle: {

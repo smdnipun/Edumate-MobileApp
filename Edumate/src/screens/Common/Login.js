@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import {
   StyledContainer,
   colors,
@@ -8,41 +8,106 @@ import {
   ButtonText,
   ExtraView,
   TextLinkContent,
-  TextLink,
   ExtraText,
   StyledTextInputField,
   StyledInputLabel,
+  MsgBox,
 } from '../../constants/styles'
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const { primary, black } = colors
+const { darkLight, black } = colors
+
+var userId = ''
+AsyncStorage.getItem('user').then((value) => {
+  userId = value
+})
 
 export default function Login({ navigation }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const [message, setMessage] = useState()
+  const [messageType, setMessageType] = useState()
+
+  const handleSubmit = async (e) => {
+    const credentials = {
+      email: email,
+      password: password,
+    }
+
+    if (credentials.email == '' || credentials.password == '') {
+      alert('Please fill all the details!!!')
+    } else {
+      await axios
+        .post(
+          'https://edumate-backend.herokuapp.com/api/auth/login',
+          credentials
+        )
+        .then((res) => {
+          const result = res.data.details
+          AsyncStorage.setItem('user', result._id)
+          if (result.type == 'student' || result.type == 'Student') {
+            navigation.replace('User')
+          } else if (result.type == 'teacher' || result.type == 'Teacher') {
+            navigation.replace('User')
+          } else {
+            alert('Please try again!!!')
+          }
+        })
+        .catch((err) => {
+          const result = err.response.data
+          if (result.message == 'Wrong Password or Username') {
+            alert(result.message)
+          } else if (result.status == 404) {
+            alert(result.message)
+          }
+        })
+    }
+  }
+
+  const handleMessage = (message, type = 'FAILED') => {
+    setMessage(message)
+    setMessageType(type)
+  }
+
   return (
     <>
       <StyledContainer>
         <StatusBar style='dark' />
         <Text style={styles.header}>Login</Text>
         <View style={styles.inputFieldView}>
+          <MsgBox type={messageType}>{message}</MsgBox>
           <View style={styles.spacing}>
             <StyledInputLabel>Email</StyledInputLabel>
-            <StyledTextInputField placeholder='example@edumate.com' />
+            <StyledTextInputField
+              id='email'
+              placeholder='example@edumate.com'
+              placeholderTextColor={darkLight}
+              onChangeText={(email) => setEmail(email)}
+              value={email}
+            />
           </View>
           <View style={styles.spacing}>
             <StyledInputLabel>Password</StyledInputLabel>
             <StyledTextInputField
+              id='password'
               secureTextEntry={true}
               placeholder='* * * * * * *'
+              placeholderTextColor={darkLight}
+              onChangeText={(password) => setPassword(password)}
+              value={password}
             />
           </View>
           <Text style={styles.alignRight}>Forgot Password?</Text>
-          <StyledButton>
+          <StyledButton onPress={handleSubmit}>
             <ButtonText>Login</ButtonText>
           </StyledButton>
           <ExtraView>
             <ExtraText>Don't have an account? </ExtraText>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('SingUpSelection')
+                navigation.navigate('LoadingPage')
               }}
             >
               <TextLinkContent>SignUp</TextLinkContent>
