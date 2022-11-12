@@ -14,25 +14,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   StyledContainer,
   InnerContainer,
-  PageLogo,
   PageTitle,
-  SubTitle,
-  StyledFormArea,
-  LeftIcon,
   RightIcon,
   StyledInputLabel,
   StyledButton,
   ButtonText,
   StyledTextInput,
   colors,
-  MsgBox,
-  Line,
-  ExtraView,
-  ExtraText,
-  TextLink,
-  TextLinkContent,
-  StyledButtoWhite,
-  ButtonTextWhite,
 } from '../../constants/styles.js'
 import { StatusBar } from 'expo-status-bar'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
@@ -49,44 +37,37 @@ export const UpdateLink = ({ route, navigation }) => {
   const [lesson_name, setLesson] = useState('')
   const [grade, setGrade] = useState()
   const [date, setDate] = useState()
-  const [d,setD]=useState(new Date())
-  const [time, setTime] = useState('')
+  const [d, setD] = useState(new Date())
+  const [time, setTime] = useState()
   const [link, setLink] = useState('')
   const [teacher_id, setTeacher] = useState('')
-
-  const [isError, setIsError] = useState(false)
-  const [message, setMessage] = useState('')
   const { id } = route.params
 
   // const id = '636cbe0453ef6c69dc31e041'
-     const validateDate = d
-     var linkDate = validateDate.toLocaleDateString('en-GB')
+  const validateDate = d
+  var linkDate = validateDate.toLocaleDateString('en-GB')
+  var linkTime = validateDate.toLocaleTimeString('en-GB')
 
-     var linkTime = validateDate.toLocaleTimeString('en-GB')
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate
+    setDate(null)
+    setTime(null)
+    setD(currentDate)
+  }
 
-     const onChange = (event, selectedDate) => {
-       const currentDate = selectedDate
-       setDate(currentDate)
-     }
-
-     const showMode = (currentMode) => {
-       DateTimePickerAndroid.open({
-         value: d,
-         onChange,
-         mode: currentMode,
-       })
-     }
-
-     const showDatepicker = () => {
-       showMode('date')
-     }
-
-     const showTimepicker = () => {
-       showMode('time')
-     }
-
-
-
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: d,
+      onChange,
+      mode: currentMode,
+    })
+  }
+  const showDatepicker = () => {
+    showMode('date')
+  }
+  const showTimepicker = () => {
+    showMode('time')
+  }
 
   const loadLink = async () => {
     const url = `https://edumate-backend.herokuapp.com/link/${id}`
@@ -97,7 +78,6 @@ export const UpdateLink = ({ route, navigation }) => {
       setDate(res.data.date)
       setTime(res.data.time)
       setLink(res.data.link)
-      console.log(res.data)
     })
   }
 
@@ -105,29 +85,22 @@ export const UpdateLink = ({ route, navigation }) => {
     loadLink()
   }, [])
 
-  const data = {
-    subject,
-    lesson_name,
-    grade,
-    date:linkDate,
-    time:linkTime,
-    link,
-    teacher_id: '516',
-  }
-
-
-
   const onChangeHandler = (e) => {
+    const data = {
+      subject,
+      lesson_name,
+      grade,
+      date: linkDate,
+      time: linkTime,
+      link,
+      teacher_id: '516',
+    }
     e.preventDefault()
     const url = `https://edumate-backend.herokuapp.com/link/${id}`
     axios.put(url, data).then((res) => {
-      console.log('done')
+      alert('Updated')
+      navigation.navigate('TeacherDash')
     })
-  }
-
-  const getMessage = () => {
-    const status = isError ? `Error: ` : `Success: `
-    return status + message
   }
 
   return (
@@ -162,8 +135,8 @@ export const UpdateLink = ({ route, navigation }) => {
               placeholder='Date'
               placeholderTextColor={darkLight}
               command={showDatepicker}
-              onChangeText={(date) => setD(date)}
-              value={d}
+              // onChangeText={(date) => setD(date)}
+              value={date == null ? d.toLocaleDateString() : date}
             />
 
             <InputCd
@@ -172,8 +145,8 @@ export const UpdateLink = ({ route, navigation }) => {
               placeholder='Time'
               placeholderTextColor={darkLight}
               command={showTimepicker}
-              onChangeText={(time) => setD(time)}
-              value={time}
+              // onChangeText={(time) => setD(time)}
+              value={time == null ? d.toLocaleTimeString() : time}
             />
 
             <InputCd

@@ -1,6 +1,6 @@
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import {
   colors,
   StyledTextInputField,
@@ -8,25 +8,50 @@ import {
   StyledButton,
   ButtonText,
   MsgBox,
+  RightIcon,
 } from '../../constants/styles'
 import ProfileUpper from './ProfileUpper'
 import axios from 'axios'
+import { Octicons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-const { darkLight, black } = colors
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
+const { darkLight, black, brand } = colors
 
 var userId = ''
 AsyncStorage.getItem('user').then((value) => {
   userId = value
 })
 
-export default function UpdateProfile({navigation}) {
+export default function UpdateProfile({ navigation }) {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [dob, setDob] = useState()
+  const [date, setDate] = useState(new Date())
 
   const [message, setMessage] = useState()
   const [messageType, setMessageType] = useState()
+
+  const validateDate = date
+  var linkDate = validateDate.toLocaleDateString('en-GB')
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate
+    setDob(null)
+    setDate(currentDate)
+  }
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+    })
+  }
+
+  const showDatepicker = () => {
+    showMode('date')
+  }
 
   useEffect(() => {
     loadData()
@@ -44,20 +69,23 @@ export default function UpdateProfile({navigation}) {
 
   const handleSubmit = async () => {
     handleMessage(null)
+    if (linkDate == new Date().toLocaleDateString('en-GB')) {
+      linkDate = dob
+    }
     const data = {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      dob: dob,
+      dob: linkDate,
     }
-    if (data.firstName == '' || data.lastName == '' || data.email == '') {
+    if (data.firstName == '' || data.lastName == '' || data.email == '' ) {
       handleMessage('Please fill all the fields', 'FAILED')
     } else {
       await axios
         .put(`https://edumate-backend.herokuapp.com/api/users/${userId}`, data)
         .then((res) => {
           alert('Profile successfully updated')
-          navigation.navigate("Profile")
+          navigation.navigate('Profile')
         })
         .catch((err) => {
           console.log(err)
@@ -108,11 +136,15 @@ export default function UpdateProfile({navigation}) {
             <View style={styles.spacing}>
               <StyledInputLabel>Date Of Birth</StyledInputLabel>
               <StyledTextInputField
+                type='date'
                 placeholder='Date Of Birth'
                 placeholderTextColor={darkLight}
                 onChangeText={(dob) => setDob(dob)}
-                value={dob}
+                value={dob == null ? date.toLocaleDateString() : dob}
               />
+              <RightIcon onPress={showDatepicker}>
+                <Octicons name='calendar' size={30} color={brand} />
+              </RightIcon>
             </View>
             <MsgBox type={messageType}>{message}</MsgBox>
             <StyledButton onPress={handleSubmit}>
