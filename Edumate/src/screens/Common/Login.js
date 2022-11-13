@@ -58,6 +58,8 @@ export default function Login({ navigation }) {
             navigation.replace('StudentStack')
           } else if (result.type == 'teacher' || result.type == 'Teacher') {
             navigation.replace('Teacher')
+          } else if (result.type == 'Admin' || result.type == 'Admin') {
+            navigation.replace('Admin')  
           } else {
             alert('Please try again!!!')
           }
