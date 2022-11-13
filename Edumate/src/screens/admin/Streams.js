@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image,
   SafeAreaView,
+  RefreshControl,
 } from 'react-native'
 import axios from 'axios'
 import { Input } from '../../constants/InputField'
@@ -40,8 +41,13 @@ const { brand, darkLight, primary } = colors
 const API_URL =
   Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
 export const Streams = ({ navigation }) => {
   const drawer = useRef(null)
+  const [refreshing, setRefreshing] = useState(true)
 
   const [streams, setStreams] = useState([])
 
@@ -51,6 +57,7 @@ export const Streams = ({ navigation }) => {
   const loadStreams = async () => {
     const url = `https://edumate-backend.herokuapp.com/stream/`
     await axios.get(url).then((res) => {
+      setRefreshing(false)
       setStreams(res.data)
     })
   }
@@ -132,7 +139,11 @@ export const Streams = ({ navigation }) => {
         </View>
         <InnerContainer>
           <View>
-            <ScrollView>
+            <ScrollView
+             refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={loadStreams} />
+            }
+            >
               {streams.map((e) => {
                 return (
                   <>

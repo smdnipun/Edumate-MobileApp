@@ -68,6 +68,7 @@ export const UpdateStream = ({ route, navigation }) => {
     axios.put(url, data).then((res) => {
       console.log('done')
       alert('updated');
+      navigation.navigate('getstreams')
     })
   }
 

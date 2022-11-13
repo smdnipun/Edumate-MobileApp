@@ -8,7 +8,8 @@ import {
   Platform,
   ScrollView,
   Image,
-  SafeAreaView
+  SafeAreaView,
+  RefreshControl
 } from 'react-native'
 import axios from 'axios'
 import { Input } from '../../constants/InputField'
@@ -42,22 +43,28 @@ const { brand, darkLight, primary } = colors
 const API_URL =
   Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
 export const Exams = (
   {navigation}) => {
     const drawer = useRef(null)
 
   const [exams, setExams] = useState([])
-
+  const [refreshing, setRefreshing] = useState(true)
   const [isError, setIsError] = useState(false)
   const [message, setMessage] = useState('')
 
   const deleteExam = (id) => {
     axios.delete(`https://edumate-backend.herokuapp.com/examtime/${id}`)
+    alert('Successfully deleted');
   }
 
   const loadExams = async () => {
     const url = `https://edumate-backend.herokuapp.com/examtime/`
     await axios.get(url).then((res) => {
+      setRefreshing(false)
       setExams(res.data)
     })
   }
@@ -140,7 +147,11 @@ export const Exams = (
       <StatusBar style='dark' />
       <InnerContainer>
         <View>
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={loadExams} />
+            }
+          >
             {exams.map((e) => {
               return (
                 <>

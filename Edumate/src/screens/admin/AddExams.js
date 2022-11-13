@@ -28,7 +28,7 @@ import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 const { brand, darkLight, primary } = colors
 
 
-export const AddExams = () => {
+export const AddExams = ({navigation}) => {
 
     const [day, setDay] = useState(new Date());
     const [day1, setDay1] = useState(new Date());
@@ -66,6 +66,7 @@ export const AddExams = () => {
       axios.post(url, formData).then((res) => {
         console.log('done')
         alert('Exam added')
+        navigation.navigate('getexams');
       })
     }
    

@@ -12,7 +12,6 @@ import { TeacherDash } from '../screens/Teacher/TeacherDash'
 import { PaperMarking } from '../screens/Teacher/PaperMarking'
 import { Answers } from '../screens/Teacher/Answers'
 import UserStack from './UserStack'
-import { Adminhome } from '../screens/admin/Adminhome'
 import { Streams } from '../screens/admin/Streams'
 import { NavigationContainer } from '@react-navigation/native'
 import { Exams } from '../screens/admin/Exams'
@@ -23,6 +22,7 @@ import { UpdateSubject } from '../screens/admin/UpdateSubject'
 import { AddStreams } from '../screens/admin/AddStreams'
 import { AddSubjects } from '../screens/admin/AddSubjects'
 import { AddExams } from '../screens/admin/AddExams'
+import { Adminhome } from '../screens/admin/Adminhome'
 const { tertiary, primary } = colors
 
 const Stack = createNativeStackNavigator()

@@ -78,6 +78,8 @@ export const UpdateExam = ({  navigation, route }) => {
     const url = `https://edumate-backend.herokuapp.com/examtime/${id}`
     axios.put(url, data).then((res) => {
       alert('updated');
+      navigation.navigate('getexams');
+
     })
   }
 

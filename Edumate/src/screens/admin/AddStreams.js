@@ -26,7 +26,7 @@ import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 const { brand, darkLight, primary } = colors
 
 
-export const AddStreams = () => {
+export const AddStreams = ({navigation}) => {
 
   const [streamname, setStreamname] = useState('')
 
@@ -37,6 +37,7 @@ export const AddStreams = () => {
     axios.post(url, formData).then((res) => {
       console.log('done')
       alert('Stream added')
+      navigation.navigate('getstreams')
     })
   }
  

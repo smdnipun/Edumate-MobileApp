@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image,
   SafeAreaView,
+  RefreshControl,
 } from 'react-native'
 import axios from 'axios'
 import { Input } from '../../constants/InputField'
@@ -41,9 +42,15 @@ const { brand, darkLight, primary } = colors
 const API_URL =
   Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+
 export const Subjects = ({ navigation }) => {
   const drawer = useRef(null)
 
+  const [refreshing, setRefreshing] = useState(true)
   const [subjects, setSubjects] = useState([])
 
   const [isError, setIsError] = useState(false)
@@ -58,13 +65,10 @@ export const Subjects = ({ navigation }) => {
       })
   }
 
-  useEffect(() => {
-    loadDate()
-  }, [])
-
   const loadDate = () => {
     const url = `https://edumate-backend.herokuapp.com/subject/`
     axios.get(url).then((res) => {
+      setRefreshing(false)
       setSubjects(res.data)
     })
   }
@@ -73,6 +77,10 @@ export const Subjects = ({ navigation }) => {
     AsyncStorage.removeItem('user')
     navigation.navigate('Login')
   }
+  
+  useEffect(() => {
+    loadDate()
+  }, [])
 
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
@@ -138,7 +146,11 @@ export const Subjects = ({ navigation }) => {
         </View>
         <InnerContainer>
           <View>
-            <ScrollView>
+            <ScrollView
+             refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={loadDate} />
+            }
+            >
               {subjects.map((e) => {
                 return (
                   <>

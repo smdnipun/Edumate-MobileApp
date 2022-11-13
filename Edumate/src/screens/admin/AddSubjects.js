@@ -27,7 +27,7 @@ import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 const { brand, darkLight, primary } = colors
 
 
-export const AddSubjects = () => {
+export const AddSubjects = ({navigation}) => {
 
   const [streamname, setStreamname] = useState('')
   const [subjectname, setSubjectname] = useState('')
@@ -38,8 +38,8 @@ export const AddSubjects = () => {
   const onChangeHandler = () => {
     const url = `https://edumate-backend.herokuapp.com/subject/add`
     axios.post(url, formData).then((res) => {
-      console.log('done')
       alert('Subject added')
+      navigation.navigate("getsubjects")
     })
   }
 

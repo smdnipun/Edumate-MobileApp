@@ -70,8 +70,8 @@ export const UpdateSubject = ({ route, navigation }) => {
     const url = `https://edumate-backend.herokuapp.com/subject/${id}`
     console.log(data);
     axios.put(url, data).then((res) => {
-      console.log('done')
       alert('updated');
+      navigation.navigate("getsubjects")
     })
   }
 
