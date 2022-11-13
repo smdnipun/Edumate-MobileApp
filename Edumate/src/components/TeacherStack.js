@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StatusBar } from 'expo-status-bar'
 import { Button, Text } from 'react-native'
@@ -12,6 +11,7 @@ import { Comment } from '../screens/Teacher/Comments'
 import { TeacherDash } from '../screens/Teacher/TeacherDash'
 import { PaperMarking } from '../screens/Teacher/PaperMarking'
 import { Answers } from '../screens/Teacher/Answers'
+import UserStack from './UserStack'
 const { tertiary, primary } = colors
 
 const Stack = createNativeStackNavigator()
@@ -19,68 +19,73 @@ const Stack = createNativeStackNavigator()
 export const TeacherStack = () => {
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: 'transparent',
-            },
-            // headerTintColor: tertiary,
-            headerTransparent: true,
-            headerTitle: '',
-            headerBackTitleVisible: false,
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: 'transparent',
+          },
+          // headerTintColor: tertiary,
+          headerTransparent: true,
+          headerTitle: '',
+          headerBackTitleVisible: false,
+        }}
+      >
+        <Stack.Screen
+          name='TeacherDash'
+          component={TeacherDash}
+          options={{
+            headerShown: false,
           }}
-        >
-          <Stack.Screen
-            name='TeacherDash'
-            component={TeacherDash}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name='UploadLink'
-            component={UploadLink}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name='UploadNote'
-            component={UploadNote}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen name='UpdateLink' component={UpdateLink} options={{}} />
-          <Stack.Screen
-            name='UpdateNote'
-            component={UpdateNote}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name='Comments'
-            component={Comment}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name='PaperMarking'
-            component={PaperMarking}
-            options={{}}
-          />
-          <Stack.Screen
-            name='Answer'
-            component={Answers}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+        />
+        <Stack.Screen
+          name='UploadLink'
+          component={UploadLink}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name='UploadNote'
+          component={UploadNote}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen name='UpdateLink' component={UpdateLink} options={{}} />
+        <Stack.Screen
+          name='UpdateNote'
+          component={UpdateNote}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name='Comments'
+          component={Comment}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name='PaperMarking'
+          component={PaperMarking}
+          options={{}}
+        />
+        <Stack.Screen
+          name='Answer'
+          component={Answers}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name='User'
+          component={UserStack}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Navigator>
     </>
   )
 }

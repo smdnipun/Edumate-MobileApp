@@ -1,6 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import React, { useState, useContext } from 'react'
+import axios from 'axios'
+import React, { useState} from 'react'
 import {
   StyledContainer,
   colors,
@@ -13,8 +15,6 @@ import {
   StyledInputLabel,
   MsgBox,
 } from '../../constants/styles'
-import axios from 'axios'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const { darkLight, black } = colors
 
@@ -50,7 +50,7 @@ export default function Login({ navigation }) {
           if (result.type == 'student' || result.type == 'Student') {
             navigation.replace('User')
           } else if (result.type == 'teacher' || result.type == 'Teacher') {
-            navigation.replace('User')
+            navigation.replace('Teacher')
           } else {
             alert('Please try again!!!')
           }
