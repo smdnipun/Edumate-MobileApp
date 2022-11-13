@@ -24,10 +24,10 @@ import {
 
 const { darkLight, black } = colors
 
-AsyncStorage.setItem('user', '')
-AsyncStorage.removeItem('user')
-AsyncStorage.removeItem('file')
-AsyncStorage.clear()
+// AsyncStorage.setItem('user', '')
+// AsyncStorage.removeItem('user')
+// AsyncStorage.removeItem('file')
+// AsyncStorage.clear()
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('')
@@ -59,7 +59,7 @@ export default function Login({ navigation }) {
           } else if (result.type == 'teacher' || result.type == 'Teacher') {
             navigation.replace('Teacher')
           } else if (result.type == 'Admin' || result.type == 'Admin') {
-            navigation.replace('Admin')  
+            navigation.replace('Admin')
           } else {
             alert('Please try again!!!')
           }
