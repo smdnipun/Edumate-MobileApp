@@ -58,14 +58,14 @@ import { StatusBar } from 'expo-status-bar'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { waitForPendingWrites } from 'firebase/firestore'
 
-const { brand, darkLight, primary } = colors
+const { brand, darkLight, primary } = colors;
 
 const API_URL =
-  Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
-var userId = ''
-AsyncStorage.getItem('user').then((value) => {
-  userId = value
-})
+  Platform.OS === "ios" ? "http://localhost:5000" : "http://10.0.2.2:5000";
+var userId = "";
+AsyncStorage.getItem("user").then((value) => {
+  userId = value;
+});
 
 export const TeacherDash = ({ navigation }) => {
   const drawer = useRef(null)
@@ -74,26 +74,26 @@ export const TeacherDash = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(true)
 
   const loadNotes = async () => {
-    const url = `https://edumate-backend.herokuapp.com/teacherNote/get/${userId}`
+    const url = `https://edumate-backend.herokuapp.com/teacherNote/get/${userId}`;
     await axios.get(url).then((res) => {
       setRefreshing(false)
       setNote(res.data)
     })
   }
   const loadLinks = async () => {
-    const url = `https://edumate-backend.herokuapp.com/link`
+    const url = `https://edumate-backend.herokuapp.com/link`;
     await axios.get(url).then((res) => {
       setRefreshing(false)
       setlink(res.data)
     })
   }
   useEffect(() => {
-    loadLinks()
-  }, [])
+    loadLinks();
+  }, []);
 
   useEffect(() => {
-    loadNotes()
-  }, [])
+    loadNotes();
+  }, []);
 
   const deleteNote = (id) => {
     axios
@@ -124,7 +124,7 @@ export const TeacherDash = ({ navigation }) => {
       <View style={styles.row}>
         <View>
           <Image
-            source={require('../../../assets/Picture1.png')}
+            source={require("../../../assets/Picture1.png")}
             style={styles.drawerImage}
           />
         </View>
@@ -178,20 +178,20 @@ export const TeacherDash = ({ navigation }) => {
     <DrawerLayoutAndroid
       ref={drawer}
       drawerWidth={300}
-      drawerPosition={'right'}
+      drawerPosition={"right"}
       renderNavigationView={navigationView}
     >
       <StyledContainerDash>
-        <StatusBar style='dark' />
+        <StatusBar style="dark" />
         <View>
           <PageTitle>Discover</PageTitle>
           <DrawerIcon>
             <TouchableOpacity
-              title='Open drawer'
+              title="Open drawer"
               onPress={() => drawer.current.openDrawer()}
             >
               <View>
-                <Octicons size={20} color={darkLight} name='three-bars' />
+                <Octicons size={20} color={darkLight} name="three-bars" />
               </View>
             </TouchableOpacity>
           </DrawerIcon>
@@ -201,7 +201,7 @@ export const TeacherDash = ({ navigation }) => {
             <DiscoverTitle>
               <DiscoverText> Notes</DiscoverText>
               <DashButton>
-                <Octicons size={30} color={primary} name='chevron-down' />
+                <Octicons size={30} color={primary} name="chevron-down" />
               </DashButton>
             </DiscoverTitle>
             <ScrollView
@@ -243,7 +243,7 @@ export const TeacherDash = ({ navigation }) => {
                           <Octicons
                             size={20}
                             color={darkLight}
-                            name='comment'
+                            name="comment"
                           />
                         </TeacherDashContentButton>
                         <TeacherDashContentButton
@@ -253,26 +253,26 @@ export const TeacherDash = ({ navigation }) => {
                             })
                           }}
                         >
-                          <Octicons size={20} color={darkLight} name='pencil' />
+                          <Octicons size={20} color={darkLight} name="pencil" />
                         </TeacherDashContentButton>
                         <TeacherDashContentButton
                           onPress={() => {
                             deleteNote(notes._id)
                           }}
                         >
-                          <Octicons size={20} color={darkLight} name='trash' />
+                          <Octicons size={20} color={darkLight} name="trash" />
                         </TeacherDashContentButton>
                       </TeacherCardColumn>
                     </TeacherCardRow>
                   </TeacherCard>
-                )
+                );
               })}
             </ScrollView>
 
             <DiscoverTitle>
               <DiscoverText> Links</DiscoverText>
               <DashButton>
-                <Octicons size={30} color={primary} name='chevron-down' />
+                <Octicons size={30} color={primary} name="chevron-down" />
               </DashButton>
             </DiscoverTitle>
             <ScrollView
@@ -308,33 +308,33 @@ export const TeacherDash = ({ navigation }) => {
                         <TeacherCardColumn>
                           <TeacherDashContentButton
                             onPress={() => {
-                              navigation.navigate('UpdateLink', {
+                              navigation.navigate("UpdateLink", {
                                 id: links._id,
-                              })
+                              });
                             }}
                           >
                             <Octicons
                               size={20}
                               color={darkLight}
-                              name='pencil'
+                              name="pencil"
                             />
                           </TeacherDashContentButton>
                           <TeacherDashContentButton
                             onPress={() => {
-                              deleteLink(links._id)
+                              deleteLink(links._id);
                             }}
                           >
                             <Octicons
                               size={20}
                               color={darkLight}
-                              name='trash'
+                              name="trash"
                             />
                           </TeacherDashContentButton>
                         </TeacherCardColumn>
                       </TeacherCardRow>
                     </TeacherCard>
                   </>
-                )
+                );
               })}
             </ScrollView>
 
@@ -343,8 +343,8 @@ export const TeacherDash = ({ navigation }) => {
         </InnerContainer>
       </StyledContainerDash>
     </DrawerLayoutAndroid>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   navigationContainer: {
-    backgroundColor: '#ecf0f1',
+    backgroundColor: "#ecf0f1",
   },
   paragraph: {
     paddingLeft: 10,
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingTop: 20,
   },
   rowInside: {
@@ -371,9 +371,9 @@ const styles = StyleSheet.create({
   drawerImage: {
     height: 45,
     width: 60,
-    resizeMode: 'stretch',
+    resizeMode: "stretch",
   },
   btnLogout: {
-    backgroundColor: '#E14545',
+    backgroundColor: "#E14545",
   },
-})
+});
