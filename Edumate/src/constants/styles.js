@@ -216,7 +216,6 @@ export const DrawerBtn = styled.TouchableOpacity`
   border-radius: 5px;
   height: 40px;
   padding: 10px;
-  border-style: dashed;
 `
 
 export const ButtonText = styled.Text`
@@ -232,7 +231,7 @@ export const ButtonTextWhite = styled.Text`
 export const MsgBox = styled.Text`
   font-size: 20px;
   text-align: center;
-  font-size: 13px;
+  font-size: 16px;
   color: red;
 `
 
@@ -318,7 +317,7 @@ export const DashButton = styled.TouchableOpacity`
   z-index: 1;
 `
 export const TeacherCard = styled.View`
-  width: 370px;
+  width: 360px;
   height: 200px;
   border-color: ${secondary};
   border: 1px;
@@ -359,24 +358,6 @@ export const StyledTextInputComment = styled.TextInput`
   color: ${tertiary};
 `
 
-export const AdminContent = styled.Text`
-  font-size: 18px;
-`
-
-export const AdminCard = styled.View`
-  width: 370px;
-  height: 100px;
-  border-color: ${secondary};
-  border: 1px;
-  margin-left: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-`
-export const AdminContainer = styled.View`
-  flex: 1;
-  padding-top: ${StatusBarHeight + 90}px;
-  background-color: ${primary};
-`
 export const StreamCard = styled.View`
   width: 370px;
   height: 50px;
@@ -385,4 +366,86 @@ export const StreamCard = styled.View`
   margin-bottom: 10px;
 `
 
+export const AdminContent = styled.Text`
 
+  font-size: 18px;
+
+`
+
+export const AdminCard = styled.View`
+
+  width: 370px;
+
+  height: 100px;
+
+  border-color: ${secondary};
+
+  border: 1px;
+
+  margin-left: 20px;
+
+  margin-top: 10px;
+
+  margin-bottom: 10px;
+
+`
+
+export const AdminContainer = styled.View`
+
+  flex: 1;
+
+  padding-top: ${StatusBarHeight + 90}px;
+
+  background-color: ${primary};
+`
+
+
+export const SBox = styled.View`
+
+  width: 340px;
+
+  height: 200px;
+
+  border-color: ${secondary};
+
+  border: 3px;
+
+  margin-left: 10px;
+
+  margin-top: 15px;
+
+  margin-bottom: 10px;
+
+  border-radius: 10px;
+
+`
+
+export const SStyledButton = styled.TouchableOpacity`
+  background-color: ${brand};
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin: 10px;
+  height: 55px;
+  margin-top: 50px;
+  `
+  
+export const Comments = styled.View`
+  width: 200px;
+  height: 100px;
+  border-color: ${secondary};
+  border: 1px;
+  margin-bottom: 50px;
+  align-items: center;
+  margin-left: 80px;
+`
+export const SAStyledButton = styled.TouchableOpacity`
+  background-color: ${primary};
+  justify-content: center;
+  border: 2px;
+  border-color: ${brand};
+  align-items: center;
+  border-radius: 5px;
+  margin: 5px;
+  height: 70px;
+  `

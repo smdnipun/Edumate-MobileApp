@@ -20,13 +20,20 @@ AsyncStorage.getItem('user').then((value) => {
   userId = value
 })
 
-export default function ResetPassword() {
+export default function ResetPassword({ navigation }) {
   const [oldPwd, setOldPwd] = useState('')
   const [newPwd, setNewPwd] = useState('')
   const [newrPwd, setNewrPwd] = useState('')
 
   const [message, setMessage] = useState()
   const [messageType, setMessageType] = useState()
+
+  const Logout = async () => {
+    await AsyncStorage.removeItem('user')
+    await AsyncStorage.removeItem('file')
+    await AsyncStorage.clear()
+    navigation.navigate('Login')
+  }
 
   const handleSubmit = async () => {
     handleMessage(null)
@@ -54,6 +61,7 @@ export default function ResetPassword() {
           .then((res) => {
             if (res.data === 'Password Reset') {
               alert('Password Updated Successfully')
+              Logout()
             } else if (res.data.message === 'Wrong Password') {
               handleMessage('Incorrect existing password', 'FAILED')
             } else {

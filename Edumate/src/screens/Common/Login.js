@@ -48,7 +48,7 @@ export default function Login({ navigation }) {
           const result = res.data.details
           AsyncStorage.setItem('user', result._id)
           if (result.type == 'student' || result.type == 'Student') {
-            navigation.replace('User')
+            navigation.replace('StudentStack')
           } else if (result.type == 'teacher' || result.type == 'Teacher') {
             navigation.replace('Teacher')
           } else if (result.type == 'Admin' || result.type == 'Admin') {

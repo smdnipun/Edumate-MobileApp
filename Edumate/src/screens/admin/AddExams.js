@@ -139,14 +139,14 @@ export const AddExams = () => {
               value={day.toLocaleDateString()}
               // onChangeText={(date) => setDate(date)}
             />
-       <InputCd
+           <InputCd
               placeholder='Start time'
               placeholderTextColor={darkLight}
               icon='clock'
               command={showTimepicker}
               value={day.toLocaleTimeString()}
             />
-       <InputCd
+            <InputCd
               placeholder='End time'
               placeholderTextColor={darkLight}
               icon='clock'
