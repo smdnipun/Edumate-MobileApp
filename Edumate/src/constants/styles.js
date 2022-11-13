@@ -231,7 +231,7 @@ export const ButtonTextWhite = styled.Text`
 export const MsgBox = styled.Text`
   font-size: 20px;
   text-align: center;
-  font-size: 13px;
+  font-size: 16px;
   color: red;
 `
 

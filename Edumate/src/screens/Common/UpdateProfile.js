@@ -33,7 +33,7 @@ export default function UpdateProfile({ navigation }) {
   const [messageType, setMessageType] = useState()
 
   const validateDate = date
-  var linkDate = validateDate.toLocaleDateString('en-GB')
+  var linkDate = validateDate.toLocaleDateString('en-US')
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate
@@ -69,16 +69,16 @@ export default function UpdateProfile({ navigation }) {
 
   const handleSubmit = async () => {
     handleMessage(null)
-    if (linkDate == new Date().toLocaleDateString('en-GB')) {
+    if (linkDate == new Date().toLocaleDateString('en-US')) {
       linkDate = dob
     }
     const data = {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      dob: linkDate,
+      dateOfBirth: linkDate,
     }
-    if (data.firstName == '' || data.lastName == '' || data.email == '' ) {
+    if (data.firstName == '' || data.lastName == '' || data.email == '') {
       handleMessage('Please fill all the fields', 'FAILED')
     } else {
       await axios

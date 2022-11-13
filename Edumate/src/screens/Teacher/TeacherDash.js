@@ -112,9 +112,10 @@ export const TeacherDash = ({ navigation }) => {
       })
   }
 
-  const Logout = () => {
-    AsyncStorage.removeItem('user')
-    AsyncStorage.removeItem('file')
+  const Logout = async () => {
+    await AsyncStorage.removeItem('user')
+    await AsyncStorage.removeItem('file')
+    await AsyncStorage.clear()
     navigation.navigate('Login')
   }
 
