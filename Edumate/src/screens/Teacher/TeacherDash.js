@@ -71,16 +71,19 @@ export const TeacherDash = ({ navigation }) => {
   const drawer = useRef(null)
   const [link, setlink] = useState([])
   const [note, setNote] = useState([])
+  const [refreshing, setRefreshing] = useState(true)
 
   const loadNotes = async () => {
     const url = `https://edumate-backend.herokuapp.com/teacherNote/get/${userId}`
     await axios.get(url).then((res) => {
+      setRefreshing(false)
       setNote(res.data)
     })
   }
   const loadLinks = async () => {
     const url = `https://edumate-backend.herokuapp.com/link`
     await axios.get(url).then((res) => {
+      setRefreshing(false)
       setlink(res.data)
     })
   }
@@ -161,13 +164,14 @@ export const TeacherDash = ({ navigation }) => {
       </LogoutBtn>
     </View>
   )
+  // const wait = (timeout) => {
+  //   return new Promise((resolve) => setTimeout(resolve, timeout))
+  // }
 
-  const [refreshing, setRefreshing] = useState(false)
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    wait(1000).then(() => setRefreshing(false));
-  },[])
-  
+  // const onRefresh = useCallback(() => {
+  //   setRefreshing(true)
+  //   wait(2000).then(() => setRefreshing(false))
+  // }, [])
 
   return (
     <DrawerLayoutAndroid
@@ -201,11 +205,8 @@ export const TeacherDash = ({ navigation }) => {
             </DiscoverTitle>
             <ScrollView
               refreshControl={
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={onRefresh}
-                />
-            }
+                <RefreshControl refreshing={refreshing} onRefresh={loadNotes} />
+              }
             >
               {note.map((notes) => {
                 return (
@@ -273,7 +274,11 @@ export const TeacherDash = ({ navigation }) => {
                 <Octicons size={30} color={primary} name='chevron-down' />
               </DashButton>
             </DiscoverTitle>
-            <ScrollView>
+            <ScrollView
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={loadLinks} />
+              }
+            >
               {link.map((links) => {
                 return (
                   <>

@@ -8,6 +8,7 @@ import {
   TextInput,
   Platform,
   ScrollView,
+  Linking
 } from 'react-native'
 import axios from 'axios'
 import { Input } from '../../constants/InputField'
@@ -112,7 +113,9 @@ export const Answers = ({navigation}) => {
                         >
                           <Octicons size={20} color={darkLight} name='pencil' />
                         </TeacherDashContentButton>
-                        <TeacherDashContentButton>
+                        <TeacherDashContentButton
+                          onPress={() => Linking.openURL(answer.image)}
+                        >
                           <Octicons
                             size={20}
                             color={darkLight}

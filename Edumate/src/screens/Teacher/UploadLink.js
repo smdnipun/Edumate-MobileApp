@@ -19,7 +19,7 @@ import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 
 const { brand, darkLight, primary } = colors
 
-export const UploadLink = () => {
+export const UploadLink = ({navigation}) => {
   const [subject, setSubject] = useState([])
   const [selectedSubject, setSelectedSubject] = useState('')
   const [lesson_name, setLesson] = useState('')
@@ -83,15 +83,7 @@ export const UploadLink = () => {
   }, [])
 
   const onChangeHandler = () => {
-    if (
-      subject == '' ||
-      lesson_name == '' ||
-      grade == '' ||
-      link == '' ||
-      date == '' ||
-      time == '' ||
-      teacher_id == ''
-    ) {
+    if (lesson_name == '' || grade == '' || link == '') {
       alert('Please fill the given fields')
     } else {
       const url = `https://edumate-backend.herokuapp.com/link/add`
