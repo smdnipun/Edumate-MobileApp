@@ -22,4 +22,3 @@ const teacherNotesSchema = new mongoose.Schema({
 })
 
 export default mongoose.model('teacherNotes', teacherNotesSchema)
-A
