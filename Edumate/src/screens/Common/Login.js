@@ -24,10 +24,10 @@ import {
 
 const { darkLight, black } = colors
 
-AsyncStorage.setItem('user', '')
-AsyncStorage.removeItem('user')
-AsyncStorage.removeItem('file')
-AsyncStorage.clear()
+// AsyncStorage.setItem('user', '')
+// AsyncStorage.removeItem('user')
+// AsyncStorage.removeItem('file')
+// AsyncStorage.clear()
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('')
