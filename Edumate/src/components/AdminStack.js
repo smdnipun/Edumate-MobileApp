@@ -29,34 +29,33 @@ const Stack = createNativeStackNavigator()
 
 export const AdminStack = () => {
   return (
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: 'transparent',
-          },
-          // headerTintColor: tertiary,
-          headerTransparent: true,
-          headerTitle: '',
-          headerBackTitleVisible: false,
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: 'transparent',
+        },
+        // headerTintColor: tertiary,
+        headerTransparent: true,
+        headerTitle: '',
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen
+        name='Adminhome'
+        component={Adminhome}
+        options={{
+          headerShown: false,
         }}
-      >
-        <Stack.Screen
-          name='Adminhome'
-          component={Adminhome}
-          options={{
-            headerShown: false,
-          }}
-        />
-         <Stack.Screen name='addstream' component={AddStreams} />
-         <Stack.Screen name='addsubject' component={AddSubjects} />
-         <Stack.Screen name='addexam' component={AddExams} />
-         <Stack.Screen name='UpdateSubject' component={UpdateSubject} />
-         <Stack.Screen name='UpdateStream' component={UpdateStream} />
-         <Stack.Screen name='UpdateExam' component={UpdateExam} />
-         <Stack.Screen name='getstreams'component={Streams}/>
-         <Stack.Screen name='getsubjects' component={Subjects} />
-         <Stack.Screen name='getexams' component={Exams} />   
-
+      />
+      <Stack.Screen name='addstream' component={AddStreams} />
+      <Stack.Screen name='addsubject' component={AddSubjects} />
+      <Stack.Screen name='addexam' component={AddExams} />
+      <Stack.Screen name='UpdateSubject' component={UpdateSubject} />
+      <Stack.Screen name='UpdateStream' component={UpdateStream} />
+      <Stack.Screen name='UpdateExam' component={UpdateExam} />
+      <Stack.Screen name='getstreams' component={Streams} />
+      <Stack.Screen name='getsubjects' component={Subjects} />
+      <Stack.Screen name='getexams' component={Exams} />
     </Stack.Navigator>
   )
 }

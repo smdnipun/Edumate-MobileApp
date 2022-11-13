@@ -8,7 +8,7 @@ import {
   Platform,
   ScrollView,
   Image,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native'
 import axios from 'axios'
 import { Input } from '../../constants/InputField'
@@ -41,25 +41,33 @@ const { brand, darkLight, primary } = colors
 const API_URL =
   Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
-export const Subjects = ( {navigation}) => {
+export const Subjects = ({ navigation }) => {
   const drawer = useRef(null)
 
   const [subjects, setSubjects] = useState([])
 
   const [isError, setIsError] = useState(false)
   const [message, setMessage] = useState('')
-  
+
   const deleteSubject = (id) => {
-    axios.delete(`https://edumate-backend.herokuapp.com/subject/${id}`)
+    axios
+      .delete(`https://edumate-backend.herokuapp.com/subject/${id}`)
+      .then((res) => {
+        alert('Successfully deleted')
+        loadDate()
+      })
   }
 
- 
   useEffect(() => {
+    loadDate()
+  }, [])
+
+  const loadDate = () => {
     const url = `https://edumate-backend.herokuapp.com/subject/`
-     axios.get(url).then((res) => {
-        setSubjects(res.data)
+    axios.get(url).then((res) => {
+      setSubjects(res.data)
     })
-  },[])
+  }
 
   const Logout = () => {
     AsyncStorage.removeItem('user')
@@ -107,16 +115,16 @@ export const Subjects = ( {navigation}) => {
   )
 
   return (
-  <DrawerLayoutAndroid
-    ref={drawer}
-    drawerWidth={300}
-    drawerPosition={'right'}
-    renderNavigationView={navigationView}
+    <DrawerLayoutAndroid
+      ref={drawer}
+      drawerWidth={300}
+      drawerPosition={'right'}
+      renderNavigationView={navigationView}
     >
-    <AdminContainer>
-      <StatusBar style='dark' />
-      <View>
-      <PageTitle>Subjects</PageTitle>
+      <AdminContainer>
+        <StatusBar style='dark' />
+        <View>
+          <PageTitle>Subjects</PageTitle>
           <DrawerIcon>
             <TouchableOpacity
               title='Open drawer'
@@ -128,48 +136,55 @@ export const Subjects = ( {navigation}) => {
             </TouchableOpacity>
           </DrawerIcon>
         </View>
-      <InnerContainer>
-        <View>
-          <ScrollView>
-            {subjects.map((e) => {
-              return (
-                <>
-                  <AdminCard id={e._id}>
-                    <TeacherCardRow>
-                      <TeacherCardColumn>
-                        <AdminContent>
-                          Stream : {e.streamname}
-                        </AdminContent>
-                        <AdminContent>
-                          Subject : {e.subjectname}
-                        </AdminContent>
-                      </TeacherCardColumn>
-                      <TeacherCardColumn>
-                      <TeacherDashContentButton
-                        onPress={() => {
-                          navigation.navigate('UpdateSubject',{id:e._id})
-                        }}>
-                        <Octicons size={20} color={darkLight} name='pencil' />
-                      </TeacherDashContentButton> 
-                      <TeacherDashContentButton
-                          onPress={() => {
-                            deleteSubject(e._id)
-                          }}
-                        >
-                          <Octicons size={20} color={darkLight} name='trash' />
-                        </TeacherDashContentButton>          
-                      </TeacherCardColumn>
-                    </TeacherCardRow>
-                  </AdminCard>
-                </>
-              )
-            })}
-          </ScrollView>
+        <InnerContainer>
+          <View>
+            <ScrollView>
+              {subjects.map((e) => {
+                return (
+                  <>
+                    <AdminCard id={e._id}>
+                      <TeacherCardRow>
+                        <TeacherCardColumn>
+                          <AdminContent>Stream : {e.streamname}</AdminContent>
+                          <AdminContent>Subject : {e.subjectname}</AdminContent>
+                        </TeacherCardColumn>
+                        <TeacherCardColumn>
+                          <TeacherDashContentButton
+                            onPress={() => {
+                              navigation.navigate('UpdateSubject', {
+                                id: e._id,
+                              })
+                            }}
+                          >
+                            <Octicons
+                              size={20}
+                              color={darkLight}
+                              name='pencil'
+                            />
+                          </TeacherDashContentButton>
+                          <TeacherDashContentButton
+                            onPress={() => {
+                              deleteSubject(e._id)
+                            }}
+                          >
+                            <Octicons
+                              size={20}
+                              color={darkLight}
+                              name='trash'
+                            />
+                          </TeacherDashContentButton>
+                        </TeacherCardColumn>
+                      </TeacherCardRow>
+                    </AdminCard>
+                  </>
+                )
+              })}
+            </ScrollView>
 
-          <View></View>
-        </View>
-      </InnerContainer>
-    </AdminContainer>
+            <View></View>
+          </View>
+        </InnerContainer>
+      </AdminContainer>
     </DrawerLayoutAndroid>
   )
 }
@@ -205,7 +220,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#E14545',
   },
 })
-   
-
-
-   

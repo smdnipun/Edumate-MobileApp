@@ -8,7 +8,7 @@ import {
   Platform,
   ScrollView,
   Image,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native'
 import axios from 'axios'
 import { Input } from '../../constants/InputField'
@@ -40,8 +40,7 @@ const { brand, darkLight, primary } = colors
 const API_URL =
   Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
-export const Streams = ( {navigation} ) => 
-{
+export const Streams = ({ navigation }) => {
   const drawer = useRef(null)
 
   const [streams, setStreams] = useState([])
@@ -52,7 +51,7 @@ export const Streams = ( {navigation} ) =>
   const loadStreams = async () => {
     const url = `https://edumate-backend.herokuapp.com/stream/`
     await axios.get(url).then((res) => {
-        setStreams(res.data)
+      setStreams(res.data)
     })
   }
 
@@ -111,15 +110,15 @@ export const Streams = ( {navigation} ) =>
 
   return (
     <DrawerLayoutAndroid
-    ref={drawer}
-    drawerWidth={300}
-    drawerPosition={'right'}
-    renderNavigationView={navigationView}
+      ref={drawer}
+      drawerWidth={300}
+      drawerPosition={'right'}
+      renderNavigationView={navigationView}
     >
-    <AdminContainer>
-      <StatusBar style='dark' />
-      <View>
-      <PageTitle>Streams</PageTitle>
+      <AdminContainer>
+        <StatusBar style='dark' />
+        <View>
+          <PageTitle>Streams</PageTitle>
           <DrawerIcon>
             <TouchableOpacity
               title='Open drawer'
@@ -131,38 +130,41 @@ export const Streams = ( {navigation} ) =>
             </TouchableOpacity>
           </DrawerIcon>
         </View>
-      <InnerContainer>
-        <View>
-          <ScrollView>
-            {streams.map((e) => {
-              return (
-                <>
-                  <StreamCard id={e._id}>
-                    <TeacherCardRow>
-                      <TeacherCardColumn>
-                        <AdminContent>
-                          {e.streamname}
-                        </AdminContent>
-                      </TeacherCardColumn>
-                      <TeacherCardColumn>
-                      <TeacherDashContentButton
-                        onPress={() => {
-                          navigation.navigate('UpdateStream',{id:e._id})
-                        }}>
-                        <Octicons size={20} color={darkLight} name='pencil' />
-                      </TeacherDashContentButton>        
-                      </TeacherCardColumn>
-                    </TeacherCardRow>
-                  </StreamCard>
-                </>
-              )
-            })}
-          </ScrollView>
+        <InnerContainer>
+          <View>
+            <ScrollView>
+              {streams.map((e) => {
+                return (
+                  <>
+                    <StreamCard id={e._id}>
+                      <TeacherCardRow>
+                        <TeacherCardColumn>
+                          <AdminContent>{e.streamname}</AdminContent>
+                        </TeacherCardColumn>
+                        <TeacherCardColumn>
+                          <TeacherDashContentButton
+                            onPress={() => {
+                              navigation.navigate('UpdateStream', { id: e._id })
+                            }}
+                          >
+                            <Octicons
+                              size={20}
+                              color={darkLight}
+                              name='pencil'
+                            />
+                          </TeacherDashContentButton>
+                        </TeacherCardColumn>
+                      </TeacherCardRow>
+                    </StreamCard>
+                  </>
+                )
+              })}
+            </ScrollView>
 
-          <View></View>
-        </View>
-      </InnerContainer>
-    </AdminContainer>
+            <View></View>
+          </View>
+        </InnerContainer>
+      </AdminContainer>
     </DrawerLayoutAndroid>
   )
 }
@@ -198,4 +200,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#E14545',
   },
 })
-   
