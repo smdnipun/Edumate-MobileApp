@@ -216,7 +216,6 @@ export const DrawerBtn = styled.TouchableOpacity`
   border-radius: 5px;
   height: 40px;
   padding: 10px;
-  border-style: dashed;
 `
 
 export const ButtonText = styled.Text`
@@ -318,7 +317,7 @@ export const DashButton = styled.TouchableOpacity`
   z-index: 1;
 `
 export const TeacherCard = styled.View`
-  width: 370px;
+  width: 360px;
   height: 200px;
   border-color: ${secondary};
   border: 1px;
@@ -357,4 +356,13 @@ export const StyledTextInputComment = styled.TextInput`
   height: 200px;
   margin-bottom: 70px;
   color: ${tertiary};
+`
+export const Comments = styled.View`
+  width: 200px;
+  height: 100px;
+  border-color: ${secondary};
+  border: 1px;
+  margin-bottom: 50px;
+  align-items: center;
+  margin-left: 80px;
 `
