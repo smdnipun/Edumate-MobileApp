@@ -70,7 +70,6 @@ export const UploadNote = ({ navigation }) => {
       })
       .then((res) => {
         setSubject(res.data)
-        // console.log(res.data)
       })
   }
 
@@ -116,13 +115,8 @@ export const UploadNote = ({ navigation }) => {
   //   )
   // }
 
-  const onChangeHandler =async () => {
-    if (
-      subject == '' ||
-      lesson_name == '' ||
-      grade == '' ||
-      note == '' 
-    ) {
+  const onChangeHandler = async () => {
+    if (subject == '' || lesson_name == '' || grade == '' || note == '') {
       alert('Please fill the given fields')
     } else {
       uploadFile()
@@ -133,9 +127,8 @@ export const UploadNote = ({ navigation }) => {
         note: file,
         teacher_id: userId,
       }
-      console.log(data)
       const url = `https://edumate-backend.herokuapp.com/teacherNote/add`
-     await axios.post(url, data).then((res) => {
+      await axios.post(url, data).then((res) => {
         alert('Note added')
         navigation.navigate('TeacherDash')
       })

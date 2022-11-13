@@ -97,7 +97,6 @@ export const PaperMarking = ({ route, navigation }) => {
     comment,
     markedBy: '636cbe0453ef6c69dc31e041',
   }
-  console.log(status)
 
   const addMarks = async () => {
    

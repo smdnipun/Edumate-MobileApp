@@ -123,7 +123,6 @@ export const UpdateNote = ({ route,navigation }) => {
         note: file,
         teacher_id
       }
-      console.log(data)
       const url = `https://edumate-backend.herokuapp.com/teacherNote/${id}`
       axios.put(url, data).then((res) => {
         alert('Note updated')

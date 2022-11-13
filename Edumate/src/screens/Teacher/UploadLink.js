@@ -64,7 +64,6 @@ export const UploadLink = ({navigation}) => {
     link,
     teacher_id: '515',
   }
-  console.log(data)
 
   const userStream = 'Science'
   const loadSubject = () => {
@@ -74,7 +73,6 @@ export const UploadLink = ({navigation}) => {
       })
       .then((res) => {
         setSubject(res.data)
-        // console.log(res.data)
       })
   }
 
@@ -88,7 +86,6 @@ export const UploadLink = ({navigation}) => {
     } else {
       const url = `https://edumate-backend.herokuapp.com/link/add`
       axios.post(url, data).then((res) => {
-        console.log('done')
         alert('Link added')
         navigation.navigate('TeacherDash')
       })

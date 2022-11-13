@@ -113,6 +113,7 @@ export const TeacherDash = ({ navigation }) => {
   }
 
   const Logout = async () => {
+    await AsyncStorage.setItem('user', '')
     await AsyncStorage.removeItem('user')
     await AsyncStorage.removeItem('file')
     await AsyncStorage.clear()

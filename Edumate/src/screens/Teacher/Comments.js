@@ -79,7 +79,6 @@ export const Comment = ({ route, navigation }) => {
       .get(`https://edumate-backend.herokuapp.com/teacherNote/${id}`)
       .then((res) => {
         setNote(res.data.note)
-        console.log(res.data)
       })
   }
   useEffect(() => {
@@ -98,7 +97,6 @@ export const Comment = ({ route, navigation }) => {
               return (
                 <>
                   <TeacherCard key={data._id}>
-                    
                     <SubTitle>Student : {data.studentName}</SubTitle>
                     <SubTitle1></SubTitle1>
                     <Comments>

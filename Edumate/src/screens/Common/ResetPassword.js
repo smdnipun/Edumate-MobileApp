@@ -29,6 +29,7 @@ export default function ResetPassword({ navigation }) {
   const [messageType, setMessageType] = useState()
 
   const Logout = async () => {
+    await AsyncStorage.setItem('user', '')
     await AsyncStorage.removeItem('user')
     await AsyncStorage.removeItem('file')
     await AsyncStorage.clear()
@@ -52,7 +53,6 @@ export default function ResetPassword({ navigation }) {
       if (newPwd != newrPwd) {
         handleMessage('Password Mismatch!!!', 'FAILED')
       } else {
-        console.log(data)
         await axios
           .put(
             `https://edumate-backend.herokuapp.com/api/auth/updatePwd/${userId}`,
