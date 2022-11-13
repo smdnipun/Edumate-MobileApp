@@ -22,6 +22,7 @@ import {
 } from '../../constants/styles.js'
 import { StatusBar } from 'expo-status-bar'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import { Picker } from '@react-native-picker/picker'
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 
 const { brand, darkLight, primary } = colors
@@ -29,7 +30,8 @@ const { brand, darkLight, primary } = colors
 
 export const AddExams = () => {
 
-    const [day, setDay] = useState('');
+    const [day, setDay] = useState(new Date());
+    const [day1, setDay1] = useState(new Date());
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
     const [stream, setStream] = useState('');
@@ -38,17 +40,22 @@ export const AddExams = () => {
     
     const [subjects, setSubjects] = useState([]);
     const [streams, setStreams] = useState([]);
-      
-    const validateDate = date
-    var examdate = validateDate.toLocaleDateString('en-GB')
-    var begin = validateDate.toLocaleTimeString('en-GB')
-    var stop = validateDate.toLocaleTimeString('en-GB')
 
+    const validateDate = day
+    var begin = validateDate.toLocaleDateString('en-GB')
+  
+    var begint = validateDate.toLocaleTimeString('en-GB')
+
+    const validateDate1 = day1
+  
+    var endtime = validateDate1.toLocaleTimeString('en-GB')
+
+      
     const formData = 
     {
-       day: examdate,
-       start: begin,
-       end : stop,
+       day:begin,
+       start: begint ,
+       end: endtime,
        stream,
        subject,
        grade
@@ -86,10 +93,28 @@ export const AddExams = () => {
       loadSubjects()
     })
 
+    const onChange = (event, selectedDate) => {
+      const currentDate = selectedDate
+      setDay(currentDate)
+    }
+  
     const showMode = (currentMode) => {
       DateTimePickerAndroid.open({
-        value: date,
+        value: day,
         onChange,
+        mode: currentMode,
+      })
+    }
+
+    const onChange1 = (event, selectedDate) => {
+      const currentDate = selectedDate
+      setDay1(currentDate)
+    }
+  
+    const showMode1 = (currentMode) => {
+      DateTimePickerAndroid.open({
+        value: day1,
+        onChange1,
         mode: currentMode,
       })
     }
@@ -109,51 +134,40 @@ export const AddExams = () => {
           <InputCd
               placeholder='Date'
               placeholderTextColor={darkLight}
-              onChangeText={(day) => setDay(day)}
+              icon='calendar'
               command={showDatepicker}
+              value={day.toLocaleDateString()}
               // onChangeText={(date) => setDate(date)}
-              value={date.toLocaleDateString()}
             />
        <InputCd
               placeholder='Start time'
               placeholderTextColor={darkLight}
+              icon='clock'
               command={showTimepicker}
-              // onChangeText={(time) => setTime(time)}
-              value={date.toLocaleTimeString()}
-              onChangeText={(start) => setStart(start)}
+              value={day.toLocaleTimeString()}
             />
        <InputCd
               placeholder='End time'
               placeholderTextColor={darkLight}
+              icon='clock'
               command={showTimepicker}
-              // onChangeText={(time) => setTime(time)}
-              value={date.toLocaleTimeString()}
-              onChangeText={(end) => setEnd(end)}
+              value={day1.toLocaleTimeString()}
             />
-      <Picker
+             <InputCd
               placeholder='Stream'
-              selectedValue={stream}
-              onValueChange={(itemValue, itemIndex) => setStream(itemValue)}
-            >
-              {streams.map((s)=>{
-                return(
-                  <Picker.Item  value={s.streamname} />
-                )
-              })}
-            
-      </Picker>
-      <Picker
+              value={stream}
+              placeholderTextColor={darkLight}
+              // onChangeText={(time) => setTime(time)}
+              onChangeText={(stream) => setStream(stream)}
+            />
+             <InputCd
               placeholder='Subject'
-              selectedValue={subject}
-              onValueChange={(itemValue, itemIndex) => setSubject(itemValue)}
-            >
-              {subjects.map((s)=>{
-                return(
-                  <Picker.Item  value={s.subjectname} />
-                )
-              })}
-            
-            </Picker>
+              value={subject}
+              placeholderTextColor={darkLight}
+              // onChangeText={(time) => setTime(time)}
+              onChangeText={(subject) => setSubject(subject)}
+            />
+
             <Picker
               placeholder='Grade'
               selectedValue={grade}
@@ -170,12 +184,12 @@ export const AddExams = () => {
     );   
 }
 
-export const InputCd = ({ label, icon, ...props }) => {
+export const InputCd = ({ label, icon, command,...props }) => {
   return (
     <View>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextInput {...props} />
-      <RightIcon>
+      <RightIcon onPress={command}>
         <Octicons name={icon} size={30}  />
       </RightIcon>
     </View>
@@ -199,4 +213,3 @@ const styles = StyleSheet.create({
     fontSize:30,
   },
 });
-

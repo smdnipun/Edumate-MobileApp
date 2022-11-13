@@ -192,6 +192,8 @@ export const StyledButtoWhite = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
   color: ${primary};
   font-size: 16px;
+  justify-content: center;
+  text-align: center;
 `
 
 export const ButtonTextWhite = styled.Text`
@@ -286,6 +288,7 @@ export const DashButton = styled.TouchableOpacity`
   top: 10.5px;
   position: absolute;
   z-index: 1;
+  justify-content: center;
 `
 export const TeacherCard = styled.View`
   width: 370px;

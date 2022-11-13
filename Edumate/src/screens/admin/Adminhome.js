@@ -3,31 +3,43 @@ import { StyleSheet, View, SafeAreaView, Text, Button} from 'react-native';
 import {
   DashButton,
   ButtonText,
+  StyledButton,
 } from '../../constants/styles.js'
 
 const Separator = () => (
   <View style={styles.separator} />
 );
-
-export const Adminhome = () => {
+export const Adminhome = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
           <View style={styles.btnview}>
-          <DashButton>
-            <Text style= {styles.textst}>Stream Management</Text>
-         </DashButton>         
+          <StyledButton
+           onPress={() => {
+            navigation.navigate('getstreams')
+          }}
+          >
+          <ButtonText>Stream Management</ButtonText>
+         </StyledButton>         
           </View>
       <Separator />
            <View style={styles.btnview}>
-           <DashButton>
-              <Text style= {styles.textst}>Subject Management</Text>
-           </DashButton>   
+           <StyledButton
+           onPress={() => {
+            navigation.navigate('getsubjects')
+          }}
+           >
+              <ButtonText>Subject Management</ButtonText>
+           </StyledButton>   
           </View>
       <Separator />
           <View style={styles.btnview}>
-          <DashButton>
-            <Text style= {styles.textst}>Exam Management</Text>
-         </DashButton>  
+          <StyledButton
+          onPress={() => {
+            navigation.navigate('getexams')
+          }}
+          >
+          <ButtonText>Exam Management</ButtonText>
+         </StyledButton>  
           </View>
       <Separator />
     </SafeAreaView>

@@ -43,7 +43,7 @@ const { brand, darkLight, primary } = colors
 const API_URL =
   Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
-export const UpdateSubject = ({ route, navigation }) => {
+export const UpdateExam = ({ route, navigation }) => {
 
     const [day, setDay] = useState('');
     const [start, setStart] = useState('');

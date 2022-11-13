@@ -1,5 +1,4 @@
 import React from 'react'
-import { RootStack } from './src/components/RootStack'
 import { TeacherStack } from './src/components/TeacherStack'
 import FirstSrn from './src/screens/Common/FirstSrn'
 import { Login } from './src/screens/Common/Login'
@@ -23,12 +22,11 @@ import {
   ProfileScreen,
   RootStack,
 } from './src/components/RootStack'
-import FirstSrn from './src/screens/Common/FirstSrn'
-import { Login } from './src/screens/Common/Login'
 import { AddExams } from './src/screens/admin/AddExams'
 import { Exams } from './src/screens/admin/Exams'
 import { Subjects } from './src/screens/admin/Subjects'
 import { Streams } from './src/screens/admin/Streams'
+import { TeacherDash } from './src/screens/Teacher/TeacherDash'
 
 export default function App() {
   return (

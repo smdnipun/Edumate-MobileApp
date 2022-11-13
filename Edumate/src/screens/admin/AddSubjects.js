@@ -62,7 +62,7 @@ export const AddSubjects = () => {
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.text}> Add Subject </Text>
-          <Picker
+          {/* <Picker
               selectedValue={streamname}
               onValueChange={(itemValue, itemIndex) => setStreamname(itemValue)}
             >
@@ -72,13 +72,18 @@ export const AddSubjects = () => {
                 )
               })}
             
-            </Picker>
+            </Picker> */}
+            <InputCd
+              placeholder='Stream Name'
+              placeholderTextColor={darkLight}
+              value={streamname}
+              onChangeText={(streamname) => setStreamname(streamname)}
+            />
               <InputCd
               placeholder='Subject Name'
               placeholderTextColor={darkLight}
               value={subjectname}
               onChangeText={(subjectname) => setSubjectname(subjectname)}
-
             />
           <StyledButton onPress={onChangeHandler}>
                  <ButtonText>Add</ButtonText>
