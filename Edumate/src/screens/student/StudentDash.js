@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import { Octicons, Ionicons, Fontisto } from "@expo/vector-icons";
 import {
   ButtonText,
   DrawerBtn,
@@ -12,42 +12,47 @@ import {
   StyledContainer,
   colors,
 } from "../../constants/styles";
-import {Text,DrawerLayoutAndroid,View, Image, TouchableOpacity,StyleSheet} from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import {
+  Text,
+  DrawerLayoutAndroid,
+  View,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const { brand, darkLight, primary } = colors
+const { brand, darkLight, primary } = colors;
 
+var userId = "636fa108822e88b4ac2ef253";
+AsyncStorage.getItem("user").then((value) => {
+  userId = value;
+});
 
-var userId = '636fa108822e88b4ac2ef253'
-AsyncStorage.getItem('user').then((value) => {
-  userId = value
-})
-
-export const StudentDash = ({navigation}) => {
-
+export const StudentDash = ({ navigation }) => {
   const drawer = useRef(null);
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [dob, setDob] = useState('')
-  const [role, setRole] = useState('')
-  const [stream, setStream] = useState('')
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [dob, setDob] = useState("");
+  const [role, setRole] = useState("");
+  const [stream, setStream] = useState("");
 
   useEffect(() => {
-    loadData()
-  }, [])
+    loadData();
+  }, []);
   const loadData = async () => {
     await axios
       .get(`https://edumate-backend.herokuapp.com/api/users/${userId}`)
       .then((res) => {
-        const name = res.data.firstName + ' ' + res.data.lastName
-        setName(name)
-        setEmail(res.data.email)
-        setDob(res.data.dateOfBirth)
-        setRole(res.data.type)
-        setStream(res.data.stream)
-      })
-  }
+        const name = res.data.firstName + " " + res.data.lastName;
+        setName(name);
+        setEmail(res.data.email);
+        setDob(res.data.dateOfBirth);
+        setRole(res.data.type);
+        setStream(res.data.stream);
+      });
+  };
 
   const Logout = () => {
     AsyncStorage.removeItem("user");
@@ -83,14 +88,12 @@ export const StudentDash = ({navigation}) => {
   console.log(userId);
   return (
     <DrawerLayoutAndroid
-    ref={drawer}
-    drawerWidth={300}
-    drawerPosition={"right"}
-    renderNavigationView={navigationView}
-  >
-
-    <StyledContainer>
-    <View>
+      ref={drawer}
+      drawerWidth={300}
+      drawerPosition={"right"}
+      renderNavigationView={navigationView}
+    >
+        <View>
           {/* <PageTitle>Edumate</PageTitle> */}
           <DrawerIcon>
             <TouchableOpacity
@@ -103,30 +106,31 @@ export const StudentDash = ({navigation}) => {
             </TouchableOpacity>
           </DrawerIcon>
         </View>
-      <SBox>
-        <Text>Name</Text>
-        <Text>{name}</Text>
-        <Text>Email</Text>
-        <Text>{email}</Text>
-        <Text>Stream</Text>
-        <Text>{stream}</Text>
-      </SBox>
-      <SStyledButton
-        onPress={() => {
-          navigation.navigate("SSubject");
-        }}
-      >
-        <ButtonText>Subjects</ButtonText>
-      </SStyledButton>
-      <SStyledButton
-        onPress={() => {
-          navigation.navigate("StudentExamTimeTable");
-        }}
-      >
-        <ButtonText>Exams</ButtonText>
-      </SStyledButton>
-    </StyledContainer>
-  </DrawerLayoutAndroid>
+      <StyledContainer>
+        <SBox>
+          <Text style={styles.userl}>Name</Text>
+          <Text  style={styles.userd}>{name}</Text>
+          <Text  style={styles.userl}>Email</Text>
+          <Text  style={styles.userd}>{email}</Text>
+          <Text  style={styles.userl}>Stream</Text>
+          <Text  style={styles.userd}>{stream}</Text>
+        </SBox>
+        <SStyledButton
+          onPress={() => {
+            navigation.navigate("SSubject");
+          }}
+        >
+          <ButtonText>Subjects</ButtonText>
+        </SStyledButton>
+        <SStyledButton
+          onPress={() => {
+            navigation.navigate("StudentExamTimeTable");
+          }}
+        >
+          <ButtonText>Exams</ButtonText>
+        </SStyledButton>
+      </StyledContainer>
+    </DrawerLayoutAndroid>
   );
 };
 
@@ -160,5 +164,12 @@ const styles = StyleSheet.create({
   btnLogout: {
     backgroundColor: "#E14545",
   },
+  userl:{
+    marginTop:10,
+    fontWeight:"bold",
+    marginLeft:10
+  },
+  userd:{
+    marginLeft:40
+  }
 });
-

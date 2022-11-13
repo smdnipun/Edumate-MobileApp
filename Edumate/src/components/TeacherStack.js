@@ -41,14 +41,14 @@ export const TeacherStack = () => {
           name='UploadLink'
           component={UploadLink}
           options={{
-            headerShown: false,
+            
           }}
         />
         <Stack.Screen
           name='UploadNote'
           component={UploadNote}
           options={{
-            headerShown: false,
+          
           }}
         />
         <Stack.Screen name='UpdateLink' component={UpdateLink} options={{}} />
@@ -56,14 +56,14 @@ export const TeacherStack = () => {
           name='UpdateNote'
           component={UpdateNote}
           options={{
-            headerShown: false,
+         
           }}
         />
         <Stack.Screen
           name='Comments'
           component={Comment}
           options={{
-            headerShown: false,
+            
           }}
         />
         <Stack.Screen
@@ -75,7 +75,7 @@ export const TeacherStack = () => {
           name='Answer'
           component={Answers}
           options={{
-            headerShown: false,
+          
           }}
         />
         <Stack.Screen

@@ -16,7 +16,7 @@ export const StudentSubject = ({ navigation, route }) => {
   return (
     <StyledContainer>
       <StatusBar style="dark" />
-      <PageTitle>{name}</PageTitle>
+      <PageTitle style={style.h}>{name}</PageTitle>
       <StyledButton
         style={style.btn}
         onPress={() => {
@@ -29,7 +29,7 @@ export const StudentSubject = ({ navigation, route }) => {
         onPress={() => {
           navigation.navigate("StudentFeedback",{name:name});
         }}
-        // style={style.btn}
+        style={style.btn}
       >
         <ButtonText>FeedBack</ButtonText>
       </StyledButton>
@@ -49,4 +49,7 @@ const style = StyleSheet.create({
   btn: {
     marginTop: 20,
   },
+  h:{
+    marginBottom:70,
+  }
 });

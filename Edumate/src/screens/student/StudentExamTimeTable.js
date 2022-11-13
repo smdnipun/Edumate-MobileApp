@@ -76,11 +76,6 @@ export const StudentExamTimeTable = () => {
     useEffect(() => {
       loadExams()
     })
-  
-    const getMessage = () => {
-      const status = isError ? `Error: ` : `Success: `
-      return status + message
-    }
 
   return (
      <StyledContainer>
@@ -113,22 +108,6 @@ export const StudentExamTimeTable = () => {
                         <AdminContent>
                           Grade : {e.grade}
                         </AdminContent>
-                      </TeacherCardColumn>
-                      <TeacherCardColumn>
-                        <TeacherDashContentButton
-                          onPress={() => {
-                            navigation.navigate('UpdateExam',{id:e._id})
-                          }}
-                        >
-                          <Octicons size={20} color={darkLight} name='pencil' />
-                        </TeacherDashContentButton>
-                        <TeacherDashContentButton
-                          onPress={() => {
-                            deleteExam(e._id)
-                          }}
-                        >
-                          <Octicons size={20} color={darkLight} name='trash' />
-                        </TeacherDashContentButton>                
                       </TeacherCardColumn>
                     </TeacherCardRow>
                   </TeacherCard>

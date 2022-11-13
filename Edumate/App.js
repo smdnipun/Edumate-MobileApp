@@ -16,13 +16,13 @@ export default function App() {
   return (
     // <Title/>
     // <Home/>
-    <StudentStack/>
+    // <StudentStack/>
     // <StudentSubject/>
     // <StudentNotes/>
     // <StudentFeedback/>
     // <StudentComment/>
     // <StudentExamTimeTable/>
-    // <RootStack /> 
+    <RootStack /> 
     // <StduentAnswerSheetUpload/> 
     // <Upload/>
 

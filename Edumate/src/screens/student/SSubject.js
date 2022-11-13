@@ -20,7 +20,7 @@ const wait = (timeout) => {
 };
 
 export const SSubject = ({ navigation }) => {
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(true)
   const [item, setItem] = useState([]);
   const drawer = useRef(null);
   const [stream, setStream] = useState("");
@@ -34,72 +34,43 @@ export const SSubject = ({ navigation }) => {
     console.log('refesh')
   }, []);
 
-  // useEffect(() => {
-  //   loadData();
-  //   //  const loadData = async () => {
-  //   //     await axios
-  //   //       .get(`https://edumate-backend.herokuapp.com/api/users/${userId}`)
-  //   //       .then(async(res) => {
-  //   //         // const name = res.data.firstName + ' ' + res.data.lastName
-  //   //         setStream(res.data.stream);
-  //   //         console.log(stream)
-  //   //          await axios.post("https://edumate-backend.herokuapp.com/subject/stream", { streamname: stream}).then((res) => {
-  //   //             setItem(res.data);
-  //   //             console.log(item)
-  //   //           });
-  //   //       })
-  //   //   }
-  // }, []);
-  // const loadData = async () => {
-  //   await axios
-  //     .get(`https://edumate-backend.herokuapp.com/api/users/${userId}`)
-  //     .then(async (res) => {
-  //       const name = res.data.firstName + " " + res.data.lastName;
-  //       setStream(res.data.stream);
-  //       console.log(stream);
-  //       axios
-  //         .post("https://edumate-backend.herokuapp.com/subject/stream", {
-  //           streamname: stream,
-  //         })
-  //         .then((res) => {
-  //           setItem(res.data);
-  //           console.log(item);
-  //         });
-  //     });
-  // };
+  useEffect(() => {
+    loadData();
+  }, []);
 
-
-  axios
-  .get(`https://edumate-backend.herokuapp.com/api/users/${userId}`)
-  .then(async (res) => {
-    const name = res.data.firstName + " " + res.data.lastName;
-    setStream(res.data.stream);
-    // console.log(stream);
-    axios
-      .post("https://edumate-backend.herokuapp.com/subject/stream", {
-        streamname: stream,
-      })
-      .then((res) => {
-        setItem(res.data);
-        // console.log(item);
+  const loadData = async () => {
+    await axios
+      .get(`https://edumate-backend.herokuapp.com/api/users/${userId}`)
+      .then(async (res) => {
+        const name = res.data.firstName + " " + res.data.lastName;
+        setRefreshing(false)
+        setStream(res.data.stream);
+        console.log(stream);
+        axios
+          .post("https://edumate-backend.herokuapp.com/subject/stream", {
+            streamname: stream,
+          })
+          .then((res) => {
+            setRefreshing(false)
+            setItem(res.data);
+            console.log(item);
+          });
       });
-  });
+  };
+
   return (
     <StyledContainer>
       <ScrollView
-        contentContainerStyle={styles.scrollView}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={loadData} />
+    }
       >
       <StatusBar style="dark" />
-      <PageTitle>Subject</PageTitle>
+      <PageTitle style={styles.h}>Subject</PageTitle>
       {item.map((r) => {
         return (
           <StyledButton
+          style={styles.hc}
             onPress={() => {
               navigation.navigate("Studentsubject", { name: r.subjectname });
             }}
@@ -110,7 +81,6 @@ export const SSubject = ({ navigation }) => {
       })}
 
       </ScrollView>
-      <RefreshControl text='name' refreshing={refreshing} onRefresh={onRefresh} />
     </StyledContainer>
   );
 };
@@ -125,4 +95,11 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
   },
+  h:{
+    marginTop:40,
+    marginBottom:70,
+  },
+  hc:{
+    marginTop:30,
+  }
 });

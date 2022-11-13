@@ -3,18 +3,22 @@ import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { ButtonText, PageTitle, StyledButton, StyledContainer, StyledInputLabel, StyledTextInput } from '../../constants/styles'
 
-export const StudentFeedback = () => {
+export const StudentFeedback = ({navigation,route}) => {
+
+  const getname = route.params
+  const subjectname = getname.name
 
   const [subject, setSubject] = useState();
-  const [comment, setComment] = useState();
+  const [Comment, setComment] = useState();
 
-  const data = { subject, comment };
+  const data = { subjectname, Comment };
 
   const onChangeHandler = () => {
     const url = `https://edumate-backend.herokuapp.com/subjectfeedback/add`;
     axios.post(url, data).then((res) => {
       console.log("done");
       alert("comment added");
+      navigation.navigate("StudentFeedback")
     });
   };
 
@@ -24,13 +28,13 @@ export const StudentFeedback = () => {
         <PageTitle>Feed Back</PageTitle>
         <StyledInputLabel>Subject</StyledInputLabel>
         <StyledTextInput
-        value={subject}
-        onChangeText={(subject) => setSubject(subject)}
+        value={subjectname}
+        // onChangeText={(subject) => setSubject(subject)}
         />
         <StyledInputLabel>FeedBack</StyledInputLabel>
         <StyledTextInput
-        value={comment}
-        onChangeText={(comment) => setComment(comment)}
+        value={Comment}
+        onChangeText={(Comment) => setComment(Comment)}
         />
         <StyledButton onPress={onChangeHandler}>
           <ButtonText>UPLOAD</ButtonText>

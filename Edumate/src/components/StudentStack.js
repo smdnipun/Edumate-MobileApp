@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator();
 export const StudentStack = () => {
   return (
     <>
-      <NavigationContainer>
+      {/* <NavigationContainer> */}
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
@@ -56,7 +56,7 @@ export const StudentStack = () => {
           />
           {/* <Stack.Screen name="UpdatePassword" component={ResetPassword} /> */}
         </Stack.Navigator>
-      </NavigationContainer>
+      {/* </NavigationContainer> */}
     </>
   );
 };

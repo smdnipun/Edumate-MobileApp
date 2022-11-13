@@ -19,7 +19,7 @@ import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 
 const { brand, darkLight, primary } = colors
 
-export const UploadLink = () => {
+export const UploadLink = ({navigation}) => {
   const [subject, setSubject] = useState([])
   const [selectedSubject, setSelectedSubject] = useState('')
   const [lesson_name, setLesson] = useState('')
@@ -56,11 +56,11 @@ export const UploadLink = () => {
   }
 
   const data = {
-    subject:selectedSubject,
+    subject: selectedSubject,
     lesson_name,
     grade,
-    date:linkDate,
-    time:linkTime,
+    date: linkDate,
+    time: linkTime,
     link,
     teacher_id: '515',
   }
@@ -82,13 +82,17 @@ export const UploadLink = () => {
     loadSubject()
   }, [])
 
-
   const onChangeHandler = () => {
-    const url = `https://edumate-backend.herokuapp.com/link/add`
-    axios.post(url, data).then((res) => {
-      console.log('done')
-      alert('Link added')
-    })
+    if (lesson_name == '' || grade == '' || link == '') {
+      alert('Please fill the given fields')
+    } else {
+      const url = `https://edumate-backend.herokuapp.com/link/add`
+      axios.post(url, data).then((res) => {
+        console.log('done')
+        alert('Link added')
+        navigation.navigate('TeacherDash')
+      })
+    }
   }
 
   return (
@@ -100,7 +104,9 @@ export const UploadLink = () => {
           <View>
             <Picker
               selectedValue={subject}
-              onValueChange={(itemValue, itemIndex) => setSelectedSubject(itemValue)}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedSubject(itemValue)
+              }
             >
               {subject.map((sub) => {
                 return (
