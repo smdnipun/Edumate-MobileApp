@@ -3,6 +3,7 @@ import { TeacherStack } from './src/components/TeacherStack'
 import FirstSrn from './src/screens/Common/FirstSrn'
 import { Login } from './src/screens/Common/Login'
 import { UploadLink } from './src/screens/Teacher/UploadLink'
+import { RootStack } from './src/components/RootStack'
 import { StudentSubject } from './src/screens/student/StudentSubject'
 import { StudentNotes } from './src/screens/student/StudentNotes'
 import { StudentFeedback } from './src/screens/student/StudentFeedback'
@@ -46,3 +47,5 @@ export default function App() {
 
   )
 }
+
+

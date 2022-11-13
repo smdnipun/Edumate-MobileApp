@@ -13,10 +13,12 @@ export const colors = {
   brand: '#000000',
   green: '#10B981',
   red: '#EF44444',
+  logout: '#E14545',
   error100: '#fcdcbf',
   error500: '#f37c13',
 }
-const { primary, secondary, tertiary, darkLight, brand, green, red } = colors
+const { primary, secondary, tertiary, darkLight, brand, green, red, logout } =
+  colors
 
 export const LoadingContainer = styled.ImageBackground`
   min-width: 100%;
@@ -33,6 +35,12 @@ export const StyledContainer = styled.View`
   flex: 1;
   padding: 15px;
   padding-top: ${StatusBarHeight + 90}px;
+  background-color: ${primary};
+`
+export const StyledContainerDash = styled.View`
+  flex: 1;
+  padding: 15px;
+  padding-top: ${StatusBarHeight}px;
   background-color: ${primary};
 `
 
@@ -170,6 +178,12 @@ export const RightIcon = styled.TouchableOpacity`
   position: absolute;
   z-index: 1;
 `
+export const DrawerIcon = styled.TouchableOpacity`
+  right: 15px;
+  top: 20px;
+  position: absolute;
+  z-index: 1;
+`
 export const StyledButton = styled.TouchableOpacity`
   background-color: ${brand};
   justify-content: center;
@@ -187,6 +201,22 @@ export const StyledButtoWhite = styled.TouchableOpacity`
   border-radius: 5px;
   margin: 5px;
   height: 55px;
+`
+
+export const LogoutBtn = styled.TouchableOpacity`
+  background-color: ${logout};
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  height: 40px;
+`
+
+export const DrawerBtn = styled.TouchableOpacity`
+  justify-content: center;
+  border-radius: 5px;
+  height: 40px;
+  padding: 10px;
+  border-style: dashed;
 `
 
 export const ButtonText = styled.Text`
@@ -298,10 +328,8 @@ export const TeacherCard = styled.View`
   margin-left: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
-
 `
 export const TeacherCardColumn = styled.View`
-  
   flex-direction: column;
   flex: 1px;
 `
@@ -347,4 +375,15 @@ export const StreamCard = styled.View`
   margin-left: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
+`
+export const StyledTextInputComment = styled.TextInput`
+  background-color: ${secondary};
+  padding-left: 60px;
+  padding-right: 55px;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 270;
+  height: 200px;
+  margin-bottom: 70px;
+  color: ${tertiary};
 `
