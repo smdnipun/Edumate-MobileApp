@@ -89,7 +89,7 @@ export const Answers = ({navigation}) => {
             {answer.map((answer) => {
               return (
                 <>
-                  <TeacherCard>
+                  <TeacherCard key={answer._id}>
                     <TeacherCardRow>
                       <TeacherCardColumn>
                         <TeacherDashContent>
