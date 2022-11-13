@@ -115,7 +115,6 @@ export const StduentAnswerSheetUpload = ({ navigation, route }) => {
         image: file,
         student_id: userId,
       };
-      console.log(data);
       const url = `https://edumate-backend.herokuapp.com/studentanswers/add`;
       await axios.post(url, data).then((res) => {
         alert("Answer Sheets added");
@@ -126,7 +125,7 @@ export const StduentAnswerSheetUpload = ({ navigation, route }) => {
   return (
     <StyledContainer>
       <StatusBar style="dark" />
-      <PageTitle>Upload Note</PageTitle>
+      <PageTitle>Upload Answer Sheet</PageTitle>
       <InnerContainer>
         <View>
           <View>

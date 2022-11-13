@@ -20,7 +20,6 @@ export const StudentComment = () => {
 app.use('/comment', commentRouter)
 const url = `https://edumate-backend.herokuapp.com/comment/add`;
     axios.post(url, data).then((res) => {
-      console.log("done");
       alert("comment added");
     });
   };

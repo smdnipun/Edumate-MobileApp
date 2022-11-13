@@ -85,7 +85,6 @@ export const StudentDash = ({ navigation }) => {
     </View>
   );
 
-  console.log(userId);
   return (
     <DrawerLayoutAndroid
       ref={drawer}

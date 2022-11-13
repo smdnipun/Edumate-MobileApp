@@ -39,7 +39,6 @@ export const StudentNotes = ({ navigation, route }) => {
     })
     .then(async (res) => {
       setItem(res.data);
-      console.log(item);
     });
   return (
     <StyledContainer>

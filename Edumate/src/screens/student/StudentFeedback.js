@@ -16,9 +16,8 @@ export const StudentFeedback = ({navigation,route}) => {
   const onChangeHandler = () => {
     const url = `https://edumate-backend.herokuapp.com/subjectfeedback/add`;
     axios.post(url, data).then((res) => {
-      console.log("done");
       alert("comment added");
-      navigation.navigate("StudentFeedback")
+      navigation.navigate("SSubject")
     });
   };
 

@@ -30,8 +30,6 @@ export const SSubject = ({ navigation }) => {
     wait(5000).then(() => setRefreshing(false));
   
       // loadData();
-
-    console.log('refesh')
   }, []);
 
   useEffect(() => {
@@ -45,7 +43,6 @@ export const SSubject = ({ navigation }) => {
         const name = res.data.firstName + " " + res.data.lastName;
         setRefreshing(false)
         setStream(res.data.stream);
-        console.log(stream);
         axios
           .post("https://edumate-backend.herokuapp.com/subject/stream", {
             streamname: stream,
@@ -53,7 +50,6 @@ export const SSubject = ({ navigation }) => {
           .then((res) => {
             setRefreshing(false)
             setItem(res.data);
-            console.log(item);
           });
       });
   };
