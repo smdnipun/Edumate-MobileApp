@@ -358,3 +358,31 @@ export const StyledTextInputComment = styled.TextInput`
   margin-bottom: 70px;
   color: ${tertiary};
 `
+
+export const AdminContent = styled.Text`
+  font-size: 18px;
+`
+
+export const AdminCard = styled.View`
+  width: 370px;
+  height: 100px;
+  border-color: ${secondary};
+  border: 1px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`
+export const AdminContainer = styled.View`
+  flex: 1;
+  padding-top: ${StatusBarHeight + 90}px;
+  background-color: ${primary};
+`
+export const StreamCard = styled.View`
+  width: 370px;
+  height: 50px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`
+
+

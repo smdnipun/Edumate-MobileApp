@@ -16,6 +16,7 @@ import { UpdateNote } from '../screens/Teacher/UpdateNote'
 import { Comment } from '../screens/Teacher/Comments'
 import UserStack from './UserStack'
 import { TeacherStack } from './TeacherStack'
+import { AdminStack } from './AdminStack'
 
 const Stack = createNativeStackNavigator()
 
@@ -63,6 +64,13 @@ export const RootStack = () => {
           <Stack.Screen
             name='Teacher'
             component={TeacherStack}
+            options={{
+              headerShown: false,
+            }}
+          />
+           <Stack.Screen
+            name='Admin'
+            component={AdminStack}
             options={{
               headerShown: false,
             }}
