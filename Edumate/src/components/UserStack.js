@@ -24,9 +24,6 @@ export default function UserStack() {
         <Stack.Screen
           name='Profile'
           component={Profile}
-          options={{
-            headerShown: false,
-          }}
         />
         <Stack.Screen name='UpdateDetails' component={UpdateProfile} />
         <Stack.Screen name='UpdatePassword' component={ResetPassword} />

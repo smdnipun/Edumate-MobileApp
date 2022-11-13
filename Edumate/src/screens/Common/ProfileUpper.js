@@ -33,7 +33,7 @@ export default function ProfileUpper() {
     <>
       <StatusBar style='dark' />
       <InnerContainer>
-        <Text style={{ fontSize: 35, marginBottom: 8 }}>
+        <Text style={{ fontSize: 28, marginBottom: 8 }}>
           {name != '' ? name : 'John Smith'}
         </Text>
         <Image

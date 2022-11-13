@@ -1,92 +1,179 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react'
+import { View, Platform, ToastAndroid } from 'react-native'
+import axios from 'axios'
+import { Input } from '../../constants/InputField'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
-  ButtonText,
-  PageTitle,
-  StyledButton,
   StyledContainer,
+  InnerContainer,
+  PageTitle,
+  RightIcon,
   StyledInputLabel,
+  StyledButton,
+  ButtonText,
   StyledTextInput,
-} from "../../constants/styles";
-import * as DocumentPicker from "expo-document-picker";
-import * as FileSystem from "expo-file-system";
-import { Button, View } from "react-native";
+  colors,
+  ButtonTextWhite,
+  UploadButton,
+  UploadingButton,
+} from '../../constants/styles.js'
+import { StatusBar } from 'expo-status-bar'
+import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import { UploadFile } from '../../../core/fileUpload'
+import { LogBox } from 'react-native'
+import * as DocumentPicker from 'expo-document-picker'
+
+LogBox.ignoreLogs(['Setting a timer'])
+
+const { brand, darkLight, primary } = colors
+
+const API_URL =
+  Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'
 
 export const StduentAnswerSheetUpload = () => {
-  const [doc, setDoc] = useState();
-  const [fname, setFname] = useState();
+  const [subject, setSubject] = useState('')
+  const [lesson_name, setLesson] = useState('')
+  const [grade, setGrade] = useState('')
+  const [note, setNote] = useState('')
+  const [teacher_id, setTeacher] = useState('')
 
+ const [blobFile, setBlobFile] = useState(null)
+ const [fileName, setFileName] = useState('No Files')
+ const [isChoosed, setIsChoosed] = useState(false)
+ const [uploadCompleted, isUploadCompleted] = useState(false)
+  const [uploadStart, setUploadStart] = useState(false)
+  
+
+   useEffect(() => {
+     if (uploadCompleted) {
+       showToastWithGravityAndOffset('Document Saved SuccessFully')
+       clearFiles()
+     }
+   }, [uploadCompleted])
+  
+  
   const pickDocument = async () => {
-    let result = await DocumentPicker.getDocumentAsync({
-      type: "*/*",
-      copyToCacheDirectory: true,
-    }).then((response) => {
-      if (response.type == "success") {
-        let { name, size, uri } = response;
-        let nameParts = name.split(".");
-        let fileType = nameParts[nameParts.length - 1];
-        var fileToUpload = 
-          {
-            name: name,
-            size: size,
-            uri: uri,
-            type: "application/" + fileType,
-          }
-        
-        console.log(fileToUpload, "...............file");
-        setDoc(fileToUpload);
-        console.log(doc);
-        // console.log(doc.name);
-        // console.log(response.name);
-        setFname(doc.name);
-        // console.log(fname);
-      }
-    });
-    // console.log(result);
-    // console.log("Doc: " + doc.uri);
-  };
+    let result = await DocumentPicker.getDocumentAsync({})
 
-  const postDocument = () => {
-    // const url = "http://192.168.10.107:8000/upload";
-    const url = `https://edumate-backend.herokuapp.com/StudentAnswers/add`;
-    const fileUri = doc.uri;
-    const formData = new FormData();
-    formData.append(url, doc);
-    const options = {
-      method: "POST",
-      body: formData,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    // console.log(formData);
+    if (result != null) {
+      const r = await fetch(result.uri)
 
-    fetch(url, options).catch((error) => console.log(error));
-  };
+      const b = await r.blob()
+      setFileName(result.name)
+      setBlobFile(b)
+      setIsChoosed(true)
+    }
+  }
+
+  const clearFiles = () => {
+    setFileName('No Files')
+    setBlobFile(null)
+    setIsChoosed(false)
+  }
+
+  const uploadFile = () => {
+    if (blobFile) {
+      showToastWithGravityAndOffset('Uploading File....')
+      setUploadStart(true)
+      UploadFile(blobFile, fileName, isUploadCompleted)
+      clearFiles()
+    }
+  }
+
+  const showToastWithGravityAndOffset = (msg = '') => {
+    ToastAndroid.showWithGravityAndOffset(
+      msg,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50
+    )
+  }
+
+
+  const userId = '123465'
+  const formData = new FormData()
+
+  const noteAdd = (e) => {
+    setNote(e.target.files[0])
+  }
+
+  formData.append('lesson_name', lesson_name)
+  formData.append('file', fileName)
+  formData.append('subject', subject)
+  formData.append('grade', grade)
+  formData.append('teacher_id', userId)
+
+  console.log(formData)
+  const onChangeHandler = () => {
+    const url = `https://edumate-backend.herokuapp.com//studentanswers/add`
+    axios.post(url, formData).then((res) => {
+      console.log('done')
+    })
+    uploadFile()
+  }
+
+  const getMessage = () => {
+    const status = isError ? `Error: ` : `Success: `
+    return status + message
+  }
 
   return (
     <StyledContainer>
-      <StatusBar style="dark" />
-      <PageTitle>Upload AnswerSheet</PageTitle>
-      <StyledInputLabel>Subject</StyledInputLabel>
-      <StyledTextInput />
-      <StyledInputLabel>Stream</StyledInputLabel>
-      <StyledTextInput />
-      <StyledInputLabel>Leason Name</StyledInputLabel>
-      <StyledTextInput />
-      <StyledInputLabel>Grade</StyledInputLabel>
-      <StyledTextInput />
-      <StyledInputLabel>Uplaod File</StyledInputLabel>
-      <StyledTextInput />
-      <Button title="Select Document" onPress={pickDocument} />
-      <StyledButton>
-        <ButtonText>{fname}</ButtonText>
-      </StyledButton>
-      <Button title="Upload" onPress={postDocument} />
-      <StyledButton>
-        <ButtonText>UPLOAD</ButtonText>
-      </StyledButton>
+      <StatusBar style='dark' />
+      <PageTitle>Upload Note</PageTitle>
+      <InnerContainer>
+        <View>
+          <View>
+            <InputCd
+              placeholder='Subject'
+              placeholderTextColor={darkLight}
+              name='subject'
+              // onChangeText={}
+              onChangeText={(subect) => setSubject(subect)}
+              value={subject}
+            />
+            <InputCd
+              placeholder='Lesson name'
+              placeholderTextColor={darkLight}
+              name='lesson_name'
+              onChangeText={(lesson_name) => setLesson(lesson_name)}
+              value={lesson_name}
+            />
+            <InputCd
+              type='number'
+              placeholder='Grade'
+              name='grade'
+              placeholderTextColor={darkLight}
+              value={grade}
+              onChangeText={(grade) => setGrade(grade)}
+              keyboardType='numeric'
+            />
+            <UploadButton>
+              <UploadingButton onPress={()=>pickDocument()}>
+                <Octicons size={30} color={brand} name='upload' />
+                <ButtonTextWhite>Upload File Here {fileName}</ButtonTextWhite>
+              </UploadingButton>
+            </UploadButton>
+            <StyledButton onPress={onChangeHandler}>
+              <ButtonText>Upload</ButtonText>
+            </StyledButton>
+          </View>
+        </View>
+      </InnerContainer>
     </StyledContainer>
-  );
-};
+  )
+}
+
+export const InputCd = ({ label, icon, ...props }) => {
+  return (
+    <View>
+      <StyledInputLabel>{label}</StyledInputLabel>
+      <StyledTextInput {...props} />
+      <RightIcon>
+        <Octicons name={icon} size={30} color={brand} />
+      </RightIcon>
+    </View>
+  )
+}
+
