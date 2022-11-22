@@ -1,8 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import axios from 'axios'
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import {
   StyledContainer,
   colors,
@@ -18,10 +24,10 @@ import {
 
 const { darkLight, black } = colors
 
-var userId = ''
-AsyncStorage.getItem('user').then((value) => {
-  userId = value
-})
+// AsyncStorage.setItem('user', '')
+// AsyncStorage.removeItem('user')
+// AsyncStorage.removeItem('file')
+// AsyncStorage.clear()
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('')
@@ -47,10 +53,13 @@ export default function Login({ navigation }) {
         .then((res) => {
           const result = res.data.details
           AsyncStorage.setItem('user', result._id)
+          console.log(result)
           if (result.type == 'student' || result.type == 'Student') {
-            navigation.replace('User')
+            navigation.replace('StudentStack')
           } else if (result.type == 'teacher' || result.type == 'Teacher') {
             navigation.replace('Teacher')
+          } else if (result.type == 'Admin' || result.type == 'Admin') {
+            navigation.replace('Admin')  
           } else {
             alert('Please try again!!!')
           }
@@ -99,7 +108,7 @@ export default function Login({ navigation }) {
               value={password}
             />
           </View>
-          <Text style={styles.alignRight}>Forgot Password?</Text>
+          {/* <Text style={styles.alignRight}>Forgot Password?</Text> */}
           <StyledButton onPress={handleSubmit}>
             <ButtonText>Login</ButtonText>
           </StyledButton>

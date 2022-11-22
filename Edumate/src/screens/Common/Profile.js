@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, Image, ScrollView, DrawerLayoutAndroid } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  DrawerLayoutAndroid,
+  RefreshControl,
+} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
@@ -24,6 +32,7 @@ export default function Profile({ navigation }) {
   const [dob, setDob] = useState('')
   const [role, setRole] = useState('')
   const [stream, setStream] = useState('')
+  const [refreshing, setRefreshing] = useState(true)
 
   useEffect(() => {
     loadData()
@@ -38,6 +47,7 @@ export default function Profile({ navigation }) {
         setDob(res.data.dateOfBirth)
         setRole(res.data.type)
         setStream(res.data.stream)
+        setRefreshing(false)
       })
   }
 
@@ -54,7 +64,11 @@ export default function Profile({ navigation }) {
   }
 
   return (
-    <>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={loadData} />
+      }
+    >
       <View style={styles.page}>
         <StatusBar style='dark' />
         <ProfileInnerContainer>
@@ -62,7 +76,7 @@ export default function Profile({ navigation }) {
             source={require('../../../assets/Teacher.png')}
             style={styles.buttonImageIconStyle}
           />
-          <Text style={{ fontSize: 28 }}>
+          <Text style={{ fontSize: 28, marginTop: 20 }}>
             {name == '' ? 'John Smith' : name}
           </Text>
         </ProfileInnerContainer>
@@ -132,7 +146,7 @@ export default function Profile({ navigation }) {
           </StyledButton>
         </View>
       </View>
-    </>
+    </ScrollView>
   )
 }
 

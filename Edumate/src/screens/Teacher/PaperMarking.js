@@ -38,6 +38,7 @@ import {
 import { StatusBar } from 'expo-status-bar'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Picker } from '@react-native-picker/picker'
+import { async } from '@firebase/util'
 
 const { brand, darkLight, primary } = colors
 
@@ -56,7 +57,7 @@ export const PaperMarking = ({ route, navigation }) => {
   const { id } = route.params
 
   // const id = '636cbe0453ef6c69dc31e041'
-  console.log(status)
+
   const loadMark = async () => {
     const url = `https://edumate-backend.herokuapp.com/StudentAnswers/get/${id}}`
     axios.get(url).then((res) => {
@@ -68,24 +69,24 @@ export const PaperMarking = ({ route, navigation }) => {
     loadMark()
   }, [])
 
-  const updateStatus = (event) => {
-    setStatus(event.target.value)
-    const data = {
-      subject: paper.subject,
-      lname: paper.lname,
-      grade: paper.grade,
-      date: paper.date,
-      time: paper.time,
-      file: paper.file,
-      student_id: paper.student_id,
-      status: event.target.value,
-    }
+  // const updateStatus = (event) => {
+  //   setStatus(event.target.value)
+  //   const data = {
+  //     subject: paper.subject,
+  //     lname: paper.lname,
+  //     grade: paper.grade,
+  //     date: paper.date,
+  //     time: paper.time,
+  //     file: paper.file,
+  //     student_id: paper.student_id,
+  //     status: event.target.value,
+  //   }
 
-    axios.put(
-      `https://edumate-backend.herokuapp.com/StudentAnswers/${id}`,
-      data
-    )
-  }
+  //   axios.put(
+  //     `https://edumate-backend.herokuapp.com/StudentAnswers/${id}`,
+  //     data
+  //   )
+  // }
 
   const data = {
     answer_id: id,
@@ -96,19 +97,25 @@ export const PaperMarking = ({ route, navigation }) => {
     comment,
     markedBy: '636cbe0453ef6c69dc31e041',
   }
-  console.log(status)
 
-  const addMarks = async (e) => {
-    e.preventDefault()
+  const addMarks = async () => {
+   
     if (status !== 'Marked') {
       alert('Something went wrong!')
     } else if (mark > 100 || mark < 0) {
       alert('please enter number between 0 and 100')
-    } else {
+    } else if(  
+    mark==''||
+    comment==''
+    ){
+      alert('please fill the given fields')
+    }
+    
+    else {
       await axios.post('https://edumate-backend.herokuapp.com/mark/add/', data)
       // alert('succesfully marked')
-
       alert('Marks added')
+      navigation.navigate('Answer')
     }
   }
 
@@ -126,7 +133,7 @@ export const PaperMarking = ({ route, navigation }) => {
           <View>
             <Picker
               selectedValue={status}
-              onFocus={updateStatus}
+              // onChangeText={updateStatus()}
               onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
             >
               <Picker.Item label='None' value='None' />
